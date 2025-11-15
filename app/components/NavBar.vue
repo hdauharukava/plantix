@@ -3,7 +3,9 @@
     class="flex items-center justify-between p-6 mx-auto max-w-7xl w-full mb-4"
   >
     <div>
-      <img src="@/assets/icons/Logo.svg" alt="logo" class="cursor-pointer" />
+      <NuxtLink to="/">
+        <img src="@/assets/icons/Logo.svg" alt="logo" class="cursor-pointer" />
+      </NuxtLink>
     </div>
 
     <div class="hidden lg:flex items-center space-x-4">
@@ -145,32 +147,32 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
-const windowWidth = ref(window.innerWidth);
+
+const windowWidth = ref(0);
 
 const updateWindowWidth = () => {
   windowWidth.value = window.innerWidth;
 };
 
 onMounted(() => {
-  window.addEventListener('resize', updateWindowWidth);
+  windowWidth.value = window.innerWidth;
+  window.addEventListener("resize", updateWindowWidth);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateWindowWidth);
+  window.removeEventListener("resize", updateWindowWidth);
 });
 
 const getUserModalPosition = () => {
   if (windowWidth.value < 768) {
-    return isMenuOpen.value 
-      ? 'top-80 right-6'
-      : 'top-16 right-6';
+    return isMenuOpen.value ? "top-80 right-6" : "top-16 right-6";
   } else {
-    return 'top-16 right-32';
+    return "top-16 right-32";
   }
 };
 
