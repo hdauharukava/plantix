@@ -1,21 +1,22 @@
 <template>
-  <div class="flex flex-col items-center">
-    <div class="w-full max-w-5xl h-96 bg-mygray relative mb-0">
-      <img src="@/assets/index.png" class="absolute bottom-0"/>
-      <div class="absolute top-24 left-20 font-poppins font-bold text-3xl text-[#1e1e1e]">
+  <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-mygray relative mb-0">
+      <img src="@/assets/index.png" class="absolute bottom-0 w-full "/>
+      <div class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]">
         Kwiaty do Twojego domu
       </div>
-      <div class="absolute left-20 top-44 max-w-96 font-poppins font-bold text-sm text-[#1e1e1e]">
+      <div class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-[#1e1e1e]">
         <p>Rośliny w doniczkach staną się pięknym i modnym dodatkiem do wnętrza Twojego mieszkania lub biura.</p>
       </div>
-      <div class="absolute left-20 top-64">
-        <button class="bg-primary hover:bg-primary activ:bg-primary text-white text-base rounded-full px-5 py-1 text-sm cursor-pointer text-primary">
+      <div class="absolute left-6 md:left-12 lg:left-20 top-40 md:top-50 lg:top-64">
+        <button class="bg-primary hover:bg-primary activ:bg-primary text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold">
           PRZEJDŹ DO KATALOGU
         </button>
       </div>
     </div>
-    <div class="w-full max-w-5xl mt-10">
-      <div class="grid grid-cols-4 gap-6">
+
+    <div class="w-full max-w-5xl mt-8 md:mt-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <CategoryCard
           :image="fikusy"
           title="Fikusy"
@@ -38,11 +39,13 @@
         />
       </div>
     </div>
-    <div class="w-full max-w-5xl flex items-start mt-10">
-      <p class="text-primary text-2xl">Oferty miesiąca</p>
+
+    <div class="w-full max-w-5xl flex items-start mt-8 md:mt-10">
+      <p class="text-primary text-xl md:text-2xl">Oferty miesiąca</p>
     </div>
-    <div class="w-full max-w-5xl mt-10 mb-10">
-      <div class="grid grid-cols-4 gap-6">
+
+    <div class="w-full max-w-5xl mt-8 md:mt-10 mb-8 md:mb-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <OfferCard
           :image="of1"
           category="Fikusy"
@@ -75,8 +78,9 @@
         />
       </div>
     </div>
-    <div class="flex justify-center mb-25 mt-10">
-      <button class="bg-primary hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-2 text-sm cursor-pointer transition-colors font-bold">
+
+    <div class="flex justify-center mb-20 md:mb-25 mt-8 md:mt-10">
+      <button class="bg-primary hover:bg-primary activ:bg-primary text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold">
         PRZEJDŹ DO KATALOGU
       </button>
     </div>
