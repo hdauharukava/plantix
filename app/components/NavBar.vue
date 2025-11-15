@@ -10,22 +10,22 @@
 
     <div class="hidden lg:flex items-center space-x-4">
       <button
-        class="bg-primary hover:bg-primary text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Katalog
       </button>
       <button
-        class="bg-primary hover:bg-primary text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Porady dotyczące pielęgnacji
       </button>
       <button
-        class="bg-primary hover:bg-primary text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Płatność i dostawa
       </button>
       <button
-        class="bg-primary hover:bg-primary text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Kontakt
       </button>
@@ -60,9 +60,9 @@
         @click="toggleMenuModal"
         class="lg:hidden flex flex-col justify-between w-6 h-5 cursor-pointer"
       >
-        <span class="block h-0.5 w-full bg-primary rounded"></span>
-        <span class="block h-0.5 w-full bg-primary rounded"></span>
-        <span class="block h-0.5 w-full bg-primary rounded"></span>
+        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
+        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
+        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
       </button>
     </div>
 

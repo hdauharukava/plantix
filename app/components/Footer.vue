@@ -1,5 +1,5 @@
 <template>
-  <footer class="h-120 md:h-64 bg-primary relative">
+  <footer class="h-120 md:h-64 bg-[#90a88c] relative">
     <div class="max-w-7xl mx-auto w-full h-full relative">
       <div class="hidden md:block">
         <div class="absolute right-6 top-9 flex items-center space-x-4">

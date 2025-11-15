@@ -102,7 +102,7 @@
 
         <UButton
           type="submit"
-          class="w-full bg-primary text-white font-bold py-2 px-4 rounded-full transition-colors duration-200 text-sm"
+          class="w-full bg-[#90a88c] hover:bg-[#799573] activ:bg-[#647e5e] text-white font-bold py-2 px-4 rounded-full transition-colors duration-200 text-sm"
           :ui="{ rounded: 'rounded-full' }"
         >
           Zarejestruj się
