@@ -20,7 +20,6 @@
         </UFormField>
         
         <UFormField name="password" :error="errors.password" required label="Hasło">
-
           <UInput
             id="password"
             v-model="state.password"
@@ -74,7 +73,6 @@
         </UFormField>
 
         <UFormField name="confirmPassword" :error="errors.confirmPassword" required label="Powtórz hasło">
-
           <UInput
             id="confirmPassword"
             v-model="state.confirmPassword"
@@ -89,7 +87,6 @@
 
         <UFormField name="rodo">
           <div class="flex items-start space-x-2">
-            
             <UCheckbox
               id="rodo"
               v-model="state.acceptedRODO"
@@ -124,7 +121,6 @@ import { reactive, computed, ref } from "vue";
 
 interface FormState {
   email: string;
-  userType: string;
   password: string;
   confirmPassword: string;
   acceptedRODO: boolean;
@@ -132,14 +128,12 @@ interface FormState {
 
 interface FormErrors {
   email?: string;
-  userType?: string;
   password?: string;
   confirmPassword?: string;
 }
 
 const state = reactive<FormState>({
   email: "",
-  userType: "",
   password: "",
   confirmPassword: "",
   acceptedRODO: false,
@@ -162,18 +156,12 @@ const passwordRequirements = computed(() => {
   }));
 });
 
-const passwordStrengthScore = computed(() => 
-  passwordRequirements.value.filter((req) => req.met).length
-);
-
-const passwordStrengthPercent = computed(() => 
-  (passwordStrengthScore.value / passwordRequirements.value.length) * 100
-);
+const passwordStrengthScore = computed(() => passwordRequirements.value.filter(req => req.met).length);
+const passwordStrengthPercent = computed(() => (passwordStrengthScore.value / passwordRequirements.value.length) * 100);
 
 const passwordStrengthClass = computed(() => {
   if (passwordStrengthScore.value === 0) return "bg-gray-400";
-  if (passwordStrengthScore.value <= 1) return "bg-red-500";
-  if (passwordStrengthScore.value <= 2) return "bg-yellow-500";
+  if (passwordStrengthScore.value <= 2) return "bg-red-500";
   if (passwordStrengthScore.value === 3) return "bg-yellow-500";
   return "bg-green-500";
 });
@@ -194,7 +182,6 @@ const passwordStrengthTextClass = computed(() => {
 
 function validateForm() {
   Object.keys(errors).forEach(key => delete errors[key as keyof FormErrors]);
-
   let isValid = true;
 
   if (!state.email) {
@@ -202,11 +189,6 @@ function validateForm() {
     isValid = false;
   } else if (!/\S+@\S+\.\S+/.test(state.email)) {
     errors.email = "Nieprawidłowy email";
-    isValid = false;
-  }
-
-  if (!state.userType) {
-    errors.userType = "Wybierz kim jesteś";
     isValid = false;
   }
 
@@ -230,25 +212,13 @@ function validateForm() {
 }
 
 async function onSubmit() {
-  if (!validateForm()) {
-    return;
-  }
+  if (!validateForm()) return;
 
   try {
     console.log("Registration data:", state);
-    
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        email: state.email,
-        userType: state.userType,
-      })
-    );
-
+    localStorage.setItem("user", JSON.stringify({ email: state.email }));
     alert("Rejestracja zakończona sukcesem!");
-    
   } catch (error) {
     console.error("Registration error:", error);
     alert("Wystąpił błąd podczas rejestracji. Spróbuj ponownie.");
