@@ -45,6 +45,7 @@
           src="@/assets/icons/UserIcon.svg"
           alt="User"
           class="w-7 h-7 cursor-pointer"
+          @click="isUserOpen = !isUserOpen"
         />
         <img
           src="@/assets/icons/CartIcon.svg"
@@ -54,7 +55,7 @@
       </div>
 
       <button
-        @click="isOpen = !isOpen"
+        @click="isMenuOpen = !isMenuOpen"
         class="lg:hidden flex flex-col justify-between w-6 h-5 cursor-pointer"
       >
         <span class="block h-0.5 w-full bg-primary rounded"></span>
@@ -65,8 +66,8 @@
 
     <transition name="fade">
       <div
-        v-if="isOpen"
-        class="absolute top-16 right-6 bg-white shadow-lg rounded-lg p-4 lg:hidden w-48 z-10"
+        v-if="isMenuOpen"
+        class="absolute top-16 right-6 bg-white shadow-lg rounded-lg p-4 lg:hidden w-48 z-20"
       >
         <button
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
@@ -106,6 +107,7 @@
             src="@/assets/icons/UserIcon.svg"
             alt="User"
             class="w-6 h-6 cursor-pointer"
+            @click="isUserOpen = true"
           />
           <img
             src="@/assets/icons/CartIcon.svg"
@@ -115,13 +117,32 @@
         </div>
       </div>
     </transition>
+
+    <transition name="fade">
+      <div
+        v-if="isUserOpen"
+        class="absolute top-16 right-20 md:right-32 bg-white shadow-lg rounded-lg p-4 w-48 z-20"
+      >
+        <button
+          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm"
+        >
+          Zaloguj się
+        </button>
+        <button
+          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm"
+        >
+          Zarejestruj się
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
-const isOpen = ref(false);
+const isMenuOpen = ref(false);
+const isUserOpen = ref(false);
 </script>
 
 <style>
