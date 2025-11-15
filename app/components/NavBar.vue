@@ -45,7 +45,7 @@
           src="@/assets/icons/UserIcon.svg"
           alt="User"
           class="w-7 h-7 cursor-pointer"
-          @click="isUserOpen = !isUserOpen"
+          @click="toggleUserModal"
         />
         <img
           src="@/assets/icons/CartIcon.svg"
@@ -55,7 +55,7 @@
       </div>
 
       <button
-        @click="isMenuOpen = !isMenuOpen"
+        @click="toggleMenuModal"
         class="lg:hidden flex flex-col justify-between w-6 h-5 cursor-pointer"
       >
         <span class="block h-0.5 w-full bg-primary rounded"></span>
@@ -63,6 +63,12 @@
         <span class="block h-0.5 w-full bg-primary rounded"></span>
       </button>
     </div>
+
+    <div 
+      v-if="isMenuOpen || isUserOpen" 
+      class="fixed inset-0 z-10" 
+      @click="closeAllModals"
+    ></div>
 
     <transition name="fade">
       <div
@@ -107,7 +113,7 @@
             src="@/assets/icons/UserIcon.svg"
             alt="User"
             class="w-6 h-6 cursor-pointer"
-            @click="isUserOpen = true"
+            @click.stop="openUserModal"
           />
           <img
             src="@/assets/icons/CartIcon.svg"
@@ -143,6 +149,32 @@ import { ref } from "vue";
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
+
+const toggleUserModal = () => {
+  isUserOpen.value = !isUserOpen.value;
+  // Закрываем меню если открыто
+  if (isMenuOpen.value) {
+    isMenuOpen.value = false;
+  }
+};
+
+const toggleMenuModal = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+  // Закрываем пользовательское окно если открыто
+  if (isUserOpen.value) {
+    isUserOpen.value = false;
+  }
+};
+
+const openUserModal = () => {
+  isUserOpen.value = true;
+  isMenuOpen.value = false;
+};
+
+const closeAllModals = () => {
+  isMenuOpen.value = false;
+  isUserOpen.value = false;
+};
 </script>
 
 <style>
