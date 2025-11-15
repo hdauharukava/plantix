@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-primary {
+    background-color: #90A88C;
+  }
+  button.bg-primary:hover {
+    background-color: #799573;
+  }
+  button.bg-primary:active {
+    background-color: #647e5e;
+  }
+  .bg-mygray{
+    background-color: #ececec;
+  }
+  .text-primary {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 0.025em;
+  } 
+}
