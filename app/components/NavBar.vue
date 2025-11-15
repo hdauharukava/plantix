@@ -132,16 +132,20 @@
         class="absolute bg-white shadow-lg rounded-lg p-4 w-48 z-30"
         :class="getUserModalPosition()"
       >
-        <button
-          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm"
+        <NuxtLink
+          to="/login"
+          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm block"
+          @click="closeAllModals"
         >
           Zaloguj się
-        </button>
-        <button
-          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm"
+        </NuxtLink>
+        <NuxtLink
+          to="/register"
+          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm block"
+          @click="closeAllModals"
         >
           Zarejestruj się
-        </button>
+        </NuxtLink>
       </div>
     </transition>
   </div>
