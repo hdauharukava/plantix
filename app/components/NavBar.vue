@@ -127,7 +127,8 @@
     <transition name="fade">
       <div
         v-if="isUserOpen"
-        class="absolute top-16 right-20 md:right-32 bg-white shadow-lg rounded-lg p-4 w-48 z-20"
+        class="absolute bg-white shadow-lg rounded-lg p-4 w-48 z-30"
+        :class="getUserModalPosition()"
       >
         <button
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer text-sm"
@@ -145,22 +146,43 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
+const windowWidth = ref(window.innerWidth);
+
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', updateWindowWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowWidth);
+});
+
+const getUserModalPosition = () => {
+  if (windowWidth.value < 768) {
+    return isMenuOpen.value 
+      ? 'top-80 right-6'
+      : 'top-16 right-6';
+  } else {
+    return 'top-16 right-32';
+  }
+};
 
 const toggleUserModal = () => {
   isUserOpen.value = !isUserOpen.value;
-  // Закрываем меню если открыто
-  if (isMenuOpen.value) {
+  if (isMenuOpen.value && windowWidth.value >= 768) {
     isMenuOpen.value = false;
   }
 };
 
 const toggleMenuModal = () => {
   isMenuOpen.value = !isMenuOpen.value;
-  // Закрываем пользовательское окно если открыто
   if (isUserOpen.value) {
     isUserOpen.value = false;
   }
@@ -168,7 +190,6 @@ const toggleMenuModal = () => {
 
 const openUserModal = () => {
   isUserOpen.value = true;
-  isMenuOpen.value = false;
 };
 
 const closeAllModals = () => {
