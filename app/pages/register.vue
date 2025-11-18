@@ -32,11 +32,14 @@
                     type="button"
                     @click="showPassword = !showPassword"
                     variant="ghost"
-                    color="gray"
+                    color="neutral"
                     :padded="false"
                     class="mr-1"
-                    :ui="{ rounded: 'rounded-md' }"
                   >
+                  <UIcon 
+                    :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" 
+                    class="w-4 h-4 text-gray-400 hover:text-gray-500"
+                  />
                   </UButton>
                 </template>
               </UInput>
