@@ -32,9 +32,9 @@
         </div>
 
         <div class="flex items-center space-x-4 absolute left-6 top-9">
-          <button class="text-white text-sm cursor-pointer hover:underline">
+          <NuxtLink to="/catalog" class="text-white text-sm cursor-pointer hover:underline">
             Katalog
-          </button>
+          </NuxtLink>
           <button class="text-white text-sm cursor-pointer hover:underline">
             Porady dotyczące pielęgnacji
           </button>
@@ -51,7 +51,9 @@
           </p>
         </div>
         <div class="absolute left-6 bottom-18">
-          <img src="@/assets/icons/LogoWhite.svg" class="h-8" />
+          <NuxtLink to="/">
+        <img src="@/assets/icons/LogoWhite.svg" alt="logo" class="cursor-pointer h-8" />
+      </NuxtLink>
         </div>
       </div>
 
@@ -103,7 +105,9 @@
         </div>
 
         <div class="flex flex-col items-center space-y-3">
-          <img src="@/assets/icons/LogoWhite.svg" class="h-8" />
+          <NuxtLink to="/">
+        <img src="@/assets/icons/LogoWhite.svg" alt="logo" class="cursor-pointer h-8" />
+      </NuxtLink>
           <p class="text-white text-sm text-center">
             ©2025 sklep z kwiatami i roślinami PLANTIX
           </p>
