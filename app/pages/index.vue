@@ -58,7 +58,7 @@
     <div class="w-full max-w-5xl mt-8 md:mt-10 mb-8 md:mb-10">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <OfferCard
-          :image="of1"
+          :image="fikus2"
           category="Fikusy"
           title="Fikus „Maluszek”"
           :price="89.99"
@@ -66,7 +66,7 @@
           discount="-25%"
         />
         <OfferCard
-          :image="of2"
+          :image="kaktus2"
           category="Kaktusy"
           title="Kaktus „Malusieńki”"
           :price="34.99"
@@ -74,13 +74,13 @@
           discount="-30%"
         />
         <OfferCard
-          :image="of3"
+          :image="sukulent"
           category="Sukulenty"
           title="Aloes Wera „Piękny”"
           :price="45.5"
         />
         <OfferCard
-          :image="of4"
+          :image="fikus3"
           category="Fikusy"
           title="Fikus „Gigantyczny”"
           :price="29.99"
@@ -103,12 +103,12 @@
 <script setup>
 import CategoryCard from "@/components/CategoryCard.vue";
 import OfferCard from "@/components/OfferCard.vue";
-import fikusy from "@/assets/plants/fikusy.png";
-import kaktusy from "@/assets/plants/kaktusy.png";
-import iglice from "@/assets/plants/iglice.png";
-import zamiokulkasy from "@/assets/plants/zamiokulkasy.png";
-import of1 from "@/assets/of1.png";
-import of2 from "@/assets/of2.png";
-import of3 from "@/assets/of3.png";
-import of4 from "@/assets/of4.png";
+import fikusy from "@/assets/plants/fikus.png";
+import kaktusy from "@/assets/plants/kaktus.png";
+import iglice from "@/assets/plants/iglica.png";
+import zamiokulkasy from "@/assets/plants/zamiokulkas.png";
+import fikus2 from "@/assets/plants/fikus2.png";
+import kaktus2 from "@/assets/plants/kaktus2.png";
+import sukulent from "@/assets/plants/sukulent.png";
+import fikus3 from "@/assets/plants/fikus3.png";
 </script>
