@@ -33,11 +33,39 @@
 
     <div class="flex items-center space-x-6">
       <div class="hidden md:flex items-center space-x-4">
-        <img
-          src="@/assets/icons/SearchIcon.svg"
-          alt="Search"
-          class="w-7 h-7 cursor-pointer"
-        />
+        <div class="relative" v-if="isSearchOpen">
+          <input
+            type="text"
+            placeholder="Wyszukaj..."
+            class="border border-[#90a88c] rounded-full px-4 py-1 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[#90a88c] focus:border-transparent transition-all duration-200 w-48"
+            v-model="searchQuery"
+            ref="searchInput"
+            @keyup.enter="performSearch"
+          />
+          <button
+            @click="performSearch"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          >
+            <img
+              src="@/assets/icons/SearchIcon.svg"
+              alt="Search"
+              class="w-5 h-5"
+            />
+          </button>
+        </div>
+        
+        <button
+          v-else
+          @click="openSearch"
+          class="cursor-pointer"
+        >
+          <img
+            src="@/assets/icons/SearchIcon.svg"
+            alt="Search"
+            class="w-7 h-7"
+          />
+        </button>
+
         <img
           src="@/assets/icons/HeartIcon.svg"
           alt="Heart"
@@ -67,7 +95,7 @@
     </div>
 
     <div 
-      v-if="isMenuOpen || isUserOpen" 
+      v-if="isMenuOpen || isUserOpen || isSearchOpen" 
       class="fixed inset-0 z-10" 
       @click="closeAllModals"
     ></div>
@@ -101,27 +129,55 @@
         <div
           class="flex items-center justify-around mt-4 pt-4 border-t border-gray-200 md:hidden"
         >
-          <img
-            src="@/assets/icons/SearchIcon.svg"
-            alt="Search"
-            class="w-6 h-6 cursor-pointer"
-          />
-          <img
-            src="@/assets/icons/HeartIcon.svg"
-            alt="Heart"
-            class="w-6 h-6 cursor-pointer"
-          />
-          <img
-            src="@/assets/icons/UserIcon.svg"
-            alt="User"
-            class="w-6 h-6 cursor-pointer"
-            @click.stop="openUserModal"
-          />
-          <img
-            src="@/assets/icons/CartIcon.svg"
-            alt="Cart"
-            class="w-6 h-6 cursor-pointer"
-          />
+          <div class="relative w-full flex justify-center" v-if="isSearchOpenMobile">
+            <input
+              type="text"
+              placeholder="Wyszukaj..."
+              class="border border-[#90a88c] rounded-full px-3 py-1 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-[#90a88c] focus:border-transparent transition-all duration-200 w-full max-w-40"
+              v-model="searchQuery"
+              ref="searchInputMobile"
+              @keyup.enter="performSearch"
+            />
+            <button
+              @click="performSearch"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            >
+              <img
+                src="@/assets/icons/SearchIcon.svg"
+                alt="Search"
+                class="w-4 h-4"
+              />
+            </button>
+          </div>
+          
+          <div v-else class="flex items-center justify-around w-full">
+            <button
+              @click="openSearchMobile"
+              class="cursor-pointer"
+            >
+              <img
+                src="@/assets/icons/SearchIcon.svg"
+                alt="Search"
+                class="w-6 h-6"
+              />
+            </button>
+            <img
+              src="@/assets/icons/HeartIcon.svg"
+              alt="Heart"
+              class="w-6 h-6 cursor-pointer"
+            />
+            <img
+              src="@/assets/icons/UserIcon.svg"
+              alt="User"
+              class="w-6 h-6 cursor-pointer"
+              @click.stop="openUserModal"
+            />
+            <img
+              src="@/assets/icons/CartIcon.svg"
+              alt="Cart"
+              class="w-6 h-6 cursor-pointer"
+            />
+          </div>
         </div>
       </div>
     </transition>
@@ -152,12 +208,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
+const isSearchOpen = ref(false);
+const isSearchOpenMobile = ref(false);
+const searchQuery = ref("");
 
 const windowWidth = ref(0);
+
+const searchInput = ref<HTMLInputElement | null>(null);
+const searchInputMobile = ref<HTMLInputElement | null>(null);
 
 const updateWindowWidth = () => {
   windowWidth.value = window.innerWidth;
@@ -166,11 +228,24 @@ const updateWindowWidth = () => {
 onMounted(() => {
   windowWidth.value = window.innerWidth;
   window.addEventListener("resize", updateWindowWidth);
+  document.addEventListener("click", handleClickOutside);
 });
 
 onUnmounted(() => {
   window.removeEventListener("resize", updateWindowWidth);
+  document.removeEventListener("click", handleClickOutside);
 });
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement;
+  
+  const isSearchInput = target.closest('input[type="text"]');
+  const isSearchIcon = target.closest('img[alt="Search"]') || target.closest('button')?.querySelector('img[alt="Search"]');
+  
+  if (!isSearchInput && !isSearchIcon) {
+    closeSearch();
+  }
+};
 
 const getUserModalPosition = () => {
   if (windowWidth.value < 768) {
@@ -185,6 +260,7 @@ const toggleUserModal = () => {
   if (isMenuOpen.value && windowWidth.value >= 768) {
     isMenuOpen.value = false;
   }
+  closeSearch();
 };
 
 const toggleMenuModal = () => {
@@ -192,15 +268,45 @@ const toggleMenuModal = () => {
   if (isUserOpen.value) {
     isUserOpen.value = false;
   }
+  closeSearch();
 };
 
 const openUserModal = () => {
   isUserOpen.value = true;
 };
 
+const openSearch = () => {
+  isSearchOpen.value = true;
+  nextTick(() => {
+    searchInput.value?.focus();
+  });
+};
+
+const openSearchMobile = () => {
+  isSearchOpenMobile.value = true;
+  nextTick(() => {
+    searchInputMobile.value?.focus();
+  });
+};
+
+const closeSearch = () => {
+  searchQuery.value = "";
+  isSearchOpen.value = false;
+  isSearchOpenMobile.value = false;
+};
+
+const performSearch = () => {
+  if (searchQuery.value.trim()) {
+    console.log("Searching for:", searchQuery.value);
+    searchQuery.value = "";
+  }
+  closeSearch();
+};
+
 const closeAllModals = () => {
   isMenuOpen.value = false;
   isUserOpen.value = false;
+  closeSearch();
 };
 </script>
 
