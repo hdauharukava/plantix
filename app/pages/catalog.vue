@@ -93,16 +93,10 @@
             </div>
           </div>
 
-          <div class="flex space-x-4">
-            <button
-              @click="applyFilters"
-              class="flex-1 bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-colors font-bold"
-            >
-              Zastosuj
-            </button>
+          <div>
             <button
               @click="resetFilters"
-              class="flex-1 border border-gray-300 hover:border-gray-400 active:border-gray-500 text-gray-300 hover:text-gray-400 active:text-gray-500 text-sm rounded-full px-4 py-2 transition-colors"
+              class="flex-1 border border-gray-300 hover:border-gray-400 active:border-gray-500 text-gray-300 hover:text-gray-400 active:text-gray-500 text-sm rounded-full px-4 py-1 transition-colors"
             >
               Wyczyść
             </button>
