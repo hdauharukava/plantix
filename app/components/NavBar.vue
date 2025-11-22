@@ -9,7 +9,8 @@
     </div>
 
     <div class="hidden lg:flex items-center space-x-4">
-      <NuxtLink to="/catalog"
+      <NuxtLink
+        to="/catalog"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Katalog
@@ -53,12 +54,8 @@
             />
           </button>
         </div>
-        
-        <button
-          v-else
-          @click="openSearch"
-          class="cursor-pointer"
-        >
+
+        <button v-else @click="openSearch" class="cursor-pointer">
           <img
             src="@/assets/icons/SearchIcon.svg"
             alt="Search"
@@ -88,15 +85,21 @@
         @click="toggleMenuModal"
         class="lg:hidden flex flex-col justify-between w-6 h-5 cursor-pointer"
       >
-        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
-        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
-        <span class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"></span>
+        <span
+          class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"
+        ></span>
+        <span
+          class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"
+        ></span>
+        <span
+          class="block h-0.5 w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] rounded"
+        ></span>
       </button>
     </div>
 
-    <div 
-      v-if="isMenuOpen || isUserOpen || isSearchOpen" 
-      class="fixed inset-0 z-10" 
+    <div
+      v-if="isMenuOpen || isUserOpen || isSearchOpen"
+      class="fixed inset-0 z-10"
       @click="closeAllModals"
     ></div>
 
@@ -129,7 +132,10 @@
         <div
           class="flex items-center justify-around mt-4 pt-4 border-t border-gray-200 md:hidden"
         >
-          <div class="relative w-full flex justify-center" v-if="isSearchOpenMobile">
+          <div
+            class="relative w-full flex justify-center"
+            v-if="isSearchOpenMobile"
+          >
             <input
               type="text"
               placeholder="Wyszukaj..."
@@ -149,12 +155,9 @@
               />
             </button>
           </div>
-          
+
           <div v-else class="flex items-center justify-around w-full">
-            <button
-              @click="openSearchMobile"
-              class="cursor-pointer"
-            >
+            <button @click="openSearchMobile" class="cursor-pointer">
               <img
                 src="@/assets/icons/SearchIcon.svg"
                 alt="Search"
@@ -238,10 +241,12 @@ onUnmounted(() => {
 
 const handleClickOutside = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
-  
+
   const isSearchInput = target.closest('input[type="text"]');
-  const isSearchIcon = target.closest('img[alt="Search"]') || target.closest('button')?.querySelector('img[alt="Search"]');
-  
+  const isSearchIcon =
+    target.closest('img[alt="Search"]') ||
+    target.closest("button")?.querySelector('img[alt="Search"]');
+
   if (!isSearchInput && !isSearchIcon) {
     closeSearch();
   }

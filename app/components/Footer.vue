@@ -32,7 +32,10 @@
         </div>
 
         <div class="flex items-center space-x-4 absolute left-6 top-9">
-          <NuxtLink to="/catalog" class="text-white text-sm cursor-pointer hover:underline">
+          <NuxtLink
+            to="/catalog"
+            class="text-white text-sm cursor-pointer hover:underline"
+          >
             Katalog
           </NuxtLink>
           <button class="text-white text-sm cursor-pointer hover:underline">
@@ -52,8 +55,12 @@
         </div>
         <div class="absolute left-6 bottom-18">
           <NuxtLink to="/">
-        <img src="@/assets/icons/LogoWhite.svg" alt="logo" class="cursor-pointer h-8" />
-      </NuxtLink>
+            <img
+              src="@/assets/icons/LogoWhite.svg"
+              alt="logo"
+              class="cursor-pointer h-8"
+            />
+          </NuxtLink>
         </div>
       </div>
 
@@ -106,8 +113,12 @@
 
         <div class="flex flex-col items-center space-y-3">
           <NuxtLink to="/">
-        <img src="@/assets/icons/LogoWhite.svg" alt="logo" class="cursor-pointer h-8" />
-      </NuxtLink>
+            <img
+              src="@/assets/icons/LogoWhite.svg"
+              alt="logo"
+              class="cursor-pointer h-8"
+            />
+          </NuxtLink>
           <p class="text-white text-sm text-center">
             ©2025 sklep z kwiatami i roślinami PLANTIX
           </p>
@@ -118,17 +129,17 @@
 </template>
 
 <script setup lang="ts">
-const email = ref('');
+const email = ref("");
 
 const subscribe = () => {
   if (email.value.trim()) {
-    console.log('Subscribing email:', email.value);
-    
-    email.value = '';
-    
-    alert('Dziękujemy za subskrypcję!');
+    console.log("Subscribing email:", email.value);
+
+    email.value = "";
+
+    alert("Dziękujemy za subskrypcję!");
   } else {
-    alert('Proszę wpisać adres e-mail');
+    alert("Proszę wpisać adres e-mail");
   }
 };
 </script>

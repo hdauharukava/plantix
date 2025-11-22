@@ -17,8 +17,13 @@
               />
             </div>
           </UFormField>
-          
-          <UFormField name="password" :error="errors.password" required label="Hasło">
+
+          <UFormField
+            name="password"
+            :error="errors.password"
+            required
+            label="Hasło"
+          >
             <div class="w-full">
               <UInput
                 id="password"
@@ -36,8 +41,12 @@
                     :padded="false"
                     class="mr-1"
                   >
-                    <UIcon 
-                      :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" 
+                    <UIcon
+                      :name="
+                        showPassword
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
                       class="w-4 h-4 text-gray-400 hover:text-gray-500"
                     />
                   </UButton>
@@ -57,7 +66,7 @@
         </UForm>
 
         <p class="mt-6 text-center text-xs">
-          Nie masz konta? 
+          Nie masz konta?
           <NuxtLink to="/register" class="hover:underline font-medium">
             Zarejestruj się
           </NuxtLink>
@@ -89,7 +98,7 @@ const errors = reactive<FormErrors>({});
 const showPassword = ref(false);
 
 function validateForm() {
-  Object.keys(errors).forEach(key => delete errors[key as keyof FormErrors]);
+  Object.keys(errors).forEach((key) => delete errors[key as keyof FormErrors]);
   let isValid = true;
 
   if (!state.email) {
@@ -113,8 +122,8 @@ async function onSubmit() {
 
   try {
     console.log("Login data:", state);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const userData = localStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);

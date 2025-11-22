@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8">
-    <div class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0">
+    <div
+      class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0"
+    >
       <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
       <div
         class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
@@ -18,11 +20,12 @@
       <div
         class="absolute left-6 md:left-12 lg:left-20 top-40 md:top-50 lg:top-64"
       >
-        <NuxtLink to="/catalog"
-        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-2 cursor-pointer font-bold"
-      >
-        PRZEJDŹ DO KATALOGU
-      </NuxtLink>
+        <NuxtLink
+          to="/catalog"
+          class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-2 cursor-pointer font-bold"
+        >
+          PRZEJDŹ DO KATALOGU
+        </NuxtLink>
       </div>
     </div>
 
@@ -52,7 +55,9 @@
     </div>
 
     <div class="w-full max-w-5xl flex items-start mt-8 md:mt-10">
-      <p class="font-poppins font-bold tracking-[0.025em] text-xl md:text-2xl">Oferty miesiąca</p>
+      <p class="font-poppins font-bold tracking-[0.025em] text-xl md:text-2xl">
+        Oferty miesiąca
+      </p>
     </div>
 
     <div class="w-full max-w-5xl mt-8 md:mt-10 mb-8 md:mb-10">
@@ -91,7 +96,8 @@
     </div>
 
     <div class="flex justify-center mb-20 md:mb-25 mt-8 md:mt-10">
-      <NuxtLink to="/catalog"
+      <NuxtLink
+        to="/catalog"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold"
       >
         PRZEJDŹ DO KATALOGU

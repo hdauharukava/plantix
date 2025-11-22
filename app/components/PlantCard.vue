@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group relative">
+  <div
+    class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group relative"
+  >
     <div class="relative">
       <div class="w-full aspect-[3/4] overflow-hidden">
         <img
@@ -14,7 +16,7 @@
       >
         {{ discount }}
       </div>
-      
+
       <div class="absolute bottom-4 left-4 right-4 hidden md:block">
         <button
           class="w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-2 font-bold shadow-lg"
@@ -23,14 +25,16 @@
         </button>
       </div>
     </div>
-    
+
     <div class="p-4">
       <p class="text-xs text-gray-500 mb-1">{{ category }}</p>
       <h3 class="font-semibold text-sm mb-2 line-clamp-2">{{ title }}</h3>
-      
+
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap">{{ price }} zł</span>
+          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap"
+            >{{ price }} zł</span
+          >
           <span
             v-if="oldPrice"
             class="text-sm text-gray-500 line-through whitespace-nowrap"
@@ -47,32 +51,32 @@
 defineProps({
   image: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   oldPrice: {
     type: Number,
-    default: null
+    default: null,
   },
   discount: {
     type: String,
-    default: null
+    default: null,
   },
   size: {
     type: String,
-    default: 'medium'
-  }
+    default: "medium",
+  },
 });
 </script>
 

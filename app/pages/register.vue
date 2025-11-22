@@ -17,8 +17,13 @@
               />
             </div>
           </UFormField>
-          
-          <UFormField name="password" :error="errors.password" required label="Hasło">
+
+          <UFormField
+            name="password"
+            :error="errors.password"
+            required
+            label="Hasło"
+          >
             <div class="w-full">
               <UInput
                 id="password"
@@ -36,10 +41,14 @@
                     :padded="false"
                     class="mr-1"
                   >
-                  <UIcon 
-                    :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" 
-                    class="w-4 h-4 text-gray-400 hover:text-gray-500"
-                  />
+                    <UIcon
+                      :name="
+                        showPassword
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
+                      class="w-4 h-4 text-gray-400 hover:text-gray-500"
+                    />
                   </UButton>
                 </template>
               </UInput>
@@ -53,15 +62,26 @@
                   :style="{ width: passwordStrengthPercent + '%' }"
                 ></div>
               </div>
-              
-              <p class="text-xs font-medium mt-1" :class="passwordStrengthTextClass">
+
+              <p
+                class="text-xs font-medium mt-1"
+                :class="passwordStrengthTextClass"
+              >
                 {{ passwordStrengthText }}
               </p>
 
               <ul class="space-y-0.5 mt-2 text-xs">
-                <li v-for="(req, index) in passwordRequirements" :key="index" class="flex items-center gap-1.5">
+                <li
+                  v-for="(req, index) in passwordRequirements"
+                  :key="index"
+                  class="flex items-center gap-1.5"
+                >
                   <UIcon
-                    :name="req.met ? 'i-heroicons-check-circle' : 'i-heroicons-x-circle'"
+                    :name="
+                      req.met
+                        ? 'i-heroicons-check-circle'
+                        : 'i-heroicons-x-circle'
+                    "
                     class="w-3 h-3 shrink-0"
                     :class="req.met ? 'text-[#90a88c]' : 'text-gray-400'"
                   />
@@ -73,7 +93,12 @@
             </div>
           </UFormField>
 
-          <UFormField name="confirmPassword" :error="errors.confirmPassword" required label="Powtórz hasło">
+          <UFormField
+            name="confirmPassword"
+            :error="errors.confirmPassword"
+            required
+            label="Powtórz hasło"
+          >
             <div class="w-full">
               <UInput
                 id="confirmPassword"
@@ -108,7 +133,7 @@
         </UForm>
 
         <p class="mt-6 text-center text-xs">
-          Już masz konto? 
+          Już masz konto?
           <NuxtLink to="/login" class="hover:underline font-medium">
             Zaloguj się
           </NuxtLink>
@@ -158,8 +183,12 @@ const passwordRequirements = computed(() => {
   }));
 });
 
-const passwordStrengthScore = computed(() => passwordRequirements.value.filter(req => req.met).length);
-const passwordStrengthPercent = computed(() => (passwordStrengthScore.value / passwordRequirements.value.length) * 100);
+const passwordStrengthScore = computed(
+  () => passwordRequirements.value.filter((req) => req.met).length,
+);
+const passwordStrengthPercent = computed(
+  () => (passwordStrengthScore.value / passwordRequirements.value.length) * 100,
+);
 
 const passwordStrengthClass = computed(() => {
   if (passwordStrengthScore.value === 0) return "bg-gray-400";
@@ -183,7 +212,7 @@ const passwordStrengthTextClass = computed(() => {
 });
 
 function validateForm() {
-  Object.keys(errors).forEach(key => delete errors[key as keyof FormErrors]);
+  Object.keys(errors).forEach((key) => delete errors[key as keyof FormErrors]);
   let isValid = true;
 
   if (!state.email) {
@@ -218,7 +247,7 @@ async function onSubmit() {
 
   try {
     console.log("Registration data:", state);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     localStorage.setItem("user", JSON.stringify({ email: state.email }));
     alert("Rejestracja zakończona sukcesem!");
   } catch (error) {
