@@ -9,11 +9,11 @@
     </div>
 
     <div class="hidden lg:flex items-center space-x-4">
-      <button
+      <NuxtLink to="/catalog"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Katalog
-      </button>
+      </NuxtLink>
       <button
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
