@@ -103,10 +103,10 @@
 <script setup>
 import CategoryCard from "@/components/CategoryCard.vue";
 import OfferCard from "@/components/OfferCard.vue";
-import fikusy from "@/assets/fikusy.png";
-import kaktusy from "@/assets/kaktusy.png";
-import iglice from "@/assets/iglice.png";
-import zamiokulkasy from "@/assets/zamiokulkasy.png";
+import fikusy from "@/assets/plants/fikusy.png";
+import kaktusy from "@/assets/plants/kaktusy.png";
+import iglice from "@/assets/plants/iglice.png";
+import zamiokulkasy from "@/assets/plants/zamiokulkasy.png";
 import of1 from "@/assets/of1.png";
 import of2 from "@/assets/of2.png";
 import of3 from "@/assets/of3.png";
