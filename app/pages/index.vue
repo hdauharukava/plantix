@@ -18,11 +18,11 @@
       <div
         class="absolute left-6 md:left-12 lg:left-20 top-40 md:top-50 lg:top-64"
       >
-        <button
-          class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold"
-        >
-          PRZEJDŹ DO KATALOGU
-        </button>
+        <NuxtLink to="/catalog"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-2 cursor-pointer font-bold"
+      >
+        PRZEJDŹ DO KATALOGU
+      </NuxtLink>
       </div>
     </div>
 
@@ -91,11 +91,11 @@
     </div>
 
     <div class="flex justify-center mb-20 md:mb-25 mt-8 md:mt-10">
-      <button
+      <NuxtLink to="/catalog"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold"
       >
         PRZEJDŹ DO KATALOGU
-      </button>
+      </NuxtLink>
     </div>
   </div>
 </template>
