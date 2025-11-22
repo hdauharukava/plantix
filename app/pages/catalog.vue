@@ -46,7 +46,7 @@
                   type="checkbox"
                   :value="category.id"
                   v-model="selectedCategories"
-                  class="rounded border-gray-300 text-[#90a88c] focus:ring-[#90a88c]"
+                  class="custom-checkbox h-4 w-4 rounded border-gray-300 focus:ring-[#90a88c] focus:ring-2 focus:ring-offset-0"
                 />
                 <span class="text-sm">{{ category.name }}</span>
               </label>
@@ -86,7 +86,7 @@
                   type="checkbox"
                   :value="size.id"
                   v-model="selectedSizes"
-                  class="rounded border-gray-300 text-[#90a88c] focus:ring-[#90a88c]"
+                  class="custom-checkbox h-4 w-4 rounded border-gray-300 focus:ring-[#90a88c] focus:ring-2 focus:ring-offset-0"
                 />
                 <span class="text-sm">{{ size.name }}</span>
               </label>
@@ -156,6 +156,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed } from 'vue';
 import PlantCard from '@/components/PlantCard.vue';
@@ -373,3 +374,19 @@ const resetFilters = () => {
   sortBy.value = 'name';
 };
 </script>
+
+<style scoped>
+.custom-checkbox {
+  accent-color: #90a88c;
+}
+
+.custom-checkbox:checked {
+  background-color: #90a88c;
+  border-color: #90a88c;
+}
+
+.custom-checkbox:focus {
+  outline: 2px solid #90a88c;
+  outline-offset: 2px;
+}
+</style>
