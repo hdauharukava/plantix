@@ -63,11 +63,13 @@
           />
         </button>
 
-        <img
-          src="@/assets/icons/HeartIcon.svg"
-          alt="Heart"
-          class="w-7 h-7 cursor-pointer"
-        />
+        <NuxtLink to="/favorites" class="hidden md:block">
+          <img
+            src="@/assets/icons/HeartIcon.svg"
+            alt="Ulubione"
+            class="w-7 h-7 cursor-pointer"
+          />
+        </NuxtLink>
         <img
           src="@/assets/icons/UserIcon.svg"
           alt="User"
