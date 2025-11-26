@@ -50,6 +50,9 @@
                     <div class="md:hidden mt-2">
                       <div class="flex items-center space-x-2">
                         <span class="font-bold text-lg text-[#1e1e1e]">{{ item.price }} zł</span>
+                        <span v-if="item.oldPrice" class="text-sm text-gray-500 line-through ml-1">
+                          {{ item.oldPrice }}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -58,7 +61,9 @@
                 <div class="hidden md:flex col-span-2 flex-col items-center">
                   <div class="flex flex-col items-center">
                     <span class="font-bold text-lg text-[#1e1e1e]">{{ item.price }} zł</span>
-                    <span class="text-xs text-gray-500 mt-1">{{ item.oldPrice }}</span>
+                    <span v-if="item.oldPrice" class="text-xs text-gray-500 mt-1 line-through">
+                      {{ item.oldPrice }}
+                    </span>
                   </div>
                 </div>
 
@@ -225,7 +230,7 @@ const plantsDatabase = {
     category: "Fikusy",
     title: "Fikus „Maluszek”",
     price: 89.99,
-    oldPrice: 119.99,
+    oldPrice: "119,99 zł",
     discount: "-25%",
     size: "small",
   },
@@ -245,7 +250,7 @@ const plantsDatabase = {
     category: "Kaktusy",
     title: "Kaktus „Malusieńki”",
     price: 34.99,
-    oldPrice: 49.99,
+    oldPrice: "49,99 zł",
     discount: "-30%",
     size: "small",
   },
@@ -275,7 +280,7 @@ const plantsDatabase = {
     category: "Iglice",
     title: "Iglice „Miniatura»",
     price: 45.0,
-    oldPrice: 55.0,
+    oldPrice: "55,00 zł",
     discount: "-18%",
     size: "small",
   },
@@ -295,7 +300,7 @@ const plantsDatabase = {
     category: "Zamiokulkasy",
     title: "Zamiokulkas „Pnący»",
     price: 120.0,
-    oldPrice: 150.0,
+    oldPrice: "150,00 zł",
     discount: "-20%",
     size: "large",
   },
@@ -315,7 +320,7 @@ const plantsDatabase = {
     category: "Sukulenty",
     title: "Sukulent „Kolorowy»",
     price: 35.99,
-    oldPrice: 42.99,
+    oldPrice: "42,99 zł",
     discount: "-16%",
     size: "small",
   },
@@ -325,7 +330,7 @@ const plantsDatabase = {
     category: "Monstery",
     title: "Monstera „Deliciosa»",
     price: 129.99,
-    oldPrice: 159.99,
+    oldPrice: "159,99 zł",
     discount: "-19%",
     size: "large",
   },
@@ -358,7 +363,7 @@ const saveCart = () => {
   }));
   localStorage.setItem('cart', JSON.stringify(cart));
   
-  if (process.client) {
+  if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event('cartUpdated'));
     window.dispatchEvent(new Event('storage'));
   }
