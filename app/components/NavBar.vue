@@ -76,11 +76,13 @@
           class="w-7 h-7 cursor-pointer"
           @click="toggleUserModal"
         />
-        <img
-          src="@/assets/icons/CartIcon.svg"
-          alt="Cart"
-          class="w-7 h-7 cursor-pointer"
-        />
+        <NuxtLink to="/cart">
+          <img
+            src="@/assets/icons/CartIcon.svg"
+            alt="Cart"
+            class="w-7 h-7 cursor-pointer"
+          />
+        </NuxtLink>
       </div>
 
       <button

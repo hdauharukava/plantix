@@ -39,6 +39,7 @@
       
       <div class="absolute bottom-4 left-4 right-4 hidden md:block">
         <button
+          @click="addToCart"
           class="w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-2 font-bold shadow-lg"
         >
           Do koszyka
@@ -123,6 +124,32 @@ const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value;
   
   window.dispatchEvent(new CustomEvent('favoritesUpdated'));
+};
+
+const addToCart = () => {
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  
+  // Проверяем, есть ли уже товар в корзине
+  const existingItem = cart.find(item => item.id === props.id);
+  
+  if (existingItem) {
+    // Увеличиваем количество
+    existingItem.quantity += 1;
+  } else {
+    // Добавляем новый товар
+    cart.push({
+      id: props.id,
+      quantity: 1
+    });
+  }
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  // Эмитим событие для обновления корзины
+  window.dispatchEvent(new CustomEvent('cartUpdated'));
+  
+  // Можно добавить уведомление
+  console.log('Dodano do koszyka:', props.title);
 };
 </script>
 
