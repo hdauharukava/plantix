@@ -3,14 +3,10 @@
     <div class="w-full max-w-5xl mb-8">
       <div class="flex justify-between items-start">
         <div>
-          <h1
-            class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]"
-          >
-            Katalog roślin
+          <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+            Ulubione produkty
           </h1>
-          <p class="text-gray-600 mt-2">
-            Znajdź idealną roślinę dla swojego domu
-          </p>
+          <p class="text-gray-600 mt-2">Twoja kolekcja ulubionych roślin</p>
         </div>
         <button
           @click="isFilterOpen = !isFilterOpen"
@@ -118,7 +114,7 @@
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4"
         >
           <p class="text-gray-600 text-sm">
-            Znaleziono {{ filteredPlants.length }} produktów
+            Znaleziono {{ filteredFavoritePlants.length }} ulubionych produktów
           </p>
           <div class="flex items-center space-x-2">
             <span class="text-sm text-gray-600">Sortuj według:</span>
@@ -134,9 +130,12 @@
           </div>
         </div>
 
-        <div v-if="filteredPlants.length > 0" class="grid grid-cols-3 gap-4">
+        <div
+          v-if="filteredFavoritePlants.length > 0"
+          class="grid grid-cols-3 gap-4"
+        >
           <PlantCard
-            v-for="plant in filteredPlants"
+            v-for="plant in filteredFavoritePlants"
             :key="plant.id"
             :id="plant.id"
             :image="plant.image"
@@ -149,16 +148,51 @@
           />
         </div>
 
-        <div v-else class="text-center py-12">
-          <p class="text-gray-500 text-lg">
-            Nie znaleziono roślin spełniających kryteria
+        <div
+          v-else
+          class="text-center py-12"
+        >
+          <div class="flex justify-center mb-4">
+            <svg
+              class="w-16 h-16 text-gray-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </div>
+          <p class="text-gray-500 text-lg mb-2">
+            <span v-if="hasActiveFilters">
+              Nie znaleziono ulubionych roślin spełniających kryteria
+            </span>
+            <span v-else>
+              Brak ulubionych produktów
+            </span>
           </p>
-          <button
-            @click="resetFilters"
-            class="mt-4 bg-[#90a88c] hover:bg-[#799573] text-white rounded-full px-4 py-2 text-sm cursor-pointer"
-          >
-            Wyczyść filtry
-          </button>
+          <p class="text-gray-400 text-sm mb-6" v-if="!hasActiveFilters">
+            Dodaj rośliny do ulubionych, klikając ikonę serca
+          </p>
+          <div class="space-x-4">
+            <button
+              v-if="hasActiveFilters"
+              @click="resetFilters"
+              class="bg-[#90a88c] hover:bg-[#799573] text-white rounded-full px-4 py-2 text-sm cursor-pointer transition-colors"
+            >
+              Wyczyść filtry
+            </button>
+            <NuxtLink
+              to="/catalog"
+              class="bg-[#90a88c] hover:bg-[#799573] text-white rounded-full px-6 py-2 text-sm cursor-pointer transition-colors inline-block"
+            >
+              Przejdź do katalogu
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
@@ -166,24 +200,26 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import PlantCard from "@/components/PlantCard.vue";
-import fikus1 from "@/assets/plants/fikus2.png";
-import fikus2 from "@/assets/plants/fikus3.png";
-import kaktus1 from "@/assets/plants/kaktus.png";
-import kaktus2 from "@/assets/plants/kaktus2.png";
-import iglica1 from "@/assets/plants/iglica.png";
-import iglica2 from "@/assets/plants/iglica2.png";
-import zamiokulkas1 from "@/assets/plants/zamiokulkas.png";
-import zamiokulkas2 from "@/assets/plants/zamiokulkas2.png";
-import sukulent1 from "@/assets/plants/sukulent.png";
-import sukulent2 from "@/assets/plants/sukulent2.png";
-import monstera1 from "@/assets/plants/monstera.png";
-import monstera2 from "@/assets/plants/monstera2.png";
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+import PlantCard from '@/components/PlantCard.vue';
+
+import fikus1 from '@/assets/plants/fikus2.png';
+import fikus2 from '@/assets/plants/fikus3.png';
+import kaktus1 from '@/assets/plants/kaktus.png';
+import kaktus2 from '@/assets/plants/kaktus2.png';
+import iglica1 from '@/assets/plants/iglica.png';
+import iglica2 from '@/assets/plants/iglica2.png';
+import zamiokulkas1 from '@/assets/plants/zamiokulkas.png';
+import zamiokulkas2 from '@/assets/plants/zamiokulkas2.png';
+import sukulent1 from '@/assets/plants/sukulent.png';
+import sukulent2 from '@/assets/plants/sukulent2.png';
+import monstera1 from '@/assets/plants/monstera.png';
+import monstera2 from '@/assets/plants/monstera2.png';
 
 const isFilterOpen = ref(false);
 
-const plants = ref([
+const allPlants = [
   {
     id: 1,
     image: fikus1,
@@ -303,8 +339,8 @@ const plants = ref([
     oldPrice: null,
     discount: null,
     size: "medium",
-  },
-]);
+  }
+]; 
 
 const categories = ref([
   { id: "Fikusy", name: "Fikusy" },
@@ -312,13 +348,13 @@ const categories = ref([
   { id: "Iglice", name: "Iglice" },
   { id: "Zamiokulkasy", name: "Zamiokulkasy" },
   { id: "Sukulenty", name: "Sukulenty" },
-  { id: "Monstery", name: "Monstery" },
+  { id: "Monstery", name: "Monstery" }
 ]);
 
 const sizes = ref([
   { id: "small", name: "Mały" },
   { id: "medium", name: "Średni" },
-  { id: "large", name: "Duży" },
+  { id: "large", name: "Duży" }
 ]);
 
 const selectedCategories = ref([]);
@@ -326,30 +362,46 @@ const selectedSizes = ref([]);
 const priceRange = ref({ min: null, max: null });
 const sortBy = ref("name");
 
-const filteredPlants = computed(() => {
-  let filtered = plants.value;
+const favoritePlants = ref([]);
+
+const loadFavorites = () => {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  favoritePlants.value = allPlants.filter(plant => favorites.includes(plant.id));
+};
+
+const handleFavoritesUpdate = () => {
+  loadFavorites();
+};
+
+onMounted(() => {
+  loadFavorites();
+  window.addEventListener('favoritesUpdated', handleFavoritesUpdate);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('favoritesUpdated', handleFavoritesUpdate);
+});
+
+const filteredFavoritePlants = computed(() => {
+  let filtered = favoritePlants.value;
 
   if (selectedCategories.value.length > 0) {
-    filtered = filtered.filter((plant) =>
-      selectedCategories.value.includes(plant.category),
+    filtered = filtered.filter(plant => 
+      selectedCategories.value.includes(plant.category)
     );
   }
 
   if (selectedSizes.value.length > 0) {
-    filtered = filtered.filter((plant) =>
-      selectedSizes.value.includes(plant.size),
+    filtered = filtered.filter(plant => 
+      selectedSizes.value.includes(plant.size)
     );
   }
 
-  if (priceRange.value.min !== null && priceRange.value.min !== "") {
-    filtered = filtered.filter(
-      (plant) => plant.price >= Number(priceRange.value.min),
-    );
+  if (priceRange.value.min !== null && priceRange.value.min !== '') {
+    filtered = filtered.filter(plant => plant.price >= Number(priceRange.value.min));
   }
-  if (priceRange.value.max !== null && priceRange.value.max !== "") {
-    filtered = filtered.filter(
-      (plant) => plant.price <= Number(priceRange.value.max),
-    );
+  if (priceRange.value.max !== null && priceRange.value.max !== '') {
+    filtered = filtered.filter(plant => plant.price <= Number(priceRange.value.max));
   }
 
   filtered = [...filtered].sort((a, b) => {
@@ -370,14 +422,13 @@ const filteredPlants = computed(() => {
   return filtered;
 });
 
-const applyFilters = () => {
-  console.log("Applying all filters:", {
-    categories: selectedCategories.value,
-    sizes: selectedSizes.value,
-    priceRange: priceRange.value,
-    sortBy: sortBy.value,
-  });
-};
+
+const hasActiveFilters = computed(() => {
+  return selectedCategories.value.length > 0 || 
+         selectedSizes.value.length > 0 || 
+         priceRange.value.min !== null || 
+         priceRange.value.max !== null;
+});
 
 const resetFilters = () => {
   selectedCategories.value = [];

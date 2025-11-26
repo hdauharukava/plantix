@@ -17,6 +17,26 @@
         {{ discount }}
       </div>
 
+      <button
+        @click.stop="toggleFavorite"
+        class="absolute top-2 left-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+      >
+        <svg
+          class="w-5 h-5"
+          :class="isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+          />
+        </svg>
+      </button>
+      
       <div class="absolute bottom-4 left-4 right-4 hidden md:block">
         <button
           class="w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-2 font-bold shadow-lg"
@@ -32,9 +52,7 @@
 
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap"
-            >{{ price }} zł</span
-          >
+          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap">{{ price }} zł</span>
           <span
             v-if="oldPrice"
             class="text-sm text-gray-500 line-through whitespace-nowrap"
@@ -48,7 +66,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, onMounted } from 'vue';
+
+const props = defineProps({
   image: {
     type: String,
     required: true,
@@ -77,7 +97,33 @@ defineProps({
     type: String,
     default: "medium",
   },
+  id: {
+    type: Number,
+    required: true,
+  }
 });
+
+const isFavorite = ref(false);
+
+onMounted(() => {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  isFavorite.value = favorites.includes(props.id);
+});
+
+const toggleFavorite = () => {
+  let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  
+  if (isFavorite.value) {
+    favorites = favorites.filter(favId => favId !== props.id);
+  } else {
+    favorites.push(props.id);
+  }
+  
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  isFavorite.value = !isFavorite.value;
+  
+  window.dispatchEvent(new CustomEvent('favoritesUpdated'));
+};
 </script>
 
 <style scoped>
