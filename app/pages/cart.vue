@@ -357,6 +357,11 @@ const saveCart = () => {
     quantity: item.quantity
   }));
   localStorage.setItem('cart', JSON.stringify(cart));
+  
+  if (process.client) {
+    window.dispatchEvent(new Event('cartUpdated'));
+    window.dispatchEvent(new Event('storage'));
+  }
 };
 
 const getSizeName = (size) => {

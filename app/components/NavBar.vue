@@ -76,12 +76,18 @@
           class="w-7 h-7 cursor-pointer"
           @click="toggleUserModal"
         />
-        <NuxtLink to="/cart">
+        <NuxtLink to="/cart" class="relative">
           <img
             src="@/assets/icons/CartIcon.svg"
             alt="Cart"
             class="w-7 h-7 cursor-pointer"
           />
+          <div
+            v-if="totalItems > 0"
+            class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
+          >
+            {{ totalItems }}
+          </div>
         </NuxtLink>
       </div>
 
@@ -179,11 +185,20 @@
               class="w-6 h-6 cursor-pointer"
               @click.stop="openUserModal"
             />
-            <img
-              src="@/assets/icons/CartIcon.svg"
-              alt="Cart"
-              class="w-6 h-6 cursor-pointer"
-            />
+            <NuxtLink to="/cart" class="relative">
+              <img
+                src="@/assets/icons/CartIcon.svg"
+                alt="Cart"
+                class="w-6 h-6 cursor-pointer"
+              />
+
+              <div
+                v-if="totalItems > 0"
+                class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold"
+              >
+                {{ totalItems }}
+              </div>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -216,6 +231,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { useCart } from "~/assets/composables/useCart";
+
+const { totalItems } = useCart();
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
