@@ -10,7 +10,7 @@
     </div>
 
     <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-8">
-      <div class="lg:w-1/4 mb-60">
+      <div class="lg:w-1/4">
         <div class="bg-white rounded-lg shadow-sm p-6 lg:sticky lg:top-8">
           <div class="flex items-center space-x-4 mb-6">
             <div>
@@ -55,13 +55,13 @@
             </NuxtLink>
 
             <NuxtLink
-              to="/profile/favorites"
+              to="/favorites"
               class="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-[#90A88C]/10 transition-colors duration-200"
-              :class="{ 'bg-[#90A88C]/10 text-[#90a88c] font-semibold': $route.path === '/profile/favorites' }"
+              :class="{ 'bg-[#90A88C]/10 text-[#90a88c] font-semibold': $route.path === '/favorites' }"
             >
               <svg 
                 class="w-5 h-5" 
-                :class="{ 'text-[#90a88c]': $route.path === '/profile/favorites', 'text-gray-500': $route.path !== '/profile/favorites' }"
+                :class="{ 'text-[#90a88c]': $route.path === '/favorites', 'text-gray-500': $route.path !== '/favorites' }"
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -140,11 +140,6 @@
         <div v-else-if="$route.path === '/profile/orders'" class="bg-white rounded-lg shadow-sm p-6">
           <h2 class="font-poppins font-bold text-xl mb-6">Moje zamówienia</h2>
           <p class="text-gray-500">Brak zamówień</p>
-        </div>
-
-        <div v-else-if="$route.path === '/profile/favorites'" class="bg-white rounded-lg shadow-sm p-6">
-          <h2 class="font-poppins font-bold text-xl mb-6">Ulubione produkty</h2>
-          <p class="text-gray-500">Przejdź do <NuxtLink to="/favorites" class="text-[#90a88c] hover:underline">ulubionych produktów</NuxtLink></p>
         </div>
       </div>
     </div>
