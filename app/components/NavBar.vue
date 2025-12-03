@@ -66,7 +66,7 @@
         <NuxtLink to="/favorites" class="hidden md:block">
           <img
             src="@/assets/icons/HeartIcon.svg"
-            alt="Ulubione"
+            alt="Favorite"
             class="w-7 h-7 cursor-pointer"
           />
         </NuxtLink>
@@ -118,11 +118,12 @@
         v-if="isMenuOpen"
         class="absolute top-16 right-6 bg-white shadow-lg rounded-lg p-4 lg:hidden w-48 z-20"
       >
-        <button
-          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
+        <NuxtLink
+          to="/catalog"
+          class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer block no-underline text-gray-700 hover:text-gray-900 focus:outline-none"
         >
           Katalog
-        </button>
+        </NuxtLink>
         <button
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
@@ -174,11 +175,13 @@
                 class="w-6 h-6"
               />
             </button>
-            <img
-              src="@/assets/icons/HeartIcon.svg"
-              alt="Heart"
-              class="w-6 h-6 cursor-pointer"
-            />
+            <NuxtLink to="/favorites" class="relative">
+              <img
+                src="@/assets/icons/HeartIcon.svg"
+                alt="Heart"
+                class="w-6 h-6 cursor-pointer"
+              />
+            </NuxtLink>
             <img
               src="@/assets/icons/UserIcon.svg"
               alt="User"
