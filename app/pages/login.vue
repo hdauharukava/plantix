@@ -56,12 +56,14 @@
           </UFormField>
 
           <div class="flex justify-center pt-4">
-            <UButton
-              type="submit"
-              class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm font-medium rounded-full px-8 py-2.5 cursor-pointer transition-colors duration-200 font-bold"
-            >
-              Zaloguj się
-            </UButton>
+            <NuxtLink to="/profile">
+              <UButton
+                type="submit"
+                class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm font-medium rounded-full px-8 py-2.5 cursor-pointer transition-colors duration-200 font-bold"
+              >
+                Zaloguj się
+              </UButton>
+            </NuxtLink>
           </div>
         </UForm>
 
