@@ -168,8 +168,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
-import { allPlants, categories, sizes } from '@/composables/usePlants';
-import { usePlantFilters } from '@/composables/usePlantFilters';
+import { allPlants, categories, sizes } from "@/composables/usePlants";
+import { usePlantFilters } from "@/composables/usePlantFilters";
 
 const isFilterOpen = ref(false);
 
@@ -182,7 +182,7 @@ const {
   sortBy,
   filteredPlants,
   hasActiveFilters,
-  resetFilters
+  resetFilters,
 } = usePlantFilters(plants);
 </script>
 

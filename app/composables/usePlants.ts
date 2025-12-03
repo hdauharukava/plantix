@@ -1,19 +1,19 @@
 // composables/usePlants.ts
-import { ref } from 'vue';
-import type { Plant, Category, Size } from '@/types/plants';
+import { ref } from "vue";
+import type { Plant, Category, Size } from "@/types/plants";
 
-import fikus1 from '@/assets/plants/fikus2.png';
-import fikus2 from '@/assets/plants/fikus3.png';
-import kaktus1 from '@/assets/plants/kaktus.png';
-import kaktus2 from '@/assets/plants/kaktus2.png';
-import iglica1 from '@/assets/plants/iglica.png';
-import iglica2 from '@/assets/plants/iglica2.png';
-import zamiokulkas1 from '@/assets/plants/zamiokulkas.png';
-import zamiokulkas2 from '@/assets/plants/zamiokulkas2.png';
-import sukulent1 from '@/assets/plants/sukulent.png';
-import sukulent2 from '@/assets/plants/sukulent2.png';
-import monstera1 from '@/assets/plants/monstera.png';
-import monstera2 from '@/assets/plants/monstera2.png';
+import fikus1 from "@/assets/plants/fikus2.png";
+import fikus2 from "@/assets/plants/fikus3.png";
+import kaktus1 from "@/assets/plants/kaktus.png";
+import kaktus2 from "@/assets/plants/kaktus2.png";
+import iglica1 from "@/assets/plants/iglica.png";
+import iglica2 from "@/assets/plants/iglica2.png";
+import zamiokulkas1 from "@/assets/plants/zamiokulkas.png";
+import zamiokulkas2 from "@/assets/plants/zamiokulkas2.png";
+import sukulent1 from "@/assets/plants/sukulent.png";
+import sukulent2 from "@/assets/plants/sukulent2.png";
+import monstera1 from "@/assets/plants/monstera.png";
+import monstera2 from "@/assets/plants/monstera2.png";
 
 // Явно указываем тип Plant
 export const allPlants: Plant[] = [
@@ -136,7 +136,7 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "medium",
-  }
+  },
 ];
 
 export const categories: Category[] = [
@@ -145,19 +145,19 @@ export const categories: Category[] = [
   { id: "Iglice", name: "Iglice" },
   { id: "Zamiokulkasy", name: "Zamiokulkasy" },
   { id: "Sukulenty", name: "Sukulenty" },
-  { id: "Monstery", name: "Monstery" }
+  { id: "Monstery", name: "Monstery" },
 ];
 
 export const sizes: Size[] = [
   { id: "small", name: "Mały" },
   { id: "medium", name: "Średni" },
-  { id: "large", name: "Duży" }
+  { id: "large", name: "Duży" },
 ];
 
 export const usePlants = () => {
   return {
     allPlants: ref<Plant[]>([...allPlants]),
     categories: ref<Category[]>([...categories]),
-    sizes: ref<Size[]>([...sizes])
+    sizes: ref<Size[]>([...sizes]),
   };
 };

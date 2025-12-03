@@ -3,7 +3,9 @@
     <div class="w-full max-w-5xl mb-8">
       <div class="flex justify-between items-start">
         <div>
-          <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+          <h1
+            class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]"
+          >
             Ulubione produkty
           </h1>
           <p class="text-gray-600 mt-2">Twoja kolekcja ulubionych roślin</p>
@@ -148,10 +150,7 @@
           />
         </div>
 
-        <div
-          v-else
-          class="text-center py-12 bg-white rounded-lg shadow-sm"
-        >
+        <div v-else class="text-center py-12 bg-white rounded-lg shadow-sm">
           <div class="flex justify-center mb-4">
             <svg
               class="w-16 h-16 text-gray-300"
@@ -171,9 +170,7 @@
             <span v-if="hasActiveFilters">
               Nie znaleziono ulubionych roślin spełniających kryteria
             </span>
-            <span v-else>
-              Brak ulubionych produktów
-            </span>
+            <span v-else> Brak ulubionych produktów </span>
           </p>
           <p class="text-gray-400 text-sm mb-6" v-if="!hasActiveFilters">
             Dodaj rośliny do ulubionych, klikając ikonę serca
@@ -200,20 +197,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import PlantCard from '@/components/PlantCard.vue';
-import { allPlants, categories, sizes } from '@/composables/usePlants';
-import { usePlantFilters } from '@/composables/usePlantFilters';
-import type { Plant } from '@/types/plants';
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import PlantCard from "@/components/PlantCard.vue";
+import { allPlants, categories, sizes } from "@/composables/usePlants";
+import { usePlantFilters } from "@/composables/usePlantFilters";
+import type { Plant } from "@/types/plants";
 
 const isFilterOpen = ref(false);
 
 const favoritePlants = ref<Plant[]>([]);
 
 const loadFavorites = () => {
-  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-  favoritePlants.value = allPlants.filter((plant: Plant) => 
-    favorites.includes(plant.id)
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  favoritePlants.value = allPlants.filter((plant: Plant) =>
+    favorites.includes(plant.id),
   );
 };
 
@@ -228,20 +225,19 @@ const {
   sortBy,
   filteredPlants,
   hasActiveFilters,
-  resetFilters
+  resetFilters,
 } = usePlantFilters(favoritePlants);
 
 const filteredFavoritePlants = computed(() => filteredPlants.value);
 
 onMounted(() => {
   loadFavorites();
-  window.addEventListener('favoritesUpdated', handleFavoritesUpdate);
+  window.addEventListener("favoritesUpdated", handleFavoritesUpdate);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('favoritesUpdated', handleFavoritesUpdate);
+  window.removeEventListener("favoritesUpdated", handleFavoritesUpdate);
 });
-
 </script>
 
 <style scoped>

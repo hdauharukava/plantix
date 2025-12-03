@@ -12,7 +12,9 @@
     <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-8">
       <div class="lg:w-2/3">
         <div v-if="cartItems.length > 0" class="space-y-6">
-          <div class="hidden md:grid grid-cols-10 gap-4 px-4 py-3 bg-gray-50 rounded-lg">
+          <div
+            class="hidden md:grid grid-cols-10 gap-4 px-4 py-3 bg-gray-50 rounded-lg"
+          >
             <div class="col-span-5">
               <span class="text-sm font-semibold text-gray-700">Produkt</span>
             </div>
@@ -30,9 +32,15 @@
               :key="item.id"
               class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6"
             >
-              <div class="flex flex-col md:grid md:grid-cols-10 md:gap-4 md:items-center">
-                <div class="col-span-5 flex items-center space-x-4 mb-4 md:mb-0">
-                  <div class="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-lg overflow-hidden">
+              <div
+                class="flex flex-col md:grid md:grid-cols-10 md:gap-4 md:items-center"
+              >
+                <div
+                  class="col-span-5 flex items-center space-x-4 mb-4 md:mb-0"
+                >
+                  <div
+                    class="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-lg overflow-hidden"
+                  >
                     <img
                       :src="item.image"
                       :alt="item.title"
@@ -40,17 +48,26 @@
                     />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h3 class="font-semibold text-sm md:text-base text-gray-900 mb-1 line-clamp-2">
+                    <h3
+                      class="font-semibold text-sm md:text-base text-gray-900 mb-1 line-clamp-2"
+                    >
                       {{ item.title }}
                     </h3>
-                    <p class="text-xs text-gray-500 mb-1">{{ item.category }}</p>
+                    <p class="text-xs text-gray-500 mb-1">
+                      {{ item.category }}
+                    </p>
                     <p class="text-sm text-gray-600" v-if="item.size">
                       Rozmiar: {{ getSizeName(item.size) }}
                     </p>
                     <div class="md:hidden mt-2">
                       <div class="flex items-center space-x-2">
-                        <span class="font-bold text-lg text-[#1e1e1e]">{{ item.price }} zł</span>
-                        <span v-if="item.oldPrice" class="text-sm text-gray-500 line-through ml-1">
+                        <span class="font-bold text-lg text-[#1e1e1e]"
+                          >{{ item.price }} zł</span
+                        >
+                        <span
+                          v-if="item.oldPrice"
+                          class="text-sm text-gray-500 line-through ml-1"
+                        >
                           {{ item.oldPrice }}
                         </span>
                       </div>
@@ -60,35 +77,62 @@
 
                 <div class="hidden md:flex col-span-2 flex-col items-center">
                   <div class="flex flex-col items-center">
-                    <span class="font-bold text-lg text-[#1e1e1e]">{{ item.price }} zł</span>
-                    <span v-if="item.oldPrice" class="text-xs text-gray-500 mt-1 line-through">
+                    <span class="font-bold text-lg text-[#1e1e1e]"
+                      >{{ item.price }} zł</span
+                    >
+                    <span
+                      v-if="item.oldPrice"
+                      class="text-xs text-gray-500 mt-1 line-through"
+                    >
                       {{ item.oldPrice }}
                     </span>
                   </div>
                 </div>
 
-                <div class="col-span-3 flex items-center justify-between md:justify-center md:space-x-4">
+                <div
+                  class="col-span-3 flex items-center justify-between md:justify-center md:space-x-4"
+                >
                   <div class="flex items-center space-x-3">
                     <button
                       @click="decreaseQuantity(item.id)"
                       class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
                       :disabled="item.quantity <= 1"
                     >
-                      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                      <svg
+                        class="w-4 h-4 text-gray-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20 12H4"
+                        />
                       </svg>
                     </button>
-                    
+
                     <span class="font-semibold text-lg min-w-8 text-center">
                       {{ item.quantity }}
                     </span>
-                    
+
                     <button
                       @click="increaseQuantity(item.id)"
                       class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
                     >
-                      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                      <svg
+                        class="w-4 h-4 text-gray-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 4v16m8-8H4"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -97,8 +141,18 @@
                     @click="removeFromCart(item.id)"
                     class="p-2 text-gray-400 hover:text-red-500 transition-colors"
                   >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -106,7 +160,10 @@
             </div>
           </div>
         </div>
-        <div v-else class="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-100">
+        <div
+          v-else
+          class="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-100"
+        >
           <div class="flex justify-center mb-4">
             <svg
               class="w-16 h-16 text-gray-300"
@@ -136,7 +193,9 @@
       </div>
 
       <div class="lg:w-1/3">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sticky top-8">
+        <div
+          class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sticky top-8"
+        >
           <h2 class="font-poppins font-bold text-lg mb-6">Podsumowanie</h2>
 
           <div v-if="cartItems.length > 0" class="space-y-4 mb-6">
@@ -150,12 +209,16 @@
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-600">Dostawa:</span>
-              <span class="font-semibold">{{ shippingCost.toFixed(2) }} zł</span>
+              <span class="font-semibold"
+                >{{ shippingCost.toFixed(2) }} zł</span
+              >
             </div>
             <div class="border-t border-gray-200 pt-4">
               <div class="flex justify-between text-lg font-bold">
                 <span>Razem:</span>
-                <span class="text-[#1e1e1e]">{{ totalPrice.toFixed(2) }} zł</span>
+                <span class="text-[#1e1e1e]"
+                  >{{ totalPrice.toFixed(2) }} zł</span
+                >
               </div>
             </div>
 
@@ -208,9 +271,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { allPlants } from '@/composables/usePlants';
-import type { Plant } from '@/types/plants';
+import { ref, computed, onMounted } from "vue";
+import { allPlants } from "@/composables/usePlants";
+import type { Plant } from "@/types/plants";
 
 interface CartItem extends Plant {
   quantity: number;
@@ -219,14 +282,14 @@ interface CartItem extends Plant {
 const cartItems = ref<CartItem[]>([]);
 
 const loadCart = () => {
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
   cartItems.value = cart
     .map((item: { id: number; quantity: number }) => {
-      const plant = allPlants.find(p => p.id === item.id);
+      const plant = allPlants.find((p) => p.id === item.id);
       if (plant) {
         return {
           ...plant,
-          quantity: item.quantity
+          quantity: item.quantity,
         };
       }
       return null;
@@ -235,29 +298,29 @@ const loadCart = () => {
 };
 
 const saveCart = () => {
-  const cart = cartItems.value.map(item => ({
+  const cart = cartItems.value.map((item) => ({
     id: item.id,
-    quantity: item.quantity
+    quantity: item.quantity,
   }));
-  localStorage.setItem('cart', JSON.stringify(cart));
-  
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new Event('cartUpdated'));
-    window.dispatchEvent(new Event('storage'));
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("cartUpdated"));
+    window.dispatchEvent(new Event("storage"));
   }
 };
 
 const getSizeName = (size: string) => {
   const sizeNames: Record<string, string> = {
-    small: 'Mały',
-    medium: 'Średni',
-    large: 'Duży'
+    small: "Mały",
+    medium: "Średni",
+    large: "Duży",
   };
   return sizeNames[size] || size;
 };
 
 const increaseQuantity = (id: number) => {
-  const item = cartItems.value.find(item => item.id === id);
+  const item = cartItems.value.find((item) => item.id === id);
   if (item) {
     item.quantity++;
     saveCart();
@@ -265,7 +328,7 @@ const increaseQuantity = (id: number) => {
 };
 
 const decreaseQuantity = (id: number) => {
-  const item = cartItems.value.find(item => item.id === id);
+  const item = cartItems.value.find((item) => item.id === id);
   if (item && item.quantity > 1) {
     item.quantity--;
     saveCart();
@@ -273,12 +336,12 @@ const decreaseQuantity = (id: number) => {
 };
 
 const removeFromCart = (id: number) => {
-  cartItems.value = cartItems.value.filter(item => item.id !== id);
+  cartItems.value = cartItems.value.filter((item) => item.id !== id);
   saveCart();
 };
 
 const proceedToCheckout = () => {
-  alert('Przechodzisz do kasy!');
+  alert("Przechodzisz do kasy!");
 };
 
 const totalItems = computed(() => {
@@ -286,7 +349,10 @@ const totalItems = computed(() => {
 });
 
 const subtotal = computed(() => {
-  return cartItems.value.reduce((total, item) => total + (item.price * item.quantity), 0);
+  return cartItems.value.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
 });
 
 const shippingCost = computed(() => {
@@ -299,7 +365,7 @@ const totalPrice = computed(() => {
 
 onMounted(() => {
   loadCart();
-  window.addEventListener('cartUpdated', loadCart);
+  window.addEventListener("cartUpdated", loadCart);
 });
 </script>
 

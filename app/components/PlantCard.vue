@@ -36,7 +36,7 @@
           />
         </svg>
       </button>
-      
+
       <div class="absolute bottom-4 left-4 right-4 hidden md:block">
         <button
           @click="addToCart"
@@ -53,7 +53,9 @@
 
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap">{{ price }} zł</span>
+          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap"
+            >{{ price }} zł</span
+          >
           <span
             v-if="oldPrice"
             class="text-sm text-gray-500 line-through whitespace-nowrap"
@@ -67,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   image: {
@@ -101,37 +103,37 @@ const props = defineProps({
   id: {
     type: Number,
     required: true,
-  }
+  },
 });
 
 const isFavorite = ref(false);
 
 onMounted(() => {
-  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
   isFavorite.value = favorites.includes(props.id);
 });
 
 const toggleFavorite = () => {
-  let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-  
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
   if (isFavorite.value) {
-    favorites = favorites.filter(favId => favId !== props.id);
+    favorites = favorites.filter((favId) => favId !== props.id);
   } else {
     favorites.push(props.id);
   }
-  
-  localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
   isFavorite.value = !isFavorite.value;
-  
-  window.dispatchEvent(new CustomEvent('favoritesUpdated'));
+
+  window.dispatchEvent(new CustomEvent("favoritesUpdated"));
 };
 
 const addToCart = () => {
-  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
   // Проверяем, есть ли уже товар в корзине
-  const existingItem = cart.find(item => item.id === props.id);
-  
+  const existingItem = cart.find((item) => item.id === props.id);
+
   if (existingItem) {
     // Увеличиваем количество
     existingItem.quantity += 1;
@@ -139,17 +141,17 @@ const addToCart = () => {
     // Добавляем новый товар
     cart.push({
       id: props.id,
-      quantity: 1
+      quantity: 1,
     });
   }
-  
-  localStorage.setItem('cart', JSON.stringify(cart));
-  
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
   // Эмитим событие для обновления корзины
-  window.dispatchEvent(new CustomEvent('cartUpdated'));
-  
+  window.dispatchEvent(new CustomEvent("cartUpdated"));
+
   // Можно добавить уведомление
-  console.log('Dodano do koszyka:', props.title);
+  console.log("Dodano do koszyka:", props.title);
 };
 </script>
 

@@ -7,7 +7,7 @@ export interface Plant {
   price: number;
   oldPrice?: number | null; // Сделано опциональным с возможностью null
   discount?: string | null; // Сделано опциональным с возможностью null
-  size: 'small' | 'medium' | 'large';
+  size: "small" | "medium" | "large";
 }
 
 export interface Category {
@@ -16,7 +16,7 @@ export interface Category {
 }
 
 export interface Size {
-  id: 'small' | 'medium' | 'large';
+  id: "small" | "medium" | "large";
   name: string;
 }
 
@@ -25,4 +25,4 @@ export interface PriceRange {
   max: string | number | null;
 }
 
-export type SortOption = 'name' | 'name-desc' | 'price' | 'price-desc';
+export type SortOption = "name" | "name-desc" | "price" | "price-desc";
