@@ -37,7 +37,7 @@
 
     <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-8">
       <div
-        class="lg:w-1/4 transition-all duration-300 overflow-hidden"
+        class="lg:w-1/4 transition-all duration-300 overflow-hidden lg:overflow-visible"
         :class="isFilterOpen ? 'max-h-[800px]' : 'max-h-0 lg:max-h-none'"
       >
         <div class="bg-white rounded-lg shadow-sm p-6 lg:sticky lg:top-8">
