@@ -71,24 +71,6 @@
               <span>Ulubione</span>
             </NuxtLink>
 
-            <NuxtLink
-              to="/profile/addresses"
-              class="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-[#90A88C]/10 transition-colors duration-200"
-              :class="{ 'bg-[#90A88C]/10 text-[#90a88c] font-semibold': $route.path === '/profile/addresses' }"
-            >
-              <svg 
-                class="w-5 h-5" 
-                :class="{ 'text-[#90a88c]': $route.path === '/profile/addresses', 'text-gray-500': $route.path !== '/profile/addresses' }"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Adresy</span>
-            </NuxtLink>
-
             <button
               @click="logout"
               class="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-red-50 hover:text-red-600 transition-colors duration-200 w-full text-left text-gray-700"
@@ -163,11 +145,6 @@
         <div v-else-if="$route.path === '/profile/favorites'" class="bg-white rounded-lg shadow-sm p-6">
           <h2 class="font-poppins font-bold text-xl mb-6">Ulubione produkty</h2>
           <p class="text-gray-500">Przejdź do <NuxtLink to="/favorites" class="text-[#90a88c] hover:underline">ulubionych produktów</NuxtLink></p>
-        </div>
-
-        <div v-else-if="$route.path === '/profile/addresses'" class="bg-white rounded-lg shadow-sm p-6">
-          <h2 class="font-poppins font-bold text-xl mb-6">Moje adresy</h2>
-          <p class="text-gray-500">Brak zapisanych adresów</p>
         </div>
       </div>
     </div>
