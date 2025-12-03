@@ -132,7 +132,7 @@
 
         <div
           v-if="filteredFavoritePlants.length > 0"
-          class="grid grid-cols-3 gap-4"
+          class="grid grid-cols-3 gap-4 bg-white rounded-lg shadow-sm p-6"
         >
           <PlantCard
             v-for="plant in filteredFavoritePlants"
@@ -142,15 +142,15 @@
             :category="plant.category"
             :title="plant.title"
             :price="plant.price"
-            :oldPrice="plant.oldPrice"
-            :discount="plant.discount"
+            :old-price="plant.oldPrice ?? undefined"
+            :discount="plant.discount ?? undefined"
             :size="plant.size"
           />
         </div>
 
         <div
           v-else
-          class="text-center py-12"
+          class="text-center py-12 bg-white rounded-lg shadow-sm"
         >
           <div class="flex justify-center mb-4">
             <svg
@@ -199,179 +199,39 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-
 import PlantCard from '@/components/PlantCard.vue';
-
-import fikus1 from '@/assets/plants/fikus2.png';
-import fikus2 from '@/assets/plants/fikus3.png';
-import kaktus1 from '@/assets/plants/kaktus.png';
-import kaktus2 from '@/assets/plants/kaktus2.png';
-import iglica1 from '@/assets/plants/iglica.png';
-import iglica2 from '@/assets/plants/iglica2.png';
-import zamiokulkas1 from '@/assets/plants/zamiokulkas.png';
-import zamiokulkas2 from '@/assets/plants/zamiokulkas2.png';
-import sukulent1 from '@/assets/plants/sukulent.png';
-import sukulent2 from '@/assets/plants/sukulent2.png';
-import monstera1 from '@/assets/plants/monstera.png';
-import monstera2 from '@/assets/plants/monstera2.png';
+import { allPlants, categories, sizes } from '@/composables/usePlants';
+import { usePlantFilters } from '@/composables/usePlantFilters';
+import type { Plant } from '@/types/plants';
 
 const isFilterOpen = ref(false);
 
-const allPlants = [
-  {
-    id: 1,
-    image: fikus1,
-    category: "Fikusy",
-    title: "Fikus „Maluszek”",
-    price: 89.99,
-    oldPrice: 119.99,
-    discount: "-25%",
-    size: "small",
-  },
-  {
-    id: 2,
-    image: fikus2,
-    category: "Fikusy",
-    title: "Fikus „Gigantyczny”",
-    price: 199.99,
-    oldPrice: null,
-    discount: null,
-    size: "large",
-  },
-  {
-    id: 3,
-    image: kaktus1,
-    category: "Kaktusy",
-    title: "Kaktus „Malusieńki”",
-    price: 34.99,
-    oldPrice: 49.99,
-    discount: "-30%",
-    size: "small",
-  },
-  {
-    id: 4,
-    image: kaktus2,
-    category: "Kaktusy",
-    title: "Kaktus „Królewski»",
-    price: 79.99,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  {
-    id: 5,
-    image: iglica1,
-    category: "Iglice",
-    title: "Iglice „Zielona Piękność»",
-    price: 65.5,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  {
-    id: 6,
-    image: iglica2,
-    category: "Iglice",
-    title: "Iglice „Miniatura»",
-    price: 45.0,
-    oldPrice: 55.0,
-    discount: "-18%",
-    size: "small",
-  },
-  {
-    id: 7,
-    image: zamiokulkas1,
-    category: "Zamiokulkasy",
-    title: "Zamiokulkas „Elegancki»",
-    price: 89.99,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  {
-    id: 8,
-    image: zamiokulkas2,
-    category: "Zamiokulkasy",
-    title: "Zamiokulkas „Pnący»",
-    price: 120.0,
-    oldPrice: 150.0,
-    discount: "-20%",
-    size: "large",
-  },
-  {
-    id: 9,
-    image: sukulent1,
-    category: "Sukulenty",
-    title: "Aloes Wera „Piękny»",
-    price: 45.5,
-    oldPrice: null,
-    discount: null,
-    size: "small",
-  },
-  {
-    id: 10,
-    image: sukulent2,
-    category: "Sukulenty",
-    title: "Sukulent „Kolorowy»",
-    price: 35.99,
-    oldPrice: 42.99,
-    discount: "-16%",
-    size: "small",
-  },
-  {
-    id: 11,
-    image: monstera1,
-    category: "Monstery",
-    title: "Monstera „Deliciosa»",
-    price: 129.99,
-    oldPrice: 159.99,
-    discount: "-19%",
-    size: "large",
-  },
-  {
-    id: 12,
-    image: monstera2,
-    category: "Monstery",
-    title: "Monstera „Adansonii»",
-    price: 95.0,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  }
-]; 
-
-const categories = ref([
-  { id: "Fikusy", name: "Fikusy" },
-  { id: "Kaktusy", name: "Kaktusy" },
-  { id: "Iglice", name: "Iglice" },
-  { id: "Zamiokulkasy", name: "Zamiokulkasy" },
-  { id: "Sukulenty", name: "Sukulenty" },
-  { id: "Monstery", name: "Monstery" }
-]);
-
-const sizes = ref([
-  { id: "small", name: "Mały" },
-  { id: "medium", name: "Średni" },
-  { id: "large", name: "Duży" }
-]);
-
-const selectedCategories = ref([]);
-const selectedSizes = ref([]);
-const priceRange = ref({ min: null, max: null });
-const sortBy = ref("name");
-
-const favoritePlants = ref([]);
+const favoritePlants = ref<Plant[]>([]);
 
 const loadFavorites = () => {
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-  favoritePlants.value = allPlants.filter(plant => favorites.includes(plant.id));
+  favoritePlants.value = allPlants.filter((plant: Plant) => 
+    favorites.includes(plant.id)
+  );
 };
 
 const handleFavoritesUpdate = () => {
   loadFavorites();
 };
+
+const {
+  selectedCategories,
+  selectedSizes,
+  priceRange,
+  sortBy,
+  filteredPlants,
+  hasActiveFilters,
+  resetFilters
+} = usePlantFilters(favoritePlants);
+
+const filteredFavoritePlants = computed(() => filteredPlants.value);
 
 onMounted(() => {
   loadFavorites();
@@ -382,60 +242,6 @@ onUnmounted(() => {
   window.removeEventListener('favoritesUpdated', handleFavoritesUpdate);
 });
 
-const filteredFavoritePlants = computed(() => {
-  let filtered = favoritePlants.value;
-
-  if (selectedCategories.value.length > 0) {
-    filtered = filtered.filter(plant => 
-      selectedCategories.value.includes(plant.category)
-    );
-  }
-
-  if (selectedSizes.value.length > 0) {
-    filtered = filtered.filter(plant => 
-      selectedSizes.value.includes(plant.size)
-    );
-  }
-
-  if (priceRange.value.min !== null && priceRange.value.min !== '') {
-    filtered = filtered.filter(plant => plant.price >= Number(priceRange.value.min));
-  }
-  if (priceRange.value.max !== null && priceRange.value.max !== '') {
-    filtered = filtered.filter(plant => plant.price <= Number(priceRange.value.max));
-  }
-
-  filtered = [...filtered].sort((a, b) => {
-    switch (sortBy.value) {
-      case "name":
-        return a.title.localeCompare(b.title);
-      case "name-desc":
-        return b.title.localeCompare(a.title);
-      case "price":
-        return a.price - b.price;
-      case "price-desc":
-        return b.price - a.price;
-      default:
-        return 0;
-    }
-  });
-
-  return filtered;
-});
-
-
-const hasActiveFilters = computed(() => {
-  return selectedCategories.value.length > 0 || 
-         selectedSizes.value.length > 0 || 
-         priceRange.value.min !== null || 
-         priceRange.value.max !== null;
-});
-
-const resetFilters = () => {
-  selectedCategories.value = [];
-  selectedSizes.value = [];
-  priceRange.value = { min: null, max: null };
-  sortBy.value = "name";
-};
 </script>
 
 <style scoped>

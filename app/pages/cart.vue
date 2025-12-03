@@ -207,153 +207,31 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { allPlants } from '@/composables/usePlants';
+import type { Plant } from '@/types/plants';
 
-import fikus1 from '@/assets/plants/fikus2.png';
-import fikus2 from '@/assets/plants/fikus3.png';
-import kaktus1 from '@/assets/plants/kaktus.png';
-import kaktus2 from '@/assets/plants/kaktus2.png';
-import iglica1 from '@/assets/plants/iglica.png';
-import iglica2 from '@/assets/plants/iglica2.png';
-import zamiokulkas1 from '@/assets/plants/zamiokulkas.png';
-import zamiokulkas2 from '@/assets/plants/zamiokulkas2.png';
-import sukulent1 from '@/assets/plants/sukulent.png';
-import sukulent2 from '@/assets/plants/sukulent2.png';
-import monstera1 from '@/assets/plants/monstera.png';
-import monstera2 from '@/assets/plants/monstera2.png';
+interface CartItem extends Plant {
+  quantity: number;
+}
 
-const plantsDatabase = {
-  1: {
-    id: 1,
-    image: fikus1,
-    category: "Fikusy",
-    title: "Fikus „Maluszek”",
-    price: 89.99,
-    oldPrice: "119,99 zł",
-    discount: "-25%",
-    size: "small",
-  },
-  2: {
-    id: 2,
-    image: fikus2,
-    category: "Fikusy",
-    title: "Fikus „Gigantyczny”",
-    price: 199.99,
-    oldPrice: null,
-    discount: null,
-    size: "large",
-  },
-  3: {
-    id: 3,
-    image: kaktus1,
-    category: "Kaktusy",
-    title: "Kaktus „Malusieńki”",
-    price: 34.99,
-    oldPrice: "49,99 zł",
-    discount: "-30%",
-    size: "small",
-  },
-  4: {
-    id: 4,
-    image: kaktus2,
-    category: "Kaktusy",
-    title: "Kaktus „Królewski»",
-    price: 79.99,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  5: {
-    id: 5,
-    image: iglica1,
-    category: "Iglice",
-    title: "Iglice „Zielona Piękność»",
-    price: 65.5,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  6: {
-    id: 6,
-    image: iglica2,
-    category: "Iglice",
-    title: "Iglice „Miniatura»",
-    price: 45.0,
-    oldPrice: "55,00 zł",
-    discount: "-18%",
-    size: "small",
-  },
-  7: {
-    id: 7,
-    image: zamiokulkas1,
-    category: "Zamiokulkasy",
-    title: "Zamiokulkas „Elegancki»",
-    price: 89.99,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  },
-  8: {
-    id: 8,
-    image: zamiokulkas2,
-    category: "Zamiokulkasy",
-    title: "Zamiokulkas „Pnący»",
-    price: 120.0,
-    oldPrice: "150,00 zł",
-    discount: "-20%",
-    size: "large",
-  },
-  9: {
-    id: 9,
-    image: sukulent1,
-    category: "Sukulenty",
-    title: "Aloes Wera „Piękny»",
-    price: 45.5,
-    oldPrice: null,
-    discount: null,
-    size: "small",
-  },
-  10: {
-    id: 10,
-    image: sukulent2,
-    category: "Sukulenty",
-    title: "Sukulent „Kolorowy»",
-    price: 35.99,
-    oldPrice: "42,99 zł",
-    discount: "-16%",
-    size: "small",
-  },
-  11: {
-    id: 11,
-    image: monstera1,
-    category: "Monstery",
-    title: "Monstera „Deliciosa»",
-    price: 129.99,
-    oldPrice: "159,99 zł",
-    discount: "-19%",
-    size: "large",
-  },
-  12: {
-    id: 12,
-    image: monstera2,
-    category: "Monstery",
-    title: "Monstera „Adansonii»",
-    price: 95.0,
-    oldPrice: null,
-    discount: null,
-    size: "medium",
-  }
-};
-
-const cartItems = ref([]);
+const cartItems = ref<CartItem[]>([]);
 
 const loadCart = () => {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  cartItems.value = cart.map(item => ({
-    ...plantsDatabase[item.id],
-    quantity: item.quantity
-  })).filter(Boolean);
+  cartItems.value = cart
+    .map((item: { id: number; quantity: number }) => {
+      const plant = allPlants.find(p => p.id === item.id);
+      if (plant) {
+        return {
+          ...plant,
+          quantity: item.quantity
+        };
+      }
+      return null;
+    })
+    .filter(Boolean) as CartItem[];
 };
 
 const saveCart = () => {
@@ -369,8 +247,8 @@ const saveCart = () => {
   }
 };
 
-const getSizeName = (size) => {
-  const sizeNames = {
+const getSizeName = (size: string) => {
+  const sizeNames: Record<string, string> = {
     small: 'Mały',
     medium: 'Średni',
     large: 'Duży'
@@ -378,7 +256,7 @@ const getSizeName = (size) => {
   return sizeNames[size] || size;
 };
 
-const increaseQuantity = (id) => {
+const increaseQuantity = (id: number) => {
   const item = cartItems.value.find(item => item.id === id);
   if (item) {
     item.quantity++;
@@ -386,7 +264,7 @@ const increaseQuantity = (id) => {
   }
 };
 
-const decreaseQuantity = (id) => {
+const decreaseQuantity = (id: number) => {
   const item = cartItems.value.find(item => item.id === id);
   if (item && item.quantity > 1) {
     item.quantity--;
@@ -394,7 +272,7 @@ const decreaseQuantity = (id) => {
   }
 };
 
-const removeFromCart = (id) => {
+const removeFromCart = (id: number) => {
   cartItems.value = cartItems.value.filter(item => item.id !== id);
   saveCart();
 };
