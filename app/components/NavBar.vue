@@ -231,7 +231,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { useCart } from "~/assets/composables/useCart";
+import { useCart } from "~/composables/useCart";
 
 const { totalItems } = useCart();
 
