@@ -6,7 +6,7 @@
           Porady dotyczące pielęgnacji
         </h1>
         <p class="text-gray-600 text-sm md:text-base mt-1 md:mt-2">
-          Dowiedz się, jak dbać o swoje rośliny domowe. Przewodnik dla początkujących i zaawansowanych.
+          Dowiedz się, jak dbać o swoje rośliny domowe. Przewodник dla początkujących i zaawansowanych.
         </p>
       </div>
     </div>
@@ -121,9 +121,9 @@
             <div
               v-for="advice in filteredAdvice"
               :key="advice.id"
-              class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
+              class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200 flex flex-col h-full"
             >
-              <div class="h-36 sm:h-40 md:h-48 overflow-hidden">
+              <div class="h-36 sm:h-40 md:h-48 overflow-hidden flex-shrink-0">
                 <img
                   :src="advice.image"
                   :alt="advice.title"
@@ -131,7 +131,7 @@
                 />
               </div>
 
-              <div class="p-3 sm:p-4 md:p-6">
+              <div class="p-3 sm:p-4 md:p-6 flex flex-col flex-grow">
                 <div class="flex justify-between items-start mb-2 md:mb-3">
                   <h3 class="font-semibold text-gray-900 text-xs sm:text-sm md:text-base line-clamp-1 pr-2">
                     {{ advice.title }}
@@ -165,7 +165,7 @@
                   </div>
                 </div>
 
-                <div class="mb-3 md:mb-4">
+                <div class="mb-3 md:mb-4 flex-grow">
                   <p class="text-[10px] sm:text-xs font-medium text-gray-700 mb-1">Kluczowe wskazówki:</p>
                   <ul class="text-[10px] sm:text-xs text-gray-600 space-y-0.5 sm:space-y-1">
                     <li
@@ -181,12 +181,14 @@
                   </ul>
                 </div>
 
-                <NuxtLink
-                  :to="`/advices/${advice.slug}`"
-                  class="block w-full text-center border border-[#90a88c] active:bg-[#647e5e] text-[#90a88c] hover:bg-[#90a88c] hover:text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-colors duration-200"
-                >
-                  Czytaj więcej
-                </NuxtLink>
+                <div class="mt-auto pt-4">
+                  <NuxtLink
+                    :to="`/advices/${advice.slug}`"
+                    class="block w-full text-center border border-[#90a88c] active:bg-[#647e5e] text-[#90a88c] hover:bg-[#90a88c] hover:text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-colors duration-200"
+                  >
+                    Czytaj więcej
+                  </NuxtLink>
+                </div>
               </div>
             </div>
           </div>
