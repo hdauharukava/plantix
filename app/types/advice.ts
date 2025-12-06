@@ -1,4 +1,3 @@
-// types/advice.ts
 export interface CareAdvice {
   id: number;
   plantCategory: string;
