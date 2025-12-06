@@ -15,11 +15,12 @@
       >
         Katalog
       </NuxtLink>
-      <button
+      <NuxtLink
+        to="/advices"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Porady dotyczące pielęgnacji
-      </button>
+      </NuxtLink>
       <button
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
@@ -124,11 +125,11 @@
         >
           Katalog
         </NuxtLink>
-        <button
+        <NuxtLink to="/advices"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
           Porady
-        </button>
+        </NuxtLink>
         <button
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
