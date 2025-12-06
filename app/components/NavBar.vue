@@ -125,7 +125,8 @@
         >
           Katalog
         </NuxtLink>
-        <NuxtLink to="/advices"
+        <NuxtLink
+          to="/advices"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
           Porady

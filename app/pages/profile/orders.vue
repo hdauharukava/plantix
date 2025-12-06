@@ -120,7 +120,9 @@
 
       <div class="lg:w-3/4">
         <div class="bg-white rounded-lg shadow-sm p-6">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <div
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4"
+          >
             <h2 class="font-poppins font-bold text-xl">Historia zamówień</h2>
             <div class="flex items-center space-x-2">
               <span class="text-sm text-gray-600">Filtruj:</span>
@@ -150,7 +152,7 @@
                   <p class="text-sm text-gray-500 mb-4">
                     Złożono: {{ formatDate(order.date) }}
                   </p>
-                  
+
                   <div class="space-y-3">
                     <div class="flex items-center space-x-4">
                       <span class="font-bold text-lg text-[#1e1e1e]">
@@ -169,23 +171,25 @@
                         :key="index"
                         class="relative group"
                       >
-                        <div class="w-8 h-8 rounded-sm overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0">
+                        <div
+                          class="w-8 h-8 rounded-sm overflow-hidden border border-gray-200 bg-gray-50 flex-shrink-0"
+                        >
                           <img
                             :src="product.image"
                             :alt="product.name"
                             class="w-full h-full object-cover"
                           />
                         </div>
-                        
-                        <div 
-                          v-if="product.quantity > 1" 
+
+                        <div
+                          v-if="product.quantity > 1"
                           class="absolute -top-1 -right-1 w-4 h-4 bg-[#90a88c] text-white text-[9px] rounded-full flex items-center justify-center border border-white"
                         >
                           {{ product.quantity }}
                         </div>
                       </div>
-                      
-                      <div 
+
+                      <div
                         v-if="order.products.length > 6"
                         class="text-xs text-gray-500 ml-1"
                       >
@@ -198,7 +202,9 @@
                 <div class="lg:w-1/3 space-y-3">
                   <div>
                     <p class="text-xs text-gray-500 mb-1">Sposób dostawy</p>
-                    <p class="text-sm font-medium">{{ order.shippingMethod }}</p>
+                    <p class="text-sm font-medium">
+                      {{ order.shippingMethod }}
+                    </p>
                   </div>
                   <div>
                     <p class="text-xs text-gray-500 mb-1">Metoda płatności</p>
@@ -206,13 +212,17 @@
                   </div>
                   <div>
                     <p class="text-xs text-gray-500 mb-1">Liczba produktów</p>
-                    <p class="text-sm font-medium">{{ order.itemsCount }} szt.</p>
+                    <p class="text-sm font-medium">
+                      {{ order.itemsCount }} szt.
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div class="border-t border-gray-100 pt-4 mt-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div
+                  class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                >
                   <NuxtLink
                     :to="`/profile/orders/${order.id}`"
                     class="text-sm text-[#90a88c] hover:text-[#799573] font-medium hover:underline"
@@ -303,16 +313,16 @@ const orders = ref([
         name: "Fikus „Maluszek”",
         image: fikus1,
         quantity: 1,
-        price: 89.99
+        price: 89.99,
       },
       {
         id: 3,
         name: "Kaktus „Malusieńki”",
         image: kaktus1,
         quantity: 2,
-        price: 34.99
-      }
-    ]
+        price: 34.99,
+      },
+    ],
   },
   {
     id: "ORD-2023-002",
@@ -328,14 +338,14 @@ const orders = ref([
         name: "Monstera „Deliciosa”",
         image: monstera1,
         quantity: 1,
-        price: 129.99
-      }
-    ]
+        price: 129.99,
+      },
+    ],
   },
   {
     id: "ORD-2023-003",
     date: "2023-09-05",
-    total: 89.50,
+    total: 89.5,
     status: "completed",
     shippingMethod: "Poczta Polska",
     paymentMethod: "Przelew tradycyjny",
@@ -346,16 +356,16 @@ const orders = ref([
         name: "Iglice „Zielona Piękność”",
         image: iglica1,
         quantity: 1,
-        price: 65.5
+        price: 65.5,
       },
       {
         id: 10,
         name: "Sukulent „Kolorowy”",
         image: kaktus2,
         quantity: 1,
-        price: 24.0
-      }
-    ]
+        price: 24.0,
+      },
+    ],
   },
   {
     id: "ORD-2023-004",
@@ -371,24 +381,24 @@ const orders = ref([
         name: "Fikus „Gigantyczny”",
         image: fikus2,
         quantity: 1,
-        price: 199.99
+        price: 199.99,
       },
       {
         id: 8,
         name: "Zamiokulkas „Pnący”",
         image: monstera2,
         quantity: 1,
-        price: 120.0
+        price: 120.0,
       },
       {
         id: 6,
         name: "Iglice „Miniatura”",
         image: iglica2,
         quantity: 2,
-        price: 45.0
-      }
-    ]
-  }
+        price: 45.0,
+      },
+    ],
+  },
 ]);
 
 const selectedFilter = ref("all");
@@ -397,15 +407,15 @@ const filteredOrders = computed(() => {
   if (selectedFilter.value === "all") {
     return orders.value;
   }
-  return orders.value.filter(order => order.status === selectedFilter.value);
+  return orders.value.filter((order) => order.status === selectedFilter.value);
 });
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('pl-PL', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
+  return date.toLocaleDateString("pl-PL", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 };
 
@@ -413,7 +423,7 @@ const getStatusClass = (status: string) => {
   const classes: Record<string, string> = {
     pending: "bg-yellow-100 text-yellow-800",
     completed: "bg-green-100 text-green-800",
-    cancelled: "bg-red-100 text-red-800"
+    cancelled: "bg-red-100 text-red-800",
   };
   return classes[status] || "bg-gray-100 text-gray-800";
 };
@@ -422,14 +432,14 @@ const getStatusText = (status: string) => {
   const texts: Record<string, string> = {
     pending: "Oczekujące",
     completed: "Zrealizowane",
-    cancelled: "Anulowane"
+    cancelled: "Anulowane",
   };
   return texts[status] || status;
 };
 
 const cancelOrder = (orderId: string) => {
   if (confirm("Czy na pewno chcesz anulować to zamówienie?")) {
-    const order = orders.value.find(o => o.id === orderId);
+    const order = orders.value.find((o) => o.id === orderId);
     if (order) {
       order.status = "cancelled";
       alert("Zamówienie zostało anulowane.");

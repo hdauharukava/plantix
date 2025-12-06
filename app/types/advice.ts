@@ -3,7 +3,7 @@ export interface CareAdvice {
   plantCategory: string;
   title: string;
   slug: string;
-  difficulty: 'łatwa' | 'średnia' | 'trudna';
+  difficulty: "łatwa" | "średnia" | "trudna";
   light: string;
   watering: string;
   soil: string;
