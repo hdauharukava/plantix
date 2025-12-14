@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
+  <div v-if="!isLoading" class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
     <div class="w-full max-w-5xl mb-8">
       <div>
         <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
@@ -202,6 +202,14 @@
     </div>
     <div class="mb-20"></div>
   </div>
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie profilu...</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -209,6 +217,7 @@ import { ref } from "vue";
 import { useRouter } from "#app";
 
 const router = useRouter();
+const isLoading = ref(false);
 
 const userData = ref({
   firstName: "Jan",

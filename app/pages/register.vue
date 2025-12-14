@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div v-if="!isLoading" class="min-h-screen flex flex-col">
     <Navbar />
     <Layout>
       <div class="w-full max-w-sm mx-auto sm: px-6 px-4 py-6">
@@ -141,10 +141,20 @@
       </div>
     </Layout>
   </div>
+    <div v-else class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie strony rejestracji...</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, computed, ref } from "vue";
+
+const isLoading = ref(false);
 
 interface FormState {
   email: string;

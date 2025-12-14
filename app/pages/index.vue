@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8">
+  <div v-if="!isLoading" class="flex flex-col items-center px-4 sm:px-6 lg:px-8">
     <div
       class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0"
     >
@@ -104,6 +104,14 @@
       </NuxtLink>
     </div>
   </div>
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie strony...</p>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -117,4 +125,6 @@ import fikus2 from "@/assets/plants/fikus2.png";
 import kaktus2 from "@/assets/plants/kaktus2.png";
 import sukulent from "@/assets/plants/sukulent.png";
 import fikus3 from "@/assets/plants/fikus3.png";
+
+const isLoading = ref(false);
 </script>

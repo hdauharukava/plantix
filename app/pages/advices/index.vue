@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-col items-center px-8 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8"
-  >
+  <div v-if="!isLoading" class="flex flex-col items-center px-8 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8">
     <div class="w-full max-w-5xl mb-6 md:mb-8">
       <div>
         <h1
@@ -352,6 +350,14 @@
     </div>
     <div class="mb-20"></div>
   </div>
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie porad...</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -364,6 +370,8 @@ import iglica1 from "@/assets/plants/iglica.png";
 import zamiokulkas1 from "@/assets/plants/zamiokulkas.png";
 import sukulent1 from "@/assets/plants/sukulent.png";
 import monstera1 from "@/assets/plants/monstera.png";
+
+const isLoading = ref(false);
 
 const categories = ref([
   { id: "Fikusy", name: "Fikusy" },
