@@ -30,7 +30,7 @@
             <div
               v-for="item in cartItems"
               :key="item.id"
-              class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6"
+              class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6 hover:shadow-md transition-shadow duration-200"
             >
               <div
                 class="flex flex-col md:grid md:grid-cols-10 md:gap-4 md:items-center"
@@ -38,21 +38,27 @@
                 <div
                   class="col-span-5 flex items-center space-x-4 mb-4 md:mb-0"
                 >
-                  <div
+                  <NuxtLink 
+                    :to="`/products/${item.id}`" 
                     class="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-lg overflow-hidden"
                   >
                     <img
                       :src="item.image"
                       :alt="item.title"
-                      class="w-full h-full object-cover"
+                      class="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                     />
-                  </div>
+                  </NuxtLink>
                   <div class="flex-1 min-w-0">
-                    <h3
-                      class="font-semibold text-sm md:text-base text-gray-900 mb-1 line-clamp-2"
+                    <NuxtLink 
+                      :to="`/products/${item.id}`" 
+                      class="block hover:text-[#90a88c] transition-colors"
                     >
-                      {{ item.title }}
-                    </h3>
+                      <h3
+                        class="font-semibold text-sm md:text-base text-gray-900 mb-1 line-clamp-2"
+                      >
+                        {{ item.title }}
+                      </h3>
+                    </NuxtLink>
                     <p class="text-xs text-gray-500 mb-1">
                       {{ item.category }}
                     </p>
@@ -62,13 +68,13 @@
                     <div class="md:hidden mt-2">
                       <div class="flex items-center space-x-2">
                         <span class="font-bold text-lg text-[#1e1e1e]"
-                          >{{ item.price }} zł</span
+                          >{{ item.price.toFixed(2) }} zł</span
                         >
                         <span
                           v-if="item.oldPrice"
                           class="text-sm text-gray-500 line-through ml-1"
                         >
-                          {{ item.oldPrice }}
+                          {{ item.oldPrice?.toFixed(2) }} zł
                         </span>
                       </div>
                     </div>
@@ -76,27 +82,32 @@
                 </div>
 
                 <div class="hidden md:flex col-span-2 flex-col items-center">
-                  <div class="flex flex-col items-center">
+                  <NuxtLink 
+                    :to="`/products/${item.id}`" 
+                    class="flex flex-col items-center hover:text-[#90a88c] transition-colors"
+                  >
                     <span class="font-bold text-lg text-[#1e1e1e]"
-                      >{{ item.price }} zł</span
+                      >{{ item.price.toFixed(2) }} zł</span
                     >
                     <span
                       v-if="item.oldPrice"
                       class="text-xs text-gray-500 mt-1 line-through"
                     >
-                      {{ item.oldPrice }}
+                      {{ item.oldPrice?.toFixed(2) }} zł
                     </span>
-                  </div>
+                  </NuxtLink>
                 </div>
 
+                <!-- Кнопки управления количеством и удалением -->
                 <div
                   class="col-span-3 flex items-center justify-between md:justify-center md:space-x-4"
                 >
                   <div class="flex items-center space-x-3">
                     <button
-                      @click="decreaseQuantity(item.id)"
+                      @click.stop="decreaseQuantity(item.id)"
                       class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
                       :disabled="item.quantity <= 1"
+                      :class="{ 'opacity-50 cursor-not-allowed': item.quantity <= 1 }"
                     >
                       <svg
                         class="w-4 h-4 text-gray-600"
@@ -118,7 +129,7 @@
                     </span>
 
                     <button
-                      @click="increaseQuantity(item.id)"
+                      @click.stop="increaseQuantity(item.id)"
                       class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
                     >
                       <svg
@@ -138,7 +149,7 @@
                   </div>
 
                   <button
-                    @click="removeFromCart(item.id)"
+                    @click.stop="removeFromCart(item.id)"
                     class="p-2 text-gray-400 hover:text-red-500 transition-colors"
                   >
                     <svg
@@ -267,7 +278,8 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
+  
   <div v-else class="min-h-screen flex items-center justify-center">
     <div class="text-center">
       <div
@@ -383,9 +395,8 @@ onMounted(() => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-clamp: 2;
-  box-orient: vertical;
 }
 </style>
