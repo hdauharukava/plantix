@@ -53,14 +53,14 @@
               class="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-[#90A88C]/10 transition-colors duration-200"
               :class="{
                 'bg-[#90A88C]/10 text-[#90a88c] font-semibold':
-                  $route.path === '/profile/orders',
+                  $route.path.startsWith('/profile/orders'),
               }"
             >
               <svg
                 class="w-5 h-5"
                 :class="{
-                  'text-[#90a88c]': $route.path === '/profile/orders',
-                  'text-gray-500': $route.path !== '/profile/orders',
+                  'text-[#90a88c]': $route.path.startsWith('/profile/orders'),
+                  'text-gray-500': !$route.path.startsWith('/profile/orders'),
                 }"
                 fill="none"
                 stroke="currentColor"
@@ -191,13 +191,7 @@
           </div>
         </div>
 
-        <div
-          v-else-if="$route.path === '/profile/orders'"
-          class="bg-white rounded-lg shadow-sm p-6"
-        >
-          <h2 class="font-poppins font-bold text-xl mb-6">Moje zamówienia</h2>
-          <p class="text-gray-500">Brak zamówień</p>
-        </div>
+        <NuxtPage />
       </div>
     </div>
     <div class="mb-20"></div>
