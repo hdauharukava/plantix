@@ -148,24 +148,25 @@
               </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col sm:flex-row gap-3">
               <button
                 @click="addToCart"
-                class="flex-1 bg-[#90a88c] hover:bg-[#799573] text-white font-semibold py-4 px-6 rounded-full transition-colors duration-200 flex items-center justify-center space-x-3"
+                class="flex-1 bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white font-semibold py-3 px-4 rounded-full transition-colors duration-200 flex items-center justify-center space-x-2"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                <span class="text-base">Dodaj do koszyka</span>
+                <span>Dodaj do koszyka</span>
               </button>
+              
               <button
                 @click="toggleFavorite"
-                class="w-14 h-14 border border-gray-300 hover:border-[#90a88c] rounded-full transition-colors duration-200 flex items-center justify-center"
-                :class="{ 'border-[#90a88c]': isFavorite }"
+                class="w-12 h-12 border border-gray-300 hover:border-gray-400 rounded-full transition-colors duration-200 flex items-center justify-center"
+                :class="{ 'border-red-500': isFavorite }"
                 aria-label="Dodaj do ulubionych"
               >
                 <svg 
-                  class="w-6 h-6" 
+                  class="w-5 h-5" 
                   :class="isFavorite ? 'text-red-500' : 'text-gray-500'" 
                   fill="none" 
                   stroke="currentColor" 
