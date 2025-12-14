@@ -3,13 +3,16 @@
     class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden group relative"
   >
     <div class="relative">
-      <div class="w-full aspect-[3/4] overflow-hidden">
-        <img
-          :src="image"
-          :alt="title"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+      <NuxtLink :to="`/products/${id}`" class="block">
+        <div class="w-full aspect-[3/4] overflow-hidden">
+          <img
+            :src="image"
+            :alt="title"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      </NuxtLink>
+      
       <div
         v-if="discount"
         class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded"
@@ -19,7 +22,8 @@
 
       <button
         @click.stop="toggleFavorite"
-        class="absolute top-2 left-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+        class="absolute top-2 left-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors z-10"
+        aria-label="Dodaj do ulubionych"
       >
         <svg
           class="w-5 h-5"
@@ -37,7 +41,7 @@
         </svg>
       </button>
 
-      <div class="absolute bottom-4 left-4 right-4 hidden md:block">
+      <div class="absolute bottom-4 left-4 right-4 hidden md:block z-10">
         <button
           @click="addToCart"
           class="w-full bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-2 font-bold shadow-lg"
@@ -48,22 +52,40 @@
     </div>
 
     <div class="p-4">
-      <p class="text-xs text-gray-500 mb-1">{{ category }}</p>
-      <h3 class="font-semibold text-sm mb-2 line-clamp-2">{{ title }}</h3>
+      <NuxtLink 
+        :to="`/products/${id}`" 
+        class="block hover:text-[#90a88c] transition-colors"
+      >
+        <p class="text-xs text-gray-500 mb-1">{{ category }}</p>
+        <h3 class="font-semibold text-sm mb-2 line-clamp-2">{{ title }}</h3>
+      </NuxtLink>
 
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
           <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap"
-            >{{ price }} zł</span
+            >{{ formatPrice(price) }}</span
           >
           <span
             v-if="oldPrice"
             class="text-sm text-gray-500 line-through whitespace-nowrap"
           >
-            {{ oldPrice }} zł
+            {{ formatPrice(oldPrice) }}
+          </span>
+        </div>
+        
+        <div class="md:hidden">
+          <span class="text-xs px-2 py-1 bg-gray-100 rounded text-gray-600">
+            {{ getSizeName(size) }}
           </span>
         </div>
       </div>
+      
+      <button
+        @click="addToCart"
+        class="w-full md:hidden mt-4 bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-colors font-bold"
+      >
+        Do koszyka
+      </button>
     </div>
   </div>
 </template>
@@ -108,12 +130,28 @@ const props = defineProps({
 
 const isFavorite = ref(false);
 
+const getSizeName = (size) => {
+  const sizes = {
+    small: "Mały",
+    medium: "Średni",
+    large: "Duży"
+  };
+  return sizes[size] || size;
+};
+
+const formatPrice = (price) => {
+  return `${price.toFixed(2)} zł`;
+};
+
 onMounted(() => {
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
   isFavorite.value = favorites.includes(props.id);
 });
 
-const toggleFavorite = () => {
+const toggleFavorite = (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  
   let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
   if (isFavorite.value) {
@@ -128,7 +166,10 @@ const toggleFavorite = () => {
   window.dispatchEvent(new CustomEvent("favoritesUpdated"));
 };
 
-const addToCart = () => {
+const addToCart = (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  
   let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
   // Проверяем, есть ли уже товар в корзине
@@ -141,7 +182,10 @@ const addToCart = () => {
     // Добавляем новый товар
     cart.push({
       id: props.id,
-      quantity: 1,
+      title: props.title,
+      price: props.price,
+      image: props.image,
+      quantity: 1
     });
   }
 
