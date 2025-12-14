@@ -314,8 +314,8 @@ const adviceData: CareAdvice[] = [
 
 const advice = ref<CareAdvice | null>(null);
 
-const slug = route.params.slug as string;
-advice.value = adviceData.find(a => a.slug === slug) || null;
+const id = route.params.id as string;
+advice.value = adviceData.find(a => a.id.toString() === id) || null;
 
 if (!advice.value) {
   throw createError({ 

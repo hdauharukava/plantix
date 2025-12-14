@@ -276,7 +276,7 @@
 
                 <div class="mt-auto pt-4">
                   <NuxtLink
-                    :to="`/advices/${advice.slug}`"
+                    :to="`/advices/${advice.id}`"
                     class="block w-full text-center border border-[#90a88c] active:bg-[#647e5e] text-[#90a88c] hover:bg-[#90a88c] hover:text-white rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm transition-colors duration-200"
                   >
                     Czytaj więcej
