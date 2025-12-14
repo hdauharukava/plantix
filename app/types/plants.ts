@@ -1,13 +1,13 @@
-// types/plants.ts
 export interface Plant {
   id: number;
   image: string;
   category: string;
   title: string;
   price: number;
-  oldPrice?: number | null; // Сделано опциональным с возможностью null
-  discount?: string | null; // Сделано опциональным с возможностью null
+  oldPrice?: number | null;
+  discount?: string | null;
   size: "small" | "medium" | "large";
+  description?: string;
 }
 
 export interface Category {
