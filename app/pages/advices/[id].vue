@@ -31,13 +31,16 @@
           >
             {{ advice.title }}
           </h1>
-          <p class="text-gray-600 text-sm md:text-base">Kompletny przewodnik pielęgnacyjny</p>
+          <p class="text-gray-600 text-sm md:text-base">
+            Kompletny przewodnik pielęgnacyjny
+          </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           <div class="lg:col-span-1">
-
-            <div class="hidden lg:block rounded-2xl overflow-hidden shadow-lg mb-6">
+            <div
+              class="hidden lg:block rounded-2xl overflow-hidden shadow-lg mb-6"
+            >
               <img
                 :src="advice.image"
                 :alt="advice.title"
@@ -46,7 +49,9 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-4 md:mb-6">
-              <h3 class="font-semibold text-base md:text-lg text-gray-900 mb-3 md:mb-4">
+              <h3
+                class="font-semibold text-base md:text-lg text-gray-900 mb-3 md:mb-4"
+              >
                 Podstawowe wymagania
               </h3>
 
@@ -63,7 +68,9 @@
                   </div>
                   <div>
                     <p class="text-xs md:text-sm text-gray-500 mb-1">Światło</p>
-                    <p class="font-medium text-gray-900 text-sm md:text-base">{{ advice.light }}</p>
+                    <p class="font-medium text-gray-900 text-sm md:text-base">
+                      {{ advice.light }}
+                    </p>
                   </div>
                 </div>
 
@@ -78,7 +85,9 @@
                     />
                   </div>
                   <div>
-                    <p class="text-xs md:text-sm text-gray-500 mb-1">Podlewanie</p>
+                    <p class="text-xs md:text-sm text-gray-500 mb-1">
+                      Podlewanie
+                    </p>
                     <p class="font-medium text-gray-900 text-sm md:text-base">
                       {{ advice.watering }}
                     </p>
@@ -96,7 +105,9 @@
                     />
                   </div>
                   <div>
-                    <p class="text-xs md:text-sm text-gray-500 mb-1">Temperatura</p>
+                    <p class="text-xs md:text-sm text-gray-500 mb-1">
+                      Temperatura
+                    </p>
                     <p class="font-medium text-gray-900 text-sm md:text-base">
                       {{ advice.temperature }}
                     </p>
@@ -107,37 +118,71 @@
           </div>
 
           <div class="lg:col-span-2">
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-4 md:mb-8">
+            <div
+              class="bg-white rounded-xl shadow-sm overflow-hidden mb-4 md:mb-8"
+            >
               <div class="p-4 md:p-6 border-b border-gray-200">
-                <h2 class="font-poppins font-semibold text-lg md:text-xl text-[#1e1e1e]">
+                <h2
+                  class="font-poppins font-semibold text-lg md:text-xl text-[#1e1e1e]"
+                >
                   Szczegółowy przewodnik pielęgnacyjny
                 </h2>
               </div>
 
               <div class="divide-y divide-gray-100">
                 <div class="p-4 md:p-6">
-                  <h3 class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2">Gleba</h3>
-                  <p class="text-gray-600 text-sm md:text-base">{{ advice.soil }}</p>
+                  <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2"
+                  >
+                    Gleba
+                  </h3>
+                  <p class="text-gray-600 text-sm md:text-base">
+                    {{ advice.soil }}
+                  </p>
                 </div>
 
                 <div class="p-4 md:p-6">
-                  <h3 class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2">Wilgotność</h3>
-                  <p class="text-gray-600 text-sm md:text-base">{{ advice.humidity }}</p>
+                  <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2"
+                  >
+                    Wilgotność
+                  </h3>
+                  <p class="text-gray-600 text-sm md:text-base">
+                    {{ advice.humidity }}
+                  </p>
                 </div>
 
                 <div class="p-4 md:p-6">
-                  <h3 class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2">Nawożenie</h3>
-                  <p class="text-gray-600 text-sm md:text-base">{{ advice.fertilization }}</p>
+                  <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2"
+                  >
+                    Nawożenie
+                  </h3>
+                  <p class="text-gray-600 text-sm md:text-base">
+                    {{ advice.fertilization }}
+                  </p>
                 </div>
 
                 <div class="p-4 md:p-6">
-                  <h3 class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2">Przycinanie</h3>
-                  <p class="text-gray-600 text-sm md:text-base">{{ advice.pruning }}</p>
+                  <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2"
+                  >
+                    Przycinanie
+                  </h3>
+                  <p class="text-gray-600 text-sm md:text-base">
+                    {{ advice.pruning }}
+                  </p>
                 </div>
 
                 <div class="p-4 md:p-6">
-                  <h3 class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2">Szkodniki</h3>
-                  <p class="text-gray-600 text-sm md:text-base">{{ advice.pests }}</p>
+                  <h3
+                    class="font-semibold text-gray-900 text-sm md:text-base mb-1 md:mb-2"
+                  >
+                    Szkodniki
+                  </h3>
+                  <p class="text-gray-600 text-sm md:text-base">
+                    {{ advice.pests }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -174,7 +219,9 @@
                       />
                     </svg>
                   </div>
-                  <span class="text-gray-700 text-sm md:text-base">{{ tip }}</span>
+                  <span class="text-gray-700 text-sm md:text-base">{{
+                    tip
+                  }}</span>
                 </li>
               </ul>
             </div>
@@ -222,7 +269,11 @@ const adviceData: CareAdvice[] = [
     fertilization: "Co 2 tygodnie wiosną i latem",
     pruning: "Przycinanie wiosną dla kształtu",
     pests: "Przędziorki, mszyce",
-    tips: ["Unikaj przeciągów", "Przesadzaj co 2-3 lata", "Regularnie przecieraj liście"],
+    tips: [
+      "Unikaj przeciągów",
+      "Przesadzaj co 2-3 lata",
+      "Regularnie przecieraj liście",
+    ],
     image: fikus1,
   },
   {
@@ -239,7 +290,11 @@ const adviceData: CareAdvice[] = [
     fertilization: "Raz w miesiącu w sezonie wegetacyjnym",
     pruning: "Rzadko potrzebne",
     pests: "Wełnowce, tarczniki",
-    tips: ["Zimą zapewnij okres spoczynku", "Unikaj przelania", "Sadź w doniczkach z otworami"],
+    tips: [
+      "Zimą zapewnij okres spoczynku",
+      "Unikaj przelania",
+      "Sadź w doniczkach z otworami",
+    ],
     image: kaktus1,
   },
   {
@@ -256,7 +311,11 @@ const adviceData: CareAdvice[] = [
     fertilization: "Co 3-4 tygodnie w sezonie",
     pruning: "Wiosenne przycinanie",
     pests: "Przędziorki, wciornastki",
-    tips: ["Lubi zraszanie liści", "Unikaj stojącej wody", "Regularnie obracaj dla równomiernego wzrostu"],
+    tips: [
+      "Lubi zraszanie liści",
+      "Unikaj stojącej wody",
+      "Regularnie obracaj dla równomiernego wzrostu",
+    ],
     image: iglica1,
   },
   {
@@ -273,7 +332,11 @@ const adviceData: CareAdvice[] = [
     fertilization: "Raz na 2 miesiące",
     pruning: "Usuwanie żółtych liści",
     pests: "Rzadko atakowany",
-    tips: ["Bardzo wytrzymała roślina", "Idealna dla początkujących", "Trująca dla zwierząt"],
+    tips: [
+      "Bardzo wytrzymała roślina",
+      "Idealna dla początkujących",
+      "Trująca dla zwierząt",
+    ],
     image: zamiokulkas1,
   },
   {
@@ -307,7 +370,11 @@ const adviceData: CareAdvice[] = [
     fertilization: "Co 2 tygodnie w sezonie",
     pruning: "Przycinanie pnączy",
     pests: "Przędziorki, tarczniki",
-    tips: ["Lubi wysoką wilgotność", "Potrzebuje podpory do pnączy", "Regularnie czyść liście"],
+    tips: [
+      "Lubi wysoką wilgotność",
+      "Potrzebuje podpory do pnączy",
+      "Regularnie czyść liście",
+    ],
     image: monstera1,
   },
 ];
@@ -315,12 +382,12 @@ const adviceData: CareAdvice[] = [
 const advice = ref<CareAdvice | null>(null);
 
 const id = route.params.id as string;
-advice.value = adviceData.find(a => a.id.toString() === id) || null;
+advice.value = adviceData.find((a) => a.id.toString() === id) || null;
 
 if (!advice.value) {
-  throw createError({ 
-    statusCode: 404, 
-    statusMessage: 'Porada nie znaleziona' 
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Porada nie znaleziona",
   });
 }
 

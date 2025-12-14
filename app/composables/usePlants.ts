@@ -24,7 +24,8 @@ export const allPlants: Plant[] = [
     oldPrice: 119.99,
     discount: "-25%",
     size: "small",
-    description: "Malutki fikus o delikatnych, błyszczących liściach. Idealny do małych pomieszczeń, biurek i parapetów. Bardzo łatwy w pielęgnacji, wybacza drobne błędy w podlewaniu. Doskonały wybór dla początkujących miłośników roślin."
+    description:
+      "Malutki fikus o delikatnych, błyszczących liściach. Idealny do małych pomieszczeń, biurek i parapetów. Bardzo łatwy w pielęgnacji, wybacza drobne błędy w podlewaniu. Doskonały wybór dla początkujących miłośników roślin.",
   },
   {
     id: 2,
@@ -35,7 +36,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "large",
-    description: "Imponujący okaz fikusa o dużych, skórzastych liściach. Ta roślina stanie się centralnym punktem każdego salonu. Wyróżnia się szybkim wzrostem i wyjątkową wytrzymałością. Idealna do przestronnych wnętrz w stylu nowoczesnym."
+    description:
+      "Imponujący okaz fikusa o dużych, skórzastych liściach. Ta roślina stanie się centralnym punktem każdego salonu. Wyróżnia się szybkim wzrostem i wyjątkową wytrzymałością. Idealna do przestronnych wnętrz w stylu nowoczesnym.",
   },
   {
     id: 3,
@@ -46,7 +48,8 @@ export const allPlants: Plant[] = [
     oldPrice: 49.99,
     discount: "-30%",
     size: "small",
-    description: "Uroczy mini kaktus o kulistym kształcie i delikatnych cierniach. Perfekcyjny do małych doniczek na parapetach i półkach. Wymaga minimalnej pielęgnacji - doskonały dla zapracowanych osób. Latem może zakwitnąć małymi, żółtymi kwiatami."
+    description:
+      "Uroczy mini kaktus o kulistym kształcie i delikatnych cierniach. Perfekcyjny do małych doniczek na parapetach i półkach. Wymaga minimalnej pielęgnacji - doskonały dla zapracowanych osób. Latem może zakwitnąć małymi, żółtymi kwiatami.",
   },
   {
     id: 4,
@@ -57,7 +60,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "medium",
-    description: "Kaktus kolumnowy o szlachetnym wyglądzie i regularnych żeberkach. Jego pionowy pokrój dodaje elegancji każdemu wnętrzu. Bardzo wolno rośnie, co czyni go rośliną długowieczną. Idealny do minimalistycznych aranżacji."
+    description:
+      "Kaktus kolumnowy o szlachetnym wyglądzie i regularnych żeberkach. Jego pionowy pokrój dodaje elegancji każdemu wnętrzu. Bardzo wolno rośnie, co czyni go rośliną długowieczną. Idealny do minimalistycznych aranżacji.",
   },
   {
     id: 5,
@@ -68,7 +72,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "medium",
-    description: "Iglice o miękkich, zielonych igłach tworzących gęstą koronę. Wydziela przyjemny, leśny zapach. Doskonale oczyszcza powietrze i nawilża pomieszczenie. Łatwa w uprawie, toleruje różne warunki świetlne."
+    description:
+      "Iglice o miękkich, zielonych igłach tworzących gęstą koronę. Wydziela przyjemny, leśny zapach. Doskonale oczyszcza powietrze i nawilża pomieszczenie. Łatwa w uprawie, toleruje różne warunki świetlne.",
   },
   {
     id: 6,
@@ -79,7 +84,8 @@ export const allPlants: Plant[] = [
     oldPrice: 55.0,
     discount: "-18%",
     size: "small",
-    description: "Miniaturowa odmiana iglicy o zwartym, kulistym pokroju. Idealna do tworzenia kompozycji roślinnych i małych ogrodów w szkle. Wolno rosnąca, zachowuje kształt przez wiele lat. Doskonała do mieszkań i biur."
+    description:
+      "Miniaturowa odmiana iglicy o zwartym, kulistym pokroju. Idealna do tworzenia kompozycji roślinnych i małych ogrodów w szkle. Wolno rosnąca, zachowuje kształt przez wiele lat. Doskonała do mieszkań i biur.",
   },
   {
     id: 7,
@@ -90,7 +96,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "medium",
-    description: "Zamiokulkas o błyszczących, ciemnozielonych liściach układających się w regularne pióropusze. Znany jako 'żelazna roślina' ze względu na wyjątkową wytrzymałość. Doskonale radzi sobie w słabym świetle i przy nieregularnym podlewaniu."
+    description:
+      "Zamiokulkas o błyszczących, ciemnozielonych liściach układających się w regularne pióropusze. Znany jako 'żelazna roślina' ze względu na wyjątkową wytrzymałość. Doskonale radzi sobie w słabym świetle i przy nieregularnym podlewaniu.",
   },
   {
     id: 8,
@@ -101,7 +108,8 @@ export const allPlants: Plant[] = [
     oldPrice: 150.0,
     discount: "-20%",
     size: "large",
-    description: "Duży okaz zamiokulkasa o pnącym pokroju. Długie łodygi z mięsistymi liśćmi doskonale prezentują się w wiszących doniczkach. Bardzo efektywny w oczyszczaniu powietrza. Minimalne wymagania pielęgnacyjne."
+    description:
+      "Duży okaz zamiokulkasa o pnącym pokroju. Długie łodygi z mięsistymi liśćmi doskonale prezentują się w wiszących doniczkach. Bardzo efektywny w oczyszczaniu powietrza. Minimalne wymagania pielęgnacyjne.",
   },
   {
     id: 9,
@@ -112,7 +120,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "small",
-    description: "Aloes o grubych, mięsistych liściach wypełnionych leczniczym żelem. Nie tylko zdobi, ale też ma właściwości lecznicze - idealny do domowej apteczki. Łatwy w uprawie, preferuje słoneczne stanowiska. Doskonały do sypialni."
+    description:
+      "Aloes o grubych, mięsistych liściach wypełnionych leczniczym żelem. Nie tylko zdobi, ale też ma właściwości lecznicze - idealny do domowej apteczki. Łatwy w uprawie, preferuje słoneczne stanowiska. Doskonały do sypialni.",
   },
   {
     id: 10,
@@ -123,7 +132,8 @@ export const allPlants: Plant[] = [
     oldPrice: 42.99,
     discount: "-16%",
     size: "small",
-    description: "Kolorowy sukulent o rozetowym pokroju i liściach w odcieniach zieleni, różu i fioletu. Pod wpływem światła liście intensywnie się wybarwiają. Idealny do małych kompozycji i terrariów. Bardzo łatwy w pielęgnacji."
+    description:
+      "Kolorowy sukulent o rozetowym pokroju i liściach w odcieniach zieleni, różu i fioletu. Pod wpływem światła liście intensywnie się wybarwiają. Idealny do małych kompozycji i terrariów. Bardzo łatwy w pielęgnacji.",
   },
   {
     id: 11,
@@ -134,7 +144,8 @@ export const allPlants: Plant[] = [
     oldPrice: 159.99,
     discount: "-19%",
     size: "large",
-    description: "Klasyczna monstera o ogromnych, perforowanych liściach. Ikona stylu jungle, niezwykle modna w nowoczesnych wnętrzach. Szybko rośnie, tworząc imponujące pnącza. Wymaga więcej uwagi, ale efekt jest spektakularny."
+    description:
+      "Klasyczna monstera o ogromnych, perforowanych liściach. Ikona stylu jungle, niezwykle modna w nowoczesnych wnętrzach. Szybko rośnie, tworząc imponujące pnącza. Wymaga więcej uwagi, ale efekt jest spektakularny.",
   },
   {
     id: 12,
@@ -145,7 +156,8 @@ export const allPlants: Plant[] = [
     oldPrice: null,
     discount: null,
     size: "medium",
-    description: "Monstera o mniejszych, sercowatych liściach z licznymi okienkami. Doskonała do wiszących doniczek lub pnączy po podporach. Bardzo dekoracyjna, nadaje wnętrzom tropikalny charakter. Łatwiejsza w uprawie niż większe odmiany."
+    description:
+      "Monstera o mniejszych, sercowatych liściach z licznymi okienkami. Doskonała do wiszących doniczek lub pnączy po podporach. Bardzo dekoracyjna, nadaje wnętrzom tropikalny charakter. Łatwiejsza w uprawie niż większe odmiany.",
   },
 ];
 

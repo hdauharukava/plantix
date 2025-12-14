@@ -1,5 +1,8 @@
 <template>
-  <div v-if="!isLoading" class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
+  <div
+    v-if="!isLoading"
+    class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8"
+  >
     <div class="w-full max-w-5xl mb-8">
       <div>
         <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
@@ -38,8 +41,8 @@
                 <div
                   class="col-span-5 flex items-center space-x-4 mb-4 md:mb-0"
                 >
-                  <NuxtLink 
-                    :to="`/products/${item.id}`" 
+                  <NuxtLink
+                    :to="`/products/${item.id}`"
                     class="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-lg overflow-hidden"
                   >
                     <img
@@ -49,8 +52,8 @@
                     />
                   </NuxtLink>
                   <div class="flex-1 min-w-0">
-                    <NuxtLink 
-                      :to="`/products/${item.id}`" 
+                    <NuxtLink
+                      :to="`/products/${item.id}`"
                       class="block hover:text-[#90a88c] transition-colors"
                     >
                       <h3
@@ -82,8 +85,8 @@
                 </div>
 
                 <div class="hidden md:flex col-span-2 flex-col items-center">
-                  <NuxtLink 
-                    :to="`/products/${item.id}`" 
+                  <NuxtLink
+                    :to="`/products/${item.id}`"
                     class="flex flex-col items-center hover:text-[#90a88c] transition-colors"
                   >
                     <span class="font-bold text-lg text-[#1e1e1e]"
@@ -107,7 +110,9 @@
                       @click.stop="decreaseQuantity(item.id)"
                       class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
                       :disabled="item.quantity <= 1"
-                      :class="{ 'opacity-50 cursor-not-allowed': item.quantity <= 1 }"
+                      :class="{
+                        'opacity-50 cursor-not-allowed': item.quantity <= 1,
+                      }"
                     >
                       <svg
                         class="w-4 h-4 text-gray-600"
@@ -279,7 +284,7 @@
       </div>
     </div>
   </div>
-  
+
   <div v-else class="min-h-screen flex items-center justify-center">
     <div class="text-center">
       <div

@@ -1,5 +1,8 @@
 <template>
-  <div v-if="!isLoading" class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
+  <div
+    v-if="!isLoading"
+    class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8"
+  >
     <div class="w-full max-w-5xl mb-8">
       <div>
         <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">

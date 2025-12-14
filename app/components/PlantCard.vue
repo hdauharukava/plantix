@@ -12,7 +12,7 @@
           />
         </div>
       </NuxtLink>
-      
+
       <div
         v-if="discount"
         class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded"
@@ -52,8 +52,8 @@
     </div>
 
     <div class="p-4">
-      <NuxtLink 
-        :to="`/products/${id}`" 
+      <NuxtLink
+        :to="`/products/${id}`"
         class="block hover:text-[#90a88c] transition-colors"
       >
         <p class="text-xs text-gray-500 mb-1">{{ category }}</p>
@@ -62,9 +62,9 @@
 
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap"
-            >{{ formatPrice(price) }}</span
-          >
+          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap">{{
+            formatPrice(price)
+          }}</span>
           <span
             v-if="oldPrice"
             class="text-sm text-gray-500 line-through whitespace-nowrap"
@@ -72,14 +72,14 @@
             {{ formatPrice(oldPrice) }}
           </span>
         </div>
-        
+
         <div class="md:hidden">
           <span class="text-xs px-2 py-1 bg-gray-100 rounded text-gray-600">
             {{ getSizeName(size) }}
           </span>
         </div>
       </div>
-      
+
       <button
         @click="addToCart"
         class="w-full md:hidden mt-4 bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm rounded-full px-4 py-2 transition-colors font-bold"
@@ -134,7 +134,7 @@ const getSizeName = (size) => {
   const sizes = {
     small: "Mały",
     medium: "Średni",
-    large: "Duży"
+    large: "Duży",
   };
   return sizes[size] || size;
 };
@@ -151,7 +151,7 @@ onMounted(() => {
 const toggleFavorite = (event) => {
   event.preventDefault();
   event.stopPropagation();
-  
+
   let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
   if (isFavorite.value) {
@@ -169,7 +169,7 @@ const toggleFavorite = (event) => {
 const addToCart = (event) => {
   event.preventDefault();
   event.stopPropagation();
-  
+
   let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
   // Проверяем, есть ли уже товар в корзине
@@ -185,7 +185,7 @@ const addToCart = (event) => {
       title: props.title,
       price: props.price,
       image: props.image,
-      quantity: 1
+      quantity: 1,
     });
   }
 

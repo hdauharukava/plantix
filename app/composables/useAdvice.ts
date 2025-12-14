@@ -17,14 +17,19 @@ export const useAdvice = () => {
       slug: "jak-dbac-o-fikusa",
       difficulty: "średnia",
       light: "Rozproszone światło, unikać bezpośredniego słońca",
-      watering: "Umiarkowane podlewanie, gdy wierzchnia warstwa gleby przeschnie",
+      watering:
+        "Umiarkowane podlewanie, gdy wierzchnia warstwa gleby przeschnie",
       soil: "Przepuszczalna ziemia do roślin doniczkowych",
       temperature: "18-24°C",
       humidity: "Średnia, 40-50%",
       fertilization: "Co 2 tygodnie wiosną i latem",
       pruning: "Przycinanie wiosną dla kształtu",
       pests: "Przędziorki, mszyce",
-      tips: ["Unikaj przeciągów", "Przesadzaj co 2-3 lata", "Regularnie przecieraj liście"],
+      tips: [
+        "Unikaj przeciągów",
+        "Przesadzaj co 2-3 lata",
+        "Regularnie przecieraj liście",
+      ],
       image: fikus1,
     },
     {
@@ -41,7 +46,11 @@ export const useAdvice = () => {
       fertilization: "Raz w miesiącu w sezonie wegetacyjnym",
       pruning: "Rzadko potrzebne",
       pests: "Wełnowce, tarczniki",
-      tips: ["Zimą zapewnij okres spoczynku", "Unikaj przelania", "Sadź w doniczkach z otworami"],
+      tips: [
+        "Zimą zapewnij okres spoczynku",
+        "Unikaj przelania",
+        "Sadź w doniczkach z otworami",
+      ],
       image: kaktus1,
     },
     {
@@ -58,7 +67,11 @@ export const useAdvice = () => {
       fertilization: "Co 3-4 tygodnie w sezonie",
       pruning: "Wiosenne przycinanie",
       pests: "Przędziorki, wciornastki",
-      tips: ["Lubi zraszanie liści", "Unikaj stojącej wody", "Regularnie obracaj dla równomiernego wzrostu"],
+      tips: [
+        "Lubi zraszanie liści",
+        "Unikaj stojącej wody",
+        "Regularnie obracaj dla równomiernego wzrostu",
+      ],
       image: iglica1,
     },
     {
@@ -75,7 +88,11 @@ export const useAdvice = () => {
       fertilization: "Raz na 2 miesiące",
       pruning: "Usuwanie żółtych liści",
       pests: "Rzadko atakowany",
-      tips: ["Bardzo wytrzymała roślina", "Idealna dla początkujących", "Trująca dla zwierząt"],
+      tips: [
+        "Bardzo wytrzymała roślina",
+        "Idealna dla początkujących",
+        "Trująca dla zwierząt",
+      ],
       image: zamiokulkas1,
     },
     {
@@ -109,17 +126,21 @@ export const useAdvice = () => {
       fertilization: "Co 2 tygodnie w sezonie",
       pruning: "Przycinanie pnączy",
       pests: "Przędziorki, tarczniki",
-      tips: ["Lubi wysoką wilgotność", "Potrzebuje podpory do pnączy", "Regularnie czyść liście"],
+      tips: [
+        "Lubi wysoką wilgotność",
+        "Potrzebuje podpory do pnączy",
+        "Regularnie czyść liście",
+      ],
       image: monstera1,
     },
   ]);
 
   const getAdviceBySlug = (slug: string) => {
-    return allAdvice.value.find(advice => advice.slug === slug) || null;
+    return allAdvice.value.find((advice) => advice.slug === slug) || null;
   };
 
   return {
     allAdvice,
-    getAdviceBySlug
+    getAdviceBySlug,
   };
 };

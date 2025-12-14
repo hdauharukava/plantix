@@ -1,5 +1,8 @@
 <template>
-  <div v-if="!isLoading" class="flex flex-col items-center px-8 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8">
+  <div
+    v-if="!isLoading"
+    class="flex flex-col items-center px-8 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8"
+  >
     <div class="w-full max-w-5xl mb-6 md:mb-8">
       <div>
         <h1
