@@ -26,11 +26,12 @@
       >
         Płatność i dostawa
       </button>
-      <button
+      <NuxtLink
+        to="/contact"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Kontakt
-      </button>
+      </NuxtLink>
     </div>
 
     <div class="flex items-center space-x-6">
@@ -136,11 +137,12 @@
         >
           Płatność i dostawa
         </button>
-        <button
+        <NuxtLink
+        to="/contact"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
           Kontakt
-        </button>
+        </NuxtLink>
 
         <div
           class="flex items-center justify-around mt-4 pt-4 border-t border-gray-200 md:hidden"
