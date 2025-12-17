@@ -21,11 +21,12 @@
       >
         Porady dotyczące pielęgnacji
       </NuxtLink>
-      <button
+      <NuxtLink
+        to="/delivery"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
       >
         Płatność i dostawa
-      </button>
+      </NuxtLink>
       <NuxtLink
         to="/contact"
         class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-1 text-sm cursor-pointer whitespace-nowrap"
@@ -132,13 +133,14 @@
         >
           Porady
         </NuxtLink>
-        <button
+        <NuxtLink
+          to="/delivery"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
           Płatność i dostawa
-        </button>
+        </NuxtLink>
         <NuxtLink
-        to="/contact"
+          to="/contact"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer"
         >
           Kontakt
