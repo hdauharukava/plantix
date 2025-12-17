@@ -16,17 +16,14 @@
     </div>
 
     <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-8">
-      <!-- Main Content -->
       <div class="lg:w-2/3">
         <div class="space-y-8">
-          <!-- Payment Methods -->
           <div class="bg-white rounded-lg shadow-sm p-6">
             <h2 class="font-poppins font-bold text-lg mb-6">
               Metody płatności
             </h2>
 
             <div class="space-y-6">
-              <!-- Online Payment -->
               <div
                 class="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors"
               >
@@ -85,7 +82,6 @@
                 </div>
               </div>
 
-              <!-- Cash on Delivery -->
               <div
                 class="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors"
               >
@@ -126,7 +122,6 @@
                 </div>
               </div>
 
-              <!-- Bank Transfer -->
               <div
                 class="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors"
               >
@@ -186,10 +181,8 @@
         </div>
       </div>
 
-      <!-- Sidebar -->
       <div class="lg:w-1/3">
         <div class="space-y-8">
-          <!-- Important Information -->
           <div class="bg-white rounded-lg shadow-sm p-6">
             <h2 class="font-poppins font-bold text-lg mb-6">
               Ważne informacje
@@ -273,7 +266,6 @@
             </div>
           </div>
 
-          <!-- Delivery Times -->
           <div class="bg-white rounded-lg shadow-sm p-6">
             <h2 class="font-poppins font-bold text-lg mb-6">
               Czasy realizacji
@@ -316,13 +308,9 @@
       </div>
     </div>
     <div class="w-full max-w-5xl mb-8 mt-8 space-y-8">
-      <!-- Delivery Methods -->
-      <!-- Delivery Methods - Horizontal Layout -->
       <div class="bg-white rounded-lg shadow-sm p-6">
         <h2 class="font-poppins font-bold text-lg mb-6">Metody dostawy</h2>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Courier -->
           <div
             class="border border-gray-100 rounded-lg p-5 hover:border-gray-200 transition-colors"
           >
@@ -372,7 +360,6 @@
             </div>
           </div>
 
-          <!-- Paczkomat -->
           <div
             class="border border-gray-100 rounded-lg p-5 hover:border-gray-200 transition-colors"
           >
@@ -419,7 +406,6 @@
             </div>
           </div>
 
-          <!-- Store Pickup -->
           <div
             class="border border-gray-100 rounded-lg p-5 hover:border-gray-200 transition-colors"
           >
@@ -474,7 +460,6 @@
           </div>
         </div>
       </div>
-      <!-- FAQ -->
       <div class="bg-white rounded-lg shadow-sm p-6">
         <h2 class="font-poppins font-bold text-lg mb-6">Najczęstsze pytania</h2>
 

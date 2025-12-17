@@ -172,14 +172,11 @@ const addToCart = (event) => {
 
   let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-  // Проверяем, есть ли уже товар в корзине
   const existingItem = cart.find((item) => item.id === props.id);
 
   if (existingItem) {
-    // Увеличиваем количество
     existingItem.quantity += 1;
   } else {
-    // Добавляем новый товар
     cart.push({
       id: props.id,
       title: props.title,
@@ -191,10 +188,8 @@ const addToCart = (event) => {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Эмитим событие для обновления корзины
   window.dispatchEvent(new CustomEvent("cartUpdated"));
 
-  // Можно добавить уведомление
   console.log("Dodano do koszyka:", props.title);
 };
 </script>
