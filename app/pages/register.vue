@@ -2,7 +2,7 @@
   <div v-if="!isLoading" class="min-h-screen flex flex-col">
     <Navbar />
     <Layout>
-      <div class="w-full max-w-sm mx-auto sm: px-6 px-4 py-6">
+      <div class="w-full max-w-sm mx-auto sm:px-6 px-4 py-6">
         <h1 class="mb-6 text-xl text-center">Załóż konto</h1>
 
         <UForm :state="state" @submit="onSubmit" class="space-y-4">
@@ -14,8 +14,17 @@
                 type="email"
                 required
                 class="w-full custom-focus"
+                autocomplete="email"
+                @blur="validateEmail"
+                @input="clearError('email')"
+                :ui="{
+                  base: errors.email ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                }"
               />
             </div>
+            <p v-if="!errors.email && state.email" class="text-xs text-green-600 mt-1">
+              ✓ Poprawny format email
+            </p>
           </UFormField>
 
           <UFormField
@@ -31,6 +40,12 @@
                 :type="showPassword ? 'text' : 'password'"
                 required
                 class="w-full custom-focus"
+                autocomplete="new-password"
+                @blur="validatePassword"
+                @input="clearError('password')"
+                :ui="{
+                  base: errors.password ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                }"
               >
                 <template #trailing>
                   <UButton
@@ -54,8 +69,15 @@
               </UInput>
             </div>
 
-            <div class="mt-2">
-              <div class="w-full bg-gray-200 rounded-full h-1.5">
+            <div v-if="state.password" class="mt-2">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-gray-600">Siła hasła:</span>
+                <span class="text-xs font-medium" :class="passwordStrengthTextClass">
+                  {{ passwordStrengthText }}
+                </span>
+              </div>
+              
+              <div class="w-full bg-gray-200 rounded-full h-1.5 mb-3">
                 <div
                   class="h-1.5 rounded-full transition-all duration-300"
                   :class="passwordStrengthClass"
@@ -63,14 +85,7 @@
                 ></div>
               </div>
 
-              <p
-                class="text-xs font-medium mt-1"
-                :class="passwordStrengthTextClass"
-              >
-                {{ passwordStrengthText }}
-              </p>
-
-              <ul class="space-y-0.5 mt-2 text-xs">
+              <ul class="space-y-1.5 mt-2 text-xs">
                 <li
                   v-for="(req, index) in passwordRequirements"
                   :key="index"
@@ -82,10 +97,10 @@
                         ? 'i-heroicons-check-circle'
                         : 'i-heroicons-x-circle'
                     "
-                    class="w-3 h-3 shrink-0"
-                    :class="req.met ? 'text-[#90a88c]' : 'text-gray-400'"
+                    class="w-3.5 h-3.5 shrink-0"
+                    :class="req.met ? 'text-green-500' : 'text-gray-400'"
                   />
-                  <span :class="req.met ? 'text-[#90a88c]' : 'text-gray-400'">
+                  <span :class="req.met ? 'text-green-600' : 'text-gray-600'">
                     {{ req.text }}
                   </span>
                 </li>
@@ -103,22 +118,55 @@
               <UInput
                 id="confirmPassword"
                 v-model="state.confirmPassword"
-                type="password"
+                :type="showConfirmPassword ? 'text' : 'password'"
                 required
                 class="w-full custom-focus"
-              />
+                autocomplete="new-password"
+                @blur="validateConfirmPassword"
+                @input="clearError('confirmPassword')"
+                :ui="{
+                  base: errors.confirmPassword ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                }"
+              >
+                <template #trailing>
+                  <UButton
+                    type="button"
+                    @click="showConfirmPassword = !showConfirmPassword"
+                    variant="ghost"
+                    color="neutral"
+                    :padded="false"
+                    class="mr-1"
+                  >
+                    <UIcon
+                      :name="
+                        showConfirmPassword
+                          ? 'i-heroicons-eye-slash'
+                          : 'i-heroicons-eye'
+                      "
+                      class="w-4 h-4 text-gray-400 hover:text-gray-500"
+                    />
+                  </UButton>
+                </template>
+              </UInput>
             </div>
+            <p v-if="!errors.confirmPassword && state.confirmPassword && passwordsMatch" class="text-xs text-green-600 mt-1">
+              ✓ Hasła są identyczne
+            </p>
           </UFormField>
 
-          <UFormField name="rodo">
+          <UFormField name="rodo" :error="errors.rodo">
             <div class="flex items-start space-x-2">
               <UCheckbox
                 id="rodo"
                 v-model="state.acceptedRODO"
                 required
                 color="primary"
-                label="Akceptuję warunki RODO"
+                @change="clearError('rodo')"
               />
+              <label for="rodo" class="text-sm text-gray-700 leading-tight">
+                Akceptuję warunki RODO
+                <span class="text-red-500">*</span>
+              </label>
             </div>
           </UFormField>
 
@@ -126,11 +174,16 @@
             <UButton
               type="submit"
               class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm font-medium rounded-full px-8 py-2.5 cursor-pointer transition-colors duration-200 font-bold"
+              :disabled="!isFormValid"
             >
               Zarejestruj się
             </UButton>
           </div>
         </UForm>
+
+        <div v-if="generalError" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-sm text-red-600 text-center">{{ generalError }}</p>
+        </div>
 
         <p class="mt-6 text-center text-xs">
           Już masz konto?
@@ -152,9 +205,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed, ref } from "vue";
+import { reactive, computed, ref, watch } from "vue";
+import { useRouter } from "#app";
 
+const router = useRouter();
 const isLoading = ref(false);
+const generalError = ref("");
 
 interface FormState {
   email: string;
@@ -167,6 +223,7 @@ interface FormErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  rodo?: string;
 }
 
 const state = reactive<FormState>({
@@ -178,91 +235,233 @@ const state = reactive<FormState>({
 
 const errors = reactive<FormErrors>({});
 const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
-const passwordRequirements = computed(() => {
-  const requirements = [
-    { regex: /.{8,}/, text: "Przynajmniej 8 znaków" },
-    { regex: /\d/, text: "Przynajmniej 1 cyfra" },
-    { regex: /[a-z]/, text: "Przynajmniej 1 mała litera" },
-    { regex: /[A-Z]/, text: "Przynajmniej 1 duża litera" },
-  ];
-
-  return requirements.map((req) => ({
-    met: req.regex.test(state.password),
-    text: req.text,
-  }));
+const passwordsMatch = computed(() => {
+  return state.password && state.confirmPassword && state.password === state.confirmPassword;
 });
 
-const passwordStrengthScore = computed(
-  () => passwordRequirements.value.filter((req) => req.met).length,
-);
-const passwordStrengthPercent = computed(
-  () => (passwordStrengthScore.value / passwordRequirements.value.length) * 100,
-);
+const isFormValid = computed(() => {
+  return state.email && state.password && state.confirmPassword && 
+         state.acceptedRODO &&
+         !errors.email && !errors.password && !errors.confirmPassword && !errors.rodo &&
+         validateEmailFormat(state.email) &&
+         passwordsMatch.value;
+});
+
+const passwordRequirements = computed(() => {
+  return [
+    { 
+      regex: /.{8,}/, 
+      text: "Minimum 8 znaków",
+      met: state.password.length >= 8 
+    },
+    { 
+      regex: /\d/, 
+      text: "Przynajmniej 1 cyfra",
+      met: /\d/.test(state.password) 
+    },
+    { 
+      regex: /[a-z]/, 
+      text: "Przynajmniej 1 mała litera",
+      met: /[a-z]/.test(state.password) 
+    },
+    { 
+      regex: /[A-Z]/, 
+      text: "Przynajmniej 1 duża litera",
+      met: /[A-Z]/.test(state.password) 
+    },
+    { 
+      regex: /[!@#$%^&*(),.?":{}|<>]/, 
+      text: "Przynajmniej 1 znak specjalny",
+      met: /[!@#$%^&*(),.?":{}|<>]/.test(state.password) 
+    },
+  ];
+});
+
+const passwordStrengthScore = computed(() => {
+  if (!state.password) return 0;
+  return passwordRequirements.value.filter(req => req.met).length;
+});
+
+const passwordStrengthPercent = computed(() => {
+  return (passwordStrengthScore.value / passwordRequirements.value.length) * 100;
+});
 
 const passwordStrengthClass = computed(() => {
-  if (passwordStrengthScore.value === 0) return "bg-gray-400";
-  if (passwordStrengthScore.value <= 2) return "bg-[#b31e1e]";
-  if (passwordStrengthScore.value === 3) return "bg-[#e5b609]";
-  return "bg-[#90a88c]";
+  if (passwordStrengthScore.value === 0) return "bg-gray-300";
+  if (passwordStrengthScore.value <= 2) return "bg-red-500";
+  if (passwordStrengthScore.value <= 3) return "bg-yellow-500";
+  if (passwordStrengthScore.value <= 4) return "bg-blue-500";
+  return "bg-green-500";
 });
 
 const passwordStrengthText = computed(() => {
   if (passwordStrengthScore.value === 0) return "Wprowadź hasło";
-  if (passwordStrengthScore.value <= 2) return "Słabe hasło";
-  if (passwordStrengthScore.value === 3) return "Średnie hasło";
-  return "Silne hasło";
+  if (passwordStrengthScore.value <= 2) return "Bardzo słabe";
+  if (passwordStrengthScore.value === 3) return "Słabe";
+  if (passwordStrengthScore.value === 4) return "Średnie";
+  return "Silne";
 });
 
 const passwordStrengthTextClass = computed(() => {
   if (passwordStrengthScore.value === 0) return "text-gray-500";
-  if (passwordStrengthScore.value <= 2) return "text-[#b31e1e]";
-  if (passwordStrengthScore.value === 3) return "text-[#e5b609]";
-  return "text-[#90a88c]";
+  if (passwordStrengthScore.value <= 2) return "text-red-600";
+  if (passwordStrengthScore.value === 3) return "text-yellow-600";
+  if (passwordStrengthScore.value === 4) return "text-blue-600";
+  return "text-green-600";
 });
 
-function validateForm() {
-  Object.keys(errors).forEach((key) => delete errors[key as keyof FormErrors]);
-  let isValid = true;
-
-  if (!state.email) {
+const validateEmail = () => {
+  if (!state.email.trim()) {
     errors.email = "Email jest wymagany";
-    isValid = false;
-  } else if (!/\S+@\S+\.\S+/.test(state.email)) {
-    errors.email = "Nieprawidłowy email";
-    isValid = false;
+    return false;
   }
+  
+  if (!validateEmailFormat(state.email)) {
+    errors.email = "Nieprawidłowy format email (np. przyklad@domena.pl)";
+    return false;
+  }
+  
+  errors.email = undefined;
+  return true;
+};
 
+const validateEmailFormat = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = () => {
   if (!state.password) {
     errors.password = "Hasło jest wymagane";
-    isValid = false;
-  } else if (state.password.length < 8) {
-    errors.password = "Hasło musi mieć co najmniej 8 znaków";
-    isValid = false;
+    return false;
   }
+  
+  if (state.password.length < 8) {
+    errors.password = "Hasło musi mieć co najmniej 8 znaków";
+    return false;
+  }
+  
+  const hasUpperCase = /[A-Z]/.test(state.password);
+  const hasLowerCase = /[a-z]/.test(state.password);
+  const hasNumbers = /\d/.test(state.password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(state.password);
+  
+  if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
+    errors.password = "Hasło musi zawierać duże i małe litery oraz cyfry";
+    return false;
+  }
+  
+  errors.password = undefined;
+  return true;
+};
 
+const validateConfirmPassword = () => {
   if (!state.confirmPassword) {
     errors.confirmPassword = "Potwierdzenie hasła jest wymagane";
-    isValid = false;
-  } else if (state.password !== state.confirmPassword) {
-    errors.confirmPassword = "Hasła nie są identyczne";
-    isValid = false;
+    return false;
   }
+  
+  if (state.password !== state.confirmPassword) {
+    errors.confirmPassword = "Hasła nie są identyczne";
+    return false;
+  }
+  
+  errors.confirmPassword = undefined;
+  return true;
+};
 
-  return isValid;
+const clearError = (field: keyof FormErrors) => {
+  errors[field] = undefined;
+  generalError.value = "";
+};
+
+const validateRODO = () => {
+  if (!state.acceptedRODO) {
+    errors.rodo = "Musisz zaakceptować warunki RODO";
+    return false;
+  }
+  
+  errors.rodo = undefined;
+  return true;
+};
+
+function validateForm() {
+  const emailValid = validateEmail();
+  const passwordValid = validatePassword();
+  const confirmPasswordValid = validateConfirmPassword();
+  const rodoValid = validateRODO();
+  
+  return emailValid && passwordValid && confirmPasswordValid && rodoValid;
 }
+
+watch(() => state.email, (newEmail) => {
+  if (newEmail && !validateEmailFormat(newEmail)) {
+    errors.email = "Nieprawidłowy format email";
+  } else {
+    errors.email = undefined;
+  }
+});
+
+watch(() => state.password, (newPassword) => {
+  if (newPassword && newPassword.length < 8) {
+    errors.password = "Hasło musi mieć co najmniej 8 znaków";
+  } else {
+    errors.password = undefined;
+  }
+  
+  if (state.confirmPassword && newPassword !== state.confirmPassword) {
+    errors.confirmPassword = "Hasła nie są identyczne";
+  } else if (state.confirmPassword) {
+    errors.confirmPassword = undefined;
+  }
+});
+
+watch(() => state.confirmPassword, (newConfirmPassword) => {
+  if (newConfirmPassword && state.password !== newConfirmPassword) {
+    errors.confirmPassword = "Hasła nie są identyczne";
+  } else if (newConfirmPassword) {
+    errors.confirmPassword = undefined;
+  }
+});
+
+watch(() => state.acceptedRODO, (newValue) => {
+  if (newValue) {
+    errors.rodo = undefined;
+  }
+});
 
 async function onSubmit() {
   if (!validateForm()) return;
 
   try {
-    console.log("Registration data:", state);
+    isLoading.value = true;
+    
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    localStorage.setItem("user", JSON.stringify({ email: state.email }));
-    alert("Rejestracja zakończona sukcesem!");
+    
+    const existingUser = localStorage.getItem("user");
+    if (existingUser) {
+      const user = JSON.parse(existingUser);
+      if (user.email === state.email) {
+        generalError.value = "Użytkownik z tym adresem email już istnieje";
+        return;
+      }
+    }
+    
+    localStorage.setItem("user", JSON.stringify({ 
+      email: state.email, 
+      password: state.password 
+    }));
+    
+    alert("Rejestracja zakończona sukcesem! Teraz możesz się zalogować.");
+    await router.push("/login");
+    
   } catch (error) {
     console.error("Registration error:", error);
-    alert("Wystąpił błąd podczas rejestracji. Spróbuj ponownie.");
+    generalError.value = "Wystąpił błąd podczas rejestracji. Spróbuj ponownie.";
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>
@@ -270,5 +469,10 @@ async function onSubmit() {
 <style scoped>
 :deep(.custom-focus input:focus) {
   --tw-ring-color: #90a88c !important;
+}
+
+:deep(.custom-focus input[aria-invalid="true"]) {
+  --tw-ring-color: #ef4444 !important;
+  border-color: #ef4444 !important;
 }
 </style>
