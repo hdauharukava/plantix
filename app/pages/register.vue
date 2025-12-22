@@ -173,7 +173,7 @@
           <div class="flex justify-center pt-4">
             <UButton
               type="submit"
-              class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm font-medium rounded-full px-8 py-2.5 cursor-pointer transition-colors duration-200 font-bold"
+              class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] disabled:bg-[#90a88c] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-full px-8 py-2.5 cursor-pointer transition-colors duration-200 font-bold"
               :disabled="!isFormValid"
             >
               Zarejestruj się

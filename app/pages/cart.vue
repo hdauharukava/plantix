@@ -101,7 +101,6 @@
                   </NuxtLink>
                 </div>
 
-                <!-- Кнопки управления количеством и удалением -->
                 <div
                   class="col-span-3 flex items-center justify-between md:justify-center md:space-x-4"
                 >
