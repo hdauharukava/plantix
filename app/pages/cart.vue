@@ -295,104 +295,103 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { allPlants } from "@/composables/usePlants";
-import type { Plant } from "@/types/plants";
+import { ref, computed, onMounted } from "vue"
+import { usePlantData } from "@/composables/usePlantData"
+import type { Plant } from "@/composables/usePlantData"
 
-const isLoading = ref(false);
+const { getPlantById, getAllSizes } = usePlantData()
+const sizes = getAllSizes()
+
+const isLoading = ref(false)
 
 interface CartItem extends Plant {
-  quantity: number;
+  quantity: number
 }
 
-const cartItems = ref<CartItem[]>([]);
+const cartItems = ref<CartItem[]>([])
 
 const loadCart = () => {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]")
   cartItems.value = cart
     .map((item: { id: number; quantity: number }) => {
-      const plant = allPlants.find((p) => p.id === item.id);
+      const plant = getPlantById(item.id)
       if (plant) {
         return {
           ...plant,
           quantity: item.quantity,
-        };
+        }
       }
-      return null;
+      return null
     })
-    .filter(Boolean) as CartItem[];
-};
+    .filter(Boolean) as CartItem[]
+}
 
 const saveCart = () => {
   const cart = cartItems.value.map((item) => ({
     id: item.id,
     quantity: item.quantity,
-  }));
-  localStorage.setItem("cart", JSON.stringify(cart));
+  }))
+  localStorage.setItem("cart", JSON.stringify(cart))
 
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event("cartUpdated"));
-    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("cartUpdated"))
+    window.dispatchEvent(new Event("storage"))
   }
-};
+}
 
 const getSizeName = (size: string) => {
-  const sizeNames: Record<string, string> = {
-    small: "Mały",
-    medium: "Średni",
-    large: "Duży",
-  };
-  return sizeNames[size] || size;
-};
+  const sizeObj = sizes.find(s => s.id === size)
+  return sizeObj ? sizeObj.name : size
+}
 
 const increaseQuantity = (id: number) => {
-  const item = cartItems.value.find((item) => item.id === id);
+  const item = cartItems.value.find((item) => item.id === id)
   if (item) {
-    item.quantity++;
-    saveCart();
+    item.quantity++
+    saveCart()
   }
-};
+}
 
 const decreaseQuantity = (id: number) => {
-  const item = cartItems.value.find((item) => item.id === id);
+  const item = cartItems.value.find((item) => item.id === id)
   if (item && item.quantity > 1) {
-    item.quantity--;
-    saveCart();
+    item.quantity--
+    saveCart()
   }
-};
+}
 
 const removeFromCart = (id: number) => {
-  cartItems.value = cartItems.value.filter((item) => item.id !== id);
-  saveCart();
-};
+  cartItems.value = cartItems.value.filter((item) => item.id !== id)
+  saveCart()
+}
 
 const proceedToCheckout = () => {
-  alert("Przechodzisz do kasy!");
-};
+  alert("Przechodzisz do kasy!")
+}
 
 const totalItems = computed(() => {
-  return cartItems.value.reduce((total, item) => total + item.quantity, 0);
-});
+  return cartItems.value.reduce((total, item) => total + item.quantity, 0)
+})
 
 const subtotal = computed(() => {
   return cartItems.value.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
-  );
-});
+  )
+})
 
 const shippingCost = computed(() => {
-  return subtotal.value > 200 ? 0 : 19.99;
-});
+  return subtotal.value > 200 ? 0 : 19.99
+})
 
 const totalPrice = computed(() => {
-  return subtotal.value + shippingCost.value;
-});
+  return subtotal.value + shippingCost.value
+})
 
 onMounted(() => {
-  loadCart();
-  window.addEventListener("cartUpdated", loadCart);
-});
+  loadCart()
+  window.addEventListener("cartUpdated", loadCart)
+})
 </script>
 
 <style scoped>

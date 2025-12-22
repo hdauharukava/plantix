@@ -1,94 +1,78 @@
-// composables/usePlantFilters.ts
-import { ref, computed, type Ref } from "vue";
-import type {
-  Plant,
-  Category,
-  Size,
-  PriceRange,
-  SortOption,
-} from "@/types/plants";
+import { ref, computed, watch } from 'vue'
+import type { Ref } from 'vue'
+import type { Plant } from './usePlantData'
 
-export const usePlantFilters = (plantsList: Ref<Plant[]>) => {
-  const selectedCategories = ref<string[]>([]);
-  const selectedSizes = ref<Size["id"][]>([]);
-  const priceRange = ref<PriceRange>({ min: null, max: null });
-  const sortBy = ref<SortOption>("name");
+interface PriceRange {
+  min: number | null
+  max: number | null
+}
+
+export const usePlantFilters = (plants: Ref<Plant[]>) => {
+  const selectedCategories = ref<string[]>([])
+  const selectedSizes = ref<string[]>([])
+  const priceRange = ref<PriceRange>({ min: null, max: null })
+  const sortBy = ref<string>('name')
 
   const filteredPlants = computed(() => {
-    let filtered = plantsList.value;
+    let filtered = [...plants.value]
 
     if (selectedCategories.value.length > 0) {
       filtered = filtered.filter((plant) =>
-        selectedCategories.value.includes(plant.category),
-      );
+        selectedCategories.value.includes(plant.category)
+      )
     }
 
     if (selectedSizes.value.length > 0) {
       filtered = filtered.filter((plant) =>
-        selectedSizes.value.includes(plant.size),
-      );
+        selectedSizes.value.includes(plant.size)
+      )
     }
 
-    // Преобразуем значения перед сравнением
-    const minPrice =
-      priceRange.value.min !== null && priceRange.value.min !== ""
-        ? Number(priceRange.value.min)
-        : null;
-    const maxPrice =
-      priceRange.value.max !== null && priceRange.value.max !== ""
-        ? Number(priceRange.value.max)
-        : null;
-
-    if (minPrice !== null && !isNaN(minPrice)) {
-      filtered = filtered.filter((plant) => plant.price >= minPrice);
+    if (priceRange.value.min !== null) {
+      filtered = filtered.filter(
+        (plant) => plant.price >= priceRange.value.min!
+      )
     }
 
-    if (maxPrice !== null && !isNaN(maxPrice)) {
-      filtered = filtered.filter((plant) => plant.price <= maxPrice);
+    if (priceRange.value.max !== null) {
+      filtered = filtered.filter(
+        (plant) => plant.price <= priceRange.value.max!
+      )
     }
 
-    filtered = [...filtered].sort((a, b) => {
-      switch (sortBy.value) {
-        case "name":
-          return a.title.localeCompare(b.title);
-        case "name-desc":
-          return b.title.localeCompare(a.title);
-        case "price":
-          return a.price - b.price;
-        case "price-desc":
-          return b.price - a.price;
-        default:
-          return 0;
-      }
-    });
+    switch (sortBy.value) {
+      case 'name':
+        filtered.sort((a, b) => a.title.localeCompare(b.title))
+        break
+      case 'name-desc':
+        filtered.sort((a, b) => b.title.localeCompare(a.title))
+        break
+      case 'price':
+        filtered.sort((a, b) => a.price - b.price)
+        break
+      case 'price-desc':
+        filtered.sort((a, b) => b.price - a.price)
+        break
+    }
 
-    return filtered;
-  });
+    return filtered
+  })
 
   const hasActiveFilters = computed(() => {
-    const minPrice =
-      priceRange.value.min !== null && priceRange.value.min !== ""
-        ? Number(priceRange.value.min)
-        : null;
-    const maxPrice =
-      priceRange.value.max !== null && priceRange.value.max !== ""
-        ? Number(priceRange.value.max)
-        : null;
-
     return (
       selectedCategories.value.length > 0 ||
       selectedSizes.value.length > 0 ||
-      (minPrice !== null && !isNaN(minPrice)) ||
-      (maxPrice !== null && !isNaN(maxPrice))
-    );
-  });
+      priceRange.value.min !== null ||
+      priceRange.value.max !== null
+    )
+  })
 
   const resetFilters = () => {
-    selectedCategories.value = [];
-    selectedSizes.value = [];
-    priceRange.value = { min: null, max: null };
-    sortBy.value = "name";
-  };
+    selectedCategories.value = []
+    selectedSizes.value = []
+    priceRange.value = { min: null, max: null }
+    sortBy.value = 'name'
+  }
 
   return {
     selectedCategories,
@@ -98,5 +82,5 @@ export const usePlantFilters = (plantsList: Ref<Plant[]>) => {
     filteredPlants,
     hasActiveFilters,
     resetFilters,
-  };
-};
+  }
+}

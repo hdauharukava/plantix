@@ -275,54 +275,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { allPlants } from "@/composables/usePlants";
-import type { Plant } from "@/types/plants";
-import PlantCard from "@/components/PlantCard.vue";
+import { ref, computed, onMounted } from "vue"
+import { usePlantData } from "@/composables/usePlantData"
+import type { Plant } from "@/composables/usePlantData"
+import PlantCard from "@/components/PlantCard.vue"
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
 
-const plant = ref<Plant | null>(null);
-const selectedImage = ref<string>("");
-const isFavorite = ref(false);
+const { getPlantById, getSimilarPlants, getAllSizes } = usePlantData()
+const sizes = getAllSizes()
 
-const id = parseInt(route.params.id as string);
-plant.value = allPlants.find((p) => p.id === id) || null;
+const plant = ref<Plant | null>(null)
+const selectedImage = ref<string>("")
+const isFavorite = ref(false)
+
+const id = parseInt(route.params.id as string)
+plant.value = getPlantById(id)
 
 if (!plant.value) {
   throw createError({
     statusCode: 404,
     statusMessage: "Produkt nie znaleziony",
-  });
+  })
 }
 
-selectedImage.value = plant.value.image;
+selectedImage.value = plant.value.image
 
 const similarPlants = computed(() => {
-  if (!plant.value) return [];
-  return allPlants
-    .filter(
-      (p) => p.category === plant.value!.category && p.id !== plant.value!.id,
-    )
-    .slice(0, 4);
-});
+  if (!plant.value) return []
+  return getSimilarPlants(plant.value.id, plant.value.category, 4)
+})
 
 const checkFavoriteStatus = () => {
   if (typeof window !== "undefined") {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    isFavorite.value = favorites.includes(plant.value?.id);
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+    isFavorite.value = favorites.includes(plant.value?.id)
   }
-};
+}
 
 const getSizeName = (size: string) => {
-  const sizes: Record<string, string> = {
-    small: "Mały",
-    medium: "Średni",
-    large: "Duży",
-  };
-  return sizes[size] || size;
-};
+  const sizeObj = sizes.find(s => s.id === size)
+  return sizeObj ? sizeObj.name : size
+}
 
 const getDefaultDescription = (plant: Plant) => {
   const descriptions: Record<string, string> = {
@@ -338,12 +332,12 @@ const getDefaultDescription = (plant: Plant) => {
       "Sukulenty to rośliny magazynujące wodę w liściach. Charakteryzują się różnorodnymi kształtami i kolorami.",
     Monstery:
       "Monstera to modna roślina o charakterystycznych, postrzępionych liściach. Wymaga więcej uwagi, ale efekt jest wart zachodu.",
-  };
+  }
   return (
     descriptions[plant.category] ||
     "Piękna roślina doniczkowa, która ozdobi każde wnętrze."
-  );
-};
+  )
+}
 
 const getLightRequirements = (category: string) => {
   const requirements: Record<string, string> = {
@@ -353,9 +347,9 @@ const getLightRequirements = (category: string) => {
     Zamiokulkasy: "Małe",
     Sukulenty: "Duże",
     Monstery: "Średnie",
-  };
-  return requirements[category] || "Średnie";
-};
+  }
+  return requirements[category] || "Średnie"
+}
 
 const getWateringRequirements = (category: string) => {
   const requirements: Record<string, string> = {
@@ -365,13 +359,13 @@ const getWateringRequirements = (category: string) => {
     Zamiokulkasy: "Rzadkie",
     Sukulenty: "Rzadkie",
     Monstery: "Regularne",
-  };
-  return requirements[category] || "Umiarkowane";
-};
+  }
+  return requirements[category] || "Umiarkowane"
+}
 
 const getTemperatureRequirements = (category: string) => {
-  return "18-25°C";
-};
+  return "18-25°C"
+}
 
 const getDifficultyLevel = (category: string) => {
   const levels: Record<string, string> = {
@@ -381,23 +375,23 @@ const getDifficultyLevel = (category: string) => {
     Zamiokulkasy: "Łatwy",
     Sukulenty: "Łatwy",
     Monstery: "Średni",
-  };
-  return levels[category] || "Średni";
-};
+  }
+  return levels[category] || "Średni"
+}
 
 const selectImage = (image: string) => {
-  selectedImage.value = image;
-};
+  selectedImage.value = image
+}
 
 const addToCart = () => {
-  if (!plant.value) return;
+  if (!plant.value) return
 
   if (typeof window !== "undefined") {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItem = cart.find((item: any) => item.id === plant.value!.id);
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+    const existingItem = cart.find((item: any) => item.id === plant.value!.id)
 
     if (existingItem) {
-      existingItem.quantity += 1;
+      existingItem.quantity += 1
     } else {
       cart.push({
         id: plant.value.id,
@@ -405,55 +399,40 @@ const addToCart = () => {
         price: plant.value.price,
         image: plant.value.image,
         quantity: 1,
-      });
+      })
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart))
 
-    window.dispatchEvent(new Event("cartUpdated"));
-
-    alert(`${plant.value.title} został dodany do koszyka!`);
+    window.dispatchEvent(new Event("cartUpdated"))
   }
-};
+}
 
 const toggleFavorite = () => {
-  if (!plant.value) return;
+  if (!plant.value) return
 
   if (typeof window !== "undefined") {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
 
     if (isFavorite.value) {
-      const index = favorites.indexOf(plant.value.id);
+      const index = favorites.indexOf(plant.value.id)
       if (index > -1) {
-        favorites.splice(index, 1);
+        favorites.splice(index, 1)
       }
     } else {
-      favorites.push(plant.value.id);
+      favorites.push(plant.value.id)
     }
 
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    isFavorite.value = !isFavorite.value;
+    localStorage.setItem("favorites", JSON.stringify(favorites))
+    isFavorite.value = !isFavorite.value
 
-    window.dispatchEvent(new Event("favoritesUpdated"));
+    window.dispatchEvent(new Event("favoritesUpdated"))
   }
-};
-
-const shareProduct = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: plant.value?.title,
-      text: `Sprawdź tę piękną roślinę: ${plant.value?.title}`,
-      url: window.location.href,
-    });
-  } else {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Link do produktu został skopiowany do schowka!");
-  }
-};
+}
 
 onMounted(() => {
-  checkFavoriteStatus();
-});
+  checkFavoriteStatus()
+})
 </script>
 
 <style scoped>
