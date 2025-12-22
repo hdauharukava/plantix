@@ -366,7 +366,7 @@ const removeFromCart = (id: number) => {
 };
 
 const proceedToCheckout = () => {
-  alert("Przechodzisz do kasy!");
+  navigateTo('/checkout')
 };
 
 const totalItems = computed(() => {
