@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLoading" class="min-h-screen flex flex-col">
     <Navbar />
-    <Layout>
+    <NuxtLayout>
       <div class="w-full max-w-sm mx-auto sm:px-6 px-4 py-6">
         <h1 class="mb-6 text-xl text-center">Zaloguj się</h1>
 
@@ -88,7 +88,7 @@
           </NuxtLink>
         </p>
       </div>
-    </Layout>
+    </NuxtLayout>
   </div>
   <div v-else class="min-h-screen flex items-center justify-center">
     <div class="text-center">
