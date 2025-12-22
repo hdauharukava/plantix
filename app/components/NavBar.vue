@@ -121,6 +121,7 @@
         v-if="isMenuOpen"
         class="absolute top-16 right-6 bg-white shadow-lg rounded-lg p-4 lg:hidden w-48 z-20"
       >
+      <div class="flex flex-col space-y-3">
         <NuxtLink
           to="/catalog"
           class="w-full text-left py-2 px-3 whitespace-nowrap rounded-md hover:bg-[#90A88C]/30 transition-colors duration-200 cursor-pointer block no-underline text-gray-700 hover:text-gray-900 focus:outline-none"
@@ -145,6 +146,7 @@
         >
           Kontakt
         </NuxtLink>
+        </div>
 
         <div
           class="flex items-center justify-around mt-4 pt-4 border-t border-gray-200 md:hidden"
@@ -210,6 +212,7 @@
             </NuxtLink>
           </div>
         </div>
+        
       </div>
     </transition>
 
