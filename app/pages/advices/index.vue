@@ -11,7 +11,7 @@
           Porady dotyczące pielęgnacji
         </h1>
         <p class="text-gray-600 text-sm md:text-base mt-1 md:mt-2">
-          Dowiedz się, jak dbać o swoje rośliny domowe. Przewodник dla
+          Dowiedz się, jak dbać o swoje rośliny domowe. Przewodnik dla
           początkujących i zaawansowanych.
         </p>
       </div>
@@ -364,260 +364,90 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import type { CareAdvice } from "@/types/advice";
+import { ref, computed } from "vue"
+import { useAdviceData } from "@/composables/useAdviceData"
+import type { CareAdvice, Category, FAQ } from "@/composables/useAdviceData"
 
-import fikus1 from "@/assets/plants/fikus2.png";
-import kaktus1 from "@/assets/plants/kaktus.png";
-import iglica1 from "@/assets/plants/iglica.png";
-import zamiokulkas1 from "@/assets/plants/zamiokulkas.png";
-import sukulent1 from "@/assets/plants/sukulent.png";
-import monstera1 from "@/assets/plants/monstera.png";
+const { getAllAdvice, getAllCategories, getAllFAQs, getAdviceCountByCategory } = useAdviceData()
 
-const isLoading = ref(false);
+const isLoading = ref(false)
 
-const categories = ref([
-  { id: "Fikusy", name: "Fikusy" },
-  { id: "Kaktusy", name: "Kaktusy" },
-  { id: "Iglice", name: "Iglice" },
-  { id: "Zamiokulkasy", name: "Zamiokulkasy" },
-  { id: "Sukulenty", name: "Sukulenty" },
-  { id: "Monstery", name: "Monstery" },
-]);
-
-const selectedCategory = ref<string>("");
-const selectedDifficulty = ref<string>("all");
+const categories = ref<Category[]>(getAllCategories())
+const selectedCategory = ref<string>("")
+const selectedDifficulty = ref<string>("all")
 const sortBy = ref<
   "easy-first" | "hard-first" | "alphabetical" | "alphabetical-desc"
->("easy-first");
-const isFilterOpen = ref(false);
+>("easy-first")
+const isFilterOpen = ref(false)
 
-const allAdvice = ref<CareAdvice[]>([
-  {
-    id: 1,
-    plantCategory: "Fikusy",
-    title: "Jak dbać o Fikusa?",
-    slug: "jak-dbac-o-fikusa",
-    difficulty: "średnia",
-    light: "Rozproszone światło, unikać bezpośredniego słońca",
-    watering: "Umiarkowane podlewanie, gdy wierzchnia warstwa gleby przeschnie",
-    soil: "Przepuszczalna ziemia do roślin doniczkowych",
-    temperature: "18-24°C",
-    humidity: "Średnia, 40-50%",
-    fertilization: "Co 2 tygodnie wiosną i latem",
-    pruning: "Przycinanie wiosną dla kształtu",
-    pests: "Przędziorki, mszyce",
-    tips: [
-      "Unikaj przeciągów",
-      "Przesadzaj co 2-3 lata",
-      "Regularnie przecieraj liście",
-    ],
-    image: fikus1,
-  },
-  {
-    id: 2,
-    plantCategory: "Kaktusy",
-    title: "Pielęgnacja Kaktusów",
-    slug: "pielegnacja-kaktusow",
-    difficulty: "łatwa",
-    light: "Pełne słońce, minimum 6 godzin dziennie",
-    watering: "Rzadkie podlewanie, zimą minimalnie",
-    soil: "Specjalistyczne podłoże dla kaktusów",
-    temperature: "20-30°C latem, 10-15°C zimą",
-    humidity: "Niska",
-    fertilization: "Raz w miesiącu w sezonie wegetacyjnym",
-    pruning: "Rzadko potrzebne",
-    pests: "Wełnowce, tarczniki",
-    tips: [
-      "Zimą zapewnij okres spoczynku",
-      "Unikaj przelania",
-      "Sadź w doniczkach z otworami",
-    ],
-    image: kaktus1,
-  },
-  {
-    id: 3,
-    plantCategory: "Iglice",
-    title: "Uprawa Iglice w domu",
-    slug: "uprawa-iglice-w-domu",
-    difficulty: "łatwa",
-    light: "Jasne, rozproszone światło",
-    watering: "Regularne, utrzymuj wilgotność gleby",
-    soil: "Ziemia uniwersalna z dodatkiem piasku",
-    temperature: "15-22°C",
-    humidity: "Średnia do wysokiej",
-    fertilization: "Co 3-4 tygodnie w sezonie",
-    pruning: "Wiosenne przycinanie",
-    pests: "Przędziorki, wciornastki",
-    tips: [
-      "Lubi zraszanie liści",
-      "Unikaj stojącej wody",
-      "Regularnie obracaj dla równomiernego wzrostu",
-    ],
-    image: iglica1,
-  },
-  {
-    id: 4,
-    plantCategory: "Zamiokulkasy",
-    title: "Zamiokulkas - żelazna roślina",
-    slug: "zamiokulkas-zelazna-roslina",
-    difficulty: "łatwa",
-    light: "Od cienia do półcienia",
-    watering: "Rzadkie, toleruje suszę",
-    soil: "Przepuszczalna, lekka mieszanka",
-    temperature: "18-26°C",
-    humidity: "Niska do średniej",
-    fertilization: "Raz na 2 miesiące",
-    pruning: "Usuwanie żółtych liści",
-    pests: "Rzadko atakowany",
-    tips: [
-      "Bardzo wytrzymała roślina",
-      "Idealna dla początkujących",
-      "Trująca dla zwierząt",
-    ],
-    image: zamiokulkas1,
-  },
-  {
-    id: 5,
-    plantCategory: "Sukulenty",
-    title: "Sukulenty dla początkujących",
-    slug: "sukulenty-dla-poczatkujacych",
-    difficulty: "łatwa",
-    light: "Jasne, bezpośrednie słońce",
-    watering: "Skąpe, dopiero gdy gleba wyschnie",
-    soil: "Mieszanka dla sukulentów",
-    temperature: "15-25°C",
-    humidity: "Niska",
-    fertilization: "Raz w sezonie",
-    pruning: "Usuwanie uszkodzonych części",
-    pests: "Wełnowce, mszyce",
-    tips: ["Nie przelewaj!", "Zapewnij drenaż", "Zimą zmniejsz podlewanie"],
-    image: sukulent1,
-  },
-  {
-    id: 6,
-    plantCategory: "Monstery",
-    title: "Monstera - poradnik pielęgnacji",
-    slug: "monstera-poradnik-pielegnacji",
-    difficulty: "średnia",
-    light: "Rozproszone światło",
-    watering: "Gdy wierzchnia warstwa gleby przeschnie",
-    soil: "Ziemia żyzna, przepuszczalna",
-    temperature: "18-27°C",
-    humidity: "Wysoka, >60%",
-    fertilization: "Co 2 tygodnie w sezonie",
-    pruning: "Przycinanie pnączy",
-    pests: "Przędziorki, tarczniki",
-    tips: [
-      "Lubi wysoką wilgotność",
-      "Potrzebuje podpory do pnączy",
-      "Regularnie czyść liście",
-    ],
-    image: monstera1,
-  },
-]);
-
-// FAQ
-interface FAQ {
-  question: string;
-  answer: string;
-}
-
-const faqs = ref<FAQ[]>([
-  {
-    question: "Jak często podlewać rośliny?",
-    answer:
-      "Częstotliwość podlewania zależy od gatunku rośliny, pory roku i warunków w pomieszczeniu. Zawsze sprawdzaj wilgotność gleby przed podlaniem.",
-  },
-  {
-    question: "Co zrobić, gdy liście żółkną?",
-    answer:
-      "Żółknięcie liści może oznaczać przelanie, niedобór składników odżywczych lub zbyt mało światła. Dostosuj pielęgnację do potrzeb rośliny.",
-  },
-  {
-    question: "Kiedy przesadzać rośliny?",
-    answer:
-      "Rośliny przesadzamy wiosną, gdy korzenie przerastają doniczkę. Zazwyczaj co 1-3 lat w zależności od tempa wzrostu.",
-  },
-  {
-    question: "Jakie rośliny są najlepsze dla początkujących?",
-    answer:
-      "Dla początkujących polecamy zamiokulkasy, sansewierie, sukulenty i некоторые gatunki fikusów - są wytrzymałe i wybaczają błędy w pielęgnacji.",
-  },
-  {
-    question: "Czy wszystkie rośliny potrzebują dużo światła?",
-    answer:
-      "Nie, zapotrzebowanie na światło różni się w zależności od gatunku. Niektóre rośliny (jak zamiokulkas) dobrze radzą sobie w półcieniu.",
-  },
-]);
+const allAdvice = ref<CareAdvice[]>(getAllAdvice())
+const faqs = ref<FAQ[]>(getAllFAQs())
 
 const filteredAdvice = computed(() => {
-  let advice = [...allAdvice.value];
+  let advice = [...allAdvice.value]
 
   if (selectedCategory.value) {
     advice = advice.filter(
       (a: CareAdvice) => a.plantCategory === selectedCategory.value,
-    );
+    )
   }
 
   if (selectedDifficulty.value !== "all") {
     advice = advice.filter(
       (a: CareAdvice) => a.difficulty === selectedDifficulty.value,
-    );
+    )
   }
 
   if (sortBy.value === "easy-first") {
-    const order: Record<string, number> = { łatwa: 1, średnia: 2, trudna: 3 };
+    const order: Record<string, number> = { łatwa: 1, średnia: 2, trudna: 3 }
     advice.sort((a: CareAdvice, b: CareAdvice) => {
-      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0);
-    });
+      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0)
+    })
   } else if (sortBy.value === "hard-first") {
-    const order: Record<string, number> = { łatwa: 3, średnia: 2, trudna: 1 };
+    const order: Record<string, number> = { łatwa: 3, średnia: 2, trudna: 1 }
     advice.sort((a: CareAdvice, b: CareAdvice) => {
-      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0);
-    });
+      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0)
+    })
   } else if (sortBy.value === "alphabetical") {
     advice.sort((a: CareAdvice, b: CareAdvice) =>
       a.title.localeCompare(b.title),
-    );
+    )
   } else if (sortBy.value === "alphabetical-desc") {
     advice.sort((a: CareAdvice, b: CareAdvice) =>
       b.title.localeCompare(a.title),
-    );
+    )
   }
 
-  return advice;
-});
+  return advice
+})
 
 const selectCategory = (categoryId: string) => {
   selectedCategory.value =
-    selectedCategory.value === categoryId ? "" : categoryId;
-};
+    selectedCategory.value === categoryId ? "" : categoryId
+}
 
 const clearFilter = () => {
-  selectedCategory.value = "";
-  selectedDifficulty.value = "all";
-};
+  selectedCategory.value = ""
+  selectedDifficulty.value = "all"
+}
 
 const getAdviceCount = (categoryId: string) => {
-  return allAdvice.value.filter(
-    (a: CareAdvice) => a.plantCategory === categoryId,
-  ).length;
-};
+  return getAdviceCountByCategory(categoryId)
+}
 
 const getCategoryName = (categoryId: string) => {
-  const category = categories.value.find((c) => c.id === categoryId);
-  return category ? category.name : categoryId;
-};
+  const category = categories.value.find((c) => c.id === categoryId)
+  return category ? category.name : categoryId
+}
 
 const getDifficultyClass = (difficulty: string) => {
   const classes: Record<string, string> = {
     łatwa: "bg-green-100 text-green-800",
     średnia: "bg-yellow-100 text-yellow-800",
     trudna: "bg-red-100 text-red-800",
-  };
-  return classes[difficulty] || "bg-gray-100 text-gray-800";
-};
+  }
+  return classes[difficulty] || "bg-gray-100 text-gray-800"
+}
 </script>
 
 <style scoped>
