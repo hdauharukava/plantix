@@ -98,11 +98,7 @@
       "fertilization": "Raz w sezonie",
       "pruning": "Usuwanie uszkodzonych części",
       "pests": "Wełnowce, mszyce",
-      "tips": [
-        "Nie przelewaj!",
-        "Zapewnij drenaż",
-        "Zimą zmniejsz podlewanie"
-      ],
+      "tips": ["Nie przelewaj!", "Zapewnij drenaż", "Zimą zmniejsz podlewanie"],
       "image": "/advice/sukulent.png"
     },
     {

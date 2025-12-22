@@ -18,11 +18,16 @@
                 @blur="validateEmail"
                 @input="clearError('email')"
                 :ui="{
-                  base: errors.email ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                  base: errors.email
+                    ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]'
+                    : '',
                 }"
               />
             </div>
-            <p v-if="!errors.email && state.email" class="text-xs text-green-600 mt-1">
+            <p
+              v-if="!errors.email && state.email"
+              class="text-xs text-green-600 mt-1"
+            >
               ✓ Poprawny format email
             </p>
           </UFormField>
@@ -77,7 +82,10 @@
           </div>
         </UForm>
 
-        <div v-if="generalError" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+        <div
+          v-if="generalError"
+          class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg"
+        >
           <p class="text-sm text-red-600 text-center">{{ generalError }}</p>
         </div>
 
@@ -127,9 +135,12 @@ const errors = reactive<FormErrors>({});
 const showPassword = ref(false);
 
 const isFormValid = computed(() => {
-  return state.email && state.password && 
-         !errors.email && 
-         validateEmailFormat(state.email);
+  return (
+    state.email &&
+    state.password &&
+    !errors.email &&
+    validateEmailFormat(state.email)
+  );
 });
 
 const validateEmail = () => {
@@ -137,12 +148,12 @@ const validateEmail = () => {
     errors.email = "Email jest wymagany";
     return false;
   }
-  
+
   if (!validateEmailFormat(state.email)) {
     errors.email = "Nieprawidłowy format email (np. przyklad@domena.pl)";
     return false;
   }
-  
+
   errors.email = undefined;
   return true;
 };
@@ -157,7 +168,7 @@ const validatePassword = () => {
     errors.password = "Hasło jest wymagane";
     return false;
   }
-  
+
   errors.password = undefined;
   return true;
 };
@@ -170,7 +181,7 @@ const clearError = (field: keyof FormErrors) => {
 function validateForm() {
   const emailValid = validateEmail();
   const passwordValid = validatePassword();
-  
+
   return emailValid && passwordValid;
 }
 
@@ -182,14 +193,17 @@ async function onSubmit() {
     const userData = localStorage.getItem("user");
     if (userData) {
       const user = JSON.parse(userData);
-      
+
       if (user.email === state.email && user.password === state.password) {
         localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("currentUser", JSON.stringify({
-          email: user.email,
-          name: user.name || "Użytkownik"
-        }));
-        
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({
+            email: user.email,
+            name: user.name || "Użytkownik",
+          }),
+        );
+
         alert("Logowanie zakończone sukcesem!");
         await router.push("/profile");
       } else {
@@ -197,7 +211,8 @@ async function onSubmit() {
         errors.password = " ";
       }
     } else {
-      generalError.value = "Nie znaleziono użytkownika. Zarejestruj się najpierw.";
+      generalError.value =
+        "Nie znaleziono użytkownika. Zarejestruj się najpierw.";
     }
   } catch (error) {
     console.error("Login error:", error);
@@ -207,21 +222,27 @@ async function onSubmit() {
   }
 }
 
-watch(() => state.email, (newEmail) => {
-  if (newEmail && !validateEmailFormat(newEmail)) {
-    errors.email = "Nieprawidłowy format email";
-  } else {
-    errors.email = undefined;
-  }
-});
+watch(
+  () => state.email,
+  (newEmail) => {
+    if (newEmail && !validateEmailFormat(newEmail)) {
+      errors.email = "Nieprawidłowy format email";
+    } else {
+      errors.email = undefined;
+    }
+  },
+);
 
-watch(() => state.password, (newPassword) => {
-  if (!newPassword) {
-    errors.password = "Hasło jest wymagane";
-  } else {
-    errors.password = undefined;
-  }
-});
+watch(
+  () => state.password,
+  (newPassword) => {
+    if (!newPassword) {
+      errors.password = "Hasło jest wymagane";
+    } else {
+      errors.password = undefined;
+    }
+  },
+);
 </script>
 
 <style scoped>

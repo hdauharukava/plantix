@@ -208,31 +208,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue"
-import PlantCard from "@/components/PlantCard.vue"
-import { usePlantData } from "@/composables/usePlantData"
-import { usePlantFilters } from "@/composables/usePlantFilters"
-import type { Plant } from "@/composables/usePlantData"
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import PlantCard from "@/components/PlantCard.vue";
+import { usePlantData } from "@/composables/usePlantData";
+import { usePlantFilters } from "@/composables/usePlantFilters";
+import type { Plant } from "@/composables/usePlantData";
 
-const { getAllPlants, getAllCategories, getAllSizes, getPlantById } = usePlantData()
+const { getAllPlants, getAllCategories, getAllSizes, getPlantById } =
+  usePlantData();
 
-const isFilterOpen = ref(false)
-const isLoading = ref(false)
+const isFilterOpen = ref(false);
+const isLoading = ref(false);
 
-const favoritePlants = ref<Plant[]>([])
-const categories = ref(getAllCategories())
-const sizes = ref(getAllSizes())
+const favoritePlants = ref<Plant[]>([]);
+const categories = ref(getAllCategories());
+const sizes = ref(getAllSizes());
 
 const loadFavorites = () => {
-  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
   favoritePlants.value = favorites
     .map((id: number) => getPlantById(id))
-    .filter(Boolean) as Plant[]
-}
+    .filter(Boolean) as Plant[];
+};
 
 const handleFavoritesUpdate = () => {
-  loadFavorites()
-}
+  loadFavorites();
+};
 
 const {
   selectedCategories,
@@ -242,18 +243,18 @@ const {
   filteredPlants,
   hasActiveFilters,
   resetFilters,
-} = usePlantFilters(favoritePlants)
+} = usePlantFilters(favoritePlants);
 
-const filteredFavoritePlants = computed(() => filteredPlants.value)
+const filteredFavoritePlants = computed(() => filteredPlants.value);
 
 onMounted(() => {
-  loadFavorites()
-  window.addEventListener("favoritesUpdated", handleFavoritesUpdate)
-})
+  loadFavorites();
+  window.addEventListener("favoritesUpdated", handleFavoritesUpdate);
+});
 
 onUnmounted(() => {
-  window.removeEventListener("favoritesUpdated", handleFavoritesUpdate)
-})
+  window.removeEventListener("favoritesUpdated", handleFavoritesUpdate);
+});
 </script>
 
 <style scoped>

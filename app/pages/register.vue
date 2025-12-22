@@ -18,11 +18,16 @@
                 @blur="validateEmail"
                 @input="clearError('email')"
                 :ui="{
-                  base: errors.email ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                  base: errors.email
+                    ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]'
+                    : '',
                 }"
               />
             </div>
-            <p v-if="!errors.email && state.email" class="text-xs text-green-600 mt-1">
+            <p
+              v-if="!errors.email && state.email"
+              class="text-xs text-green-600 mt-1"
+            >
               ✓ Poprawny format email
             </p>
           </UFormField>
@@ -44,7 +49,9 @@
                 @blur="validatePassword"
                 @input="clearError('password')"
                 :ui="{
-                  base: errors.password ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                  base: errors.password
+                    ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]'
+                    : '',
                 }"
               >
                 <template #trailing>
@@ -72,11 +79,14 @@
             <div v-if="state.password" class="mt-2">
               <div class="flex items-center justify-between mb-1">
                 <span class="text-xs text-gray-600">Siła hasła:</span>
-                <span class="text-xs font-medium" :class="passwordStrengthTextClass">
+                <span
+                  class="text-xs font-medium"
+                  :class="passwordStrengthTextClass"
+                >
                   {{ passwordStrengthText }}
                 </span>
               </div>
-              
+
               <div class="w-full bg-gray-200 rounded-full h-1.5 mb-3">
                 <div
                   class="h-1.5 rounded-full transition-all duration-300"
@@ -125,7 +135,9 @@
                 @blur="validateConfirmPassword"
                 @input="clearError('confirmPassword')"
                 :ui="{
-                  base: errors.confirmPassword ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]' : ''
+                  base: errors.confirmPassword
+                    ? 'ring-1 ring-red-500 focus:ring-1 focus:ring-[#90a88c]'
+                    : '',
                 }"
               >
                 <template #trailing>
@@ -149,7 +161,14 @@
                 </template>
               </UInput>
             </div>
-            <p v-if="!errors.confirmPassword && state.confirmPassword && passwordsMatch" class="text-xs text-green-600 mt-1">
+            <p
+              v-if="
+                !errors.confirmPassword &&
+                state.confirmPassword &&
+                passwordsMatch
+              "
+              class="text-xs text-green-600 mt-1"
+            >
               ✓ Hasła są identyczne
             </p>
           </UFormField>
@@ -181,7 +200,10 @@
           </div>
         </UForm>
 
-        <div v-if="generalError" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+        <div
+          v-if="generalError"
+          class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg"
+        >
           <p class="text-sm text-red-600 text-center">{{ generalError }}</p>
         </div>
 
@@ -238,54 +260,67 @@ const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
 const passwordsMatch = computed(() => {
-  return state.password && state.confirmPassword && state.password === state.confirmPassword;
+  return (
+    state.password &&
+    state.confirmPassword &&
+    state.password === state.confirmPassword
+  );
 });
 
 const isFormValid = computed(() => {
-  return state.email && state.password && state.confirmPassword && 
-         state.acceptedRODO &&
-         !errors.email && !errors.password && !errors.confirmPassword && !errors.rodo &&
-         validateEmailFormat(state.email) &&
-         passwordsMatch.value;
+  return (
+    state.email &&
+    state.password &&
+    state.confirmPassword &&
+    state.acceptedRODO &&
+    !errors.email &&
+    !errors.password &&
+    !errors.confirmPassword &&
+    !errors.rodo &&
+    validateEmailFormat(state.email) &&
+    passwordsMatch.value
+  );
 });
 
 const passwordRequirements = computed(() => {
   return [
-    { 
-      regex: /.{8,}/, 
+    {
+      regex: /.{8,}/,
       text: "Minimum 8 znaków",
-      met: state.password.length >= 8 
+      met: state.password.length >= 8,
     },
-    { 
-      regex: /\d/, 
+    {
+      regex: /\d/,
       text: "Przynajmniej 1 cyfra",
-      met: /\d/.test(state.password) 
+      met: /\d/.test(state.password),
     },
-    { 
-      regex: /[a-z]/, 
+    {
+      regex: /[a-z]/,
       text: "Przynajmniej 1 mała litera",
-      met: /[a-z]/.test(state.password) 
+      met: /[a-z]/.test(state.password),
     },
-    { 
-      regex: /[A-Z]/, 
+    {
+      regex: /[A-Z]/,
       text: "Przynajmniej 1 duża litera",
-      met: /[A-Z]/.test(state.password) 
+      met: /[A-Z]/.test(state.password),
     },
-    { 
-      regex: /[!@#$%^&*(),.?":{}|<>]/, 
+    {
+      regex: /[!@#$%^&*(),.?":{}|<>]/,
       text: "Przynajmniej 1 znak specjalny",
-      met: /[!@#$%^&*(),.?":{}|<>]/.test(state.password) 
+      met: /[!@#$%^&*(),.?":{}|<>]/.test(state.password),
     },
   ];
 });
 
 const passwordStrengthScore = computed(() => {
   if (!state.password) return 0;
-  return passwordRequirements.value.filter(req => req.met).length;
+  return passwordRequirements.value.filter((req) => req.met).length;
 });
 
 const passwordStrengthPercent = computed(() => {
-  return (passwordStrengthScore.value / passwordRequirements.value.length) * 100;
+  return (
+    (passwordStrengthScore.value / passwordRequirements.value.length) * 100
+  );
 });
 
 const passwordStrengthClass = computed(() => {
@@ -317,12 +352,12 @@ const validateEmail = () => {
     errors.email = "Email jest wymagany";
     return false;
   }
-  
+
   if (!validateEmailFormat(state.email)) {
     errors.email = "Nieprawidłowy format email (np. przyklad@domena.pl)";
     return false;
   }
-  
+
   errors.email = undefined;
   return true;
 };
@@ -337,22 +372,22 @@ const validatePassword = () => {
     errors.password = "Hasło jest wymagane";
     return false;
   }
-  
+
   if (state.password.length < 8) {
     errors.password = "Hasło musi mieć co najmniej 8 znaków";
     return false;
   }
-  
+
   const hasUpperCase = /[A-Z]/.test(state.password);
   const hasLowerCase = /[a-z]/.test(state.password);
   const hasNumbers = /\d/.test(state.password);
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(state.password);
-  
+
   if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
     errors.password = "Hasło musi zawierać duże i małe litery oraz cyfry";
     return false;
   }
-  
+
   errors.password = undefined;
   return true;
 };
@@ -362,12 +397,12 @@ const validateConfirmPassword = () => {
     errors.confirmPassword = "Potwierdzenie hasła jest wymagane";
     return false;
   }
-  
+
   if (state.password !== state.confirmPassword) {
     errors.confirmPassword = "Hasła nie są identyczne";
     return false;
   }
-  
+
   errors.confirmPassword = undefined;
   return true;
 };
@@ -382,7 +417,7 @@ const validateRODO = () => {
     errors.rodo = "Musisz zaakceptować warunki RODO";
     return false;
   }
-  
+
   errors.rodo = undefined;
   return true;
 };
@@ -392,54 +427,66 @@ function validateForm() {
   const passwordValid = validatePassword();
   const confirmPasswordValid = validateConfirmPassword();
   const rodoValid = validateRODO();
-  
+
   return emailValid && passwordValid && confirmPasswordValid && rodoValid;
 }
 
-watch(() => state.email, (newEmail) => {
-  if (newEmail && !validateEmailFormat(newEmail)) {
-    errors.email = "Nieprawidłowy format email";
-  } else {
-    errors.email = undefined;
-  }
-});
+watch(
+  () => state.email,
+  (newEmail) => {
+    if (newEmail && !validateEmailFormat(newEmail)) {
+      errors.email = "Nieprawidłowy format email";
+    } else {
+      errors.email = undefined;
+    }
+  },
+);
 
-watch(() => state.password, (newPassword) => {
-  if (newPassword && newPassword.length < 8) {
-    errors.password = "Hasło musi mieć co najmniej 8 znaków";
-  } else {
-    errors.password = undefined;
-  }
-  
-  if (state.confirmPassword && newPassword !== state.confirmPassword) {
-    errors.confirmPassword = "Hasła nie są identyczne";
-  } else if (state.confirmPassword) {
-    errors.confirmPassword = undefined;
-  }
-});
+watch(
+  () => state.password,
+  (newPassword) => {
+    if (newPassword && newPassword.length < 8) {
+      errors.password = "Hasło musi mieć co najmniej 8 znaków";
+    } else {
+      errors.password = undefined;
+    }
 
-watch(() => state.confirmPassword, (newConfirmPassword) => {
-  if (newConfirmPassword && state.password !== newConfirmPassword) {
-    errors.confirmPassword = "Hasła nie są identyczne";
-  } else if (newConfirmPassword) {
-    errors.confirmPassword = undefined;
-  }
-});
+    if (state.confirmPassword && newPassword !== state.confirmPassword) {
+      errors.confirmPassword = "Hasła nie są identyczne";
+    } else if (state.confirmPassword) {
+      errors.confirmPassword = undefined;
+    }
+  },
+);
 
-watch(() => state.acceptedRODO, (newValue) => {
-  if (newValue) {
-    errors.rodo = undefined;
-  }
-});
+watch(
+  () => state.confirmPassword,
+  (newConfirmPassword) => {
+    if (newConfirmPassword && state.password !== newConfirmPassword) {
+      errors.confirmPassword = "Hasła nie są identyczne";
+    } else if (newConfirmPassword) {
+      errors.confirmPassword = undefined;
+    }
+  },
+);
+
+watch(
+  () => state.acceptedRODO,
+  (newValue) => {
+    if (newValue) {
+      errors.rodo = undefined;
+    }
+  },
+);
 
 async function onSubmit() {
   if (!validateForm()) return;
 
   try {
     isLoading.value = true;
-    
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     const existingUser = localStorage.getItem("user");
     if (existingUser) {
       const user = JSON.parse(existingUser);
@@ -448,15 +495,17 @@ async function onSubmit() {
         return;
       }
     }
-    
-    localStorage.setItem("user", JSON.stringify({ 
-      email: state.email, 
-      password: state.password 
-    }));
-    
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        email: state.email,
+        password: state.password,
+      }),
+    );
+
     alert("Rejestracja zakończona sukcesem! Teraz możesz się zalogować.");
     await router.push("/login");
-    
   } catch (error) {
     console.error("Registration error:", error);
     generalError.value = "Wystąpił błąd podczas rejestracji. Spróbuj ponownie.";

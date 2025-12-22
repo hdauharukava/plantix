@@ -364,90 +364,91 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
-import { useAdviceData } from "@/composables/useAdviceData"
-import type { CareAdvice, Category, FAQ } from "@/composables/useAdviceData"
+import { ref, computed } from "vue";
+import { useAdviceData } from "@/composables/useAdviceData";
+import type { CareAdvice, Category, FAQ } from "@/composables/useAdviceData";
 
-const { getAllAdvice, getAllCategories, getAllFAQs, getAdviceCountByCategory } = useAdviceData()
+const { getAllAdvice, getAllCategories, getAllFAQs, getAdviceCountByCategory } =
+  useAdviceData();
 
-const isLoading = ref(false)
+const isLoading = ref(false);
 
-const categories = ref<Category[]>(getAllCategories())
-const selectedCategory = ref<string>("")
-const selectedDifficulty = ref<string>("all")
+const categories = ref<Category[]>(getAllCategories());
+const selectedCategory = ref<string>("");
+const selectedDifficulty = ref<string>("all");
 const sortBy = ref<
   "easy-first" | "hard-first" | "alphabetical" | "alphabetical-desc"
->("easy-first")
-const isFilterOpen = ref(false)
+>("easy-first");
+const isFilterOpen = ref(false);
 
-const allAdvice = ref<CareAdvice[]>(getAllAdvice())
-const faqs = ref<FAQ[]>(getAllFAQs())
+const allAdvice = ref<CareAdvice[]>(getAllAdvice());
+const faqs = ref<FAQ[]>(getAllFAQs());
 
 const filteredAdvice = computed(() => {
-  let advice = [...allAdvice.value]
+  let advice = [...allAdvice.value];
 
   if (selectedCategory.value) {
     advice = advice.filter(
       (a: CareAdvice) => a.plantCategory === selectedCategory.value,
-    )
+    );
   }
 
   if (selectedDifficulty.value !== "all") {
     advice = advice.filter(
       (a: CareAdvice) => a.difficulty === selectedDifficulty.value,
-    )
+    );
   }
 
   if (sortBy.value === "easy-first") {
-    const order: Record<string, number> = { łatwa: 1, średnia: 2, trudna: 3 }
+    const order: Record<string, number> = { łatwa: 1, średnia: 2, trudna: 3 };
     advice.sort((a: CareAdvice, b: CareAdvice) => {
-      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0)
-    })
+      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0);
+    });
   } else if (sortBy.value === "hard-first") {
-    const order: Record<string, number> = { łatwa: 3, średnia: 2, trudna: 1 }
+    const order: Record<string, number> = { łatwa: 3, średnia: 2, trudna: 1 };
     advice.sort((a: CareAdvice, b: CareAdvice) => {
-      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0)
-    })
+      return (order[a.difficulty] || 0) - (order[b.difficulty] || 0);
+    });
   } else if (sortBy.value === "alphabetical") {
     advice.sort((a: CareAdvice, b: CareAdvice) =>
       a.title.localeCompare(b.title),
-    )
+    );
   } else if (sortBy.value === "alphabetical-desc") {
     advice.sort((a: CareAdvice, b: CareAdvice) =>
       b.title.localeCompare(a.title),
-    )
+    );
   }
 
-  return advice
-})
+  return advice;
+});
 
 const selectCategory = (categoryId: string) => {
   selectedCategory.value =
-    selectedCategory.value === categoryId ? "" : categoryId
-}
+    selectedCategory.value === categoryId ? "" : categoryId;
+};
 
 const clearFilter = () => {
-  selectedCategory.value = ""
-  selectedDifficulty.value = "all"
-}
+  selectedCategory.value = "";
+  selectedDifficulty.value = "all";
+};
 
 const getAdviceCount = (categoryId: string) => {
-  return getAdviceCountByCategory(categoryId)
-}
+  return getAdviceCountByCategory(categoryId);
+};
 
 const getCategoryName = (categoryId: string) => {
-  const category = categories.value.find((c) => c.id === categoryId)
-  return category ? category.name : categoryId
-}
+  const category = categories.value.find((c) => c.id === categoryId);
+  return category ? category.name : categoryId;
+};
 
 const getDifficultyClass = (difficulty: string) => {
   const classes: Record<string, string> = {
     łatwa: "bg-green-100 text-green-800",
     średnia: "bg-yellow-100 text-yellow-800",
     trudna: "bg-red-100 text-red-800",
-  }
-  return classes[difficulty] || "bg-gray-100 text-gray-800"
-}
+  };
+  return classes[difficulty] || "bg-gray-100 text-gray-800";
+};
 </script>
 
 <style scoped>

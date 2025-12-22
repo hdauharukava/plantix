@@ -177,19 +177,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
-import PlantCard from "@/components/PlantCard.vue"
-import { usePlantData } from "@/composables/usePlantData"
-import { usePlantFilters } from "@/composables/usePlantFilters"
+import { ref } from "vue";
+import PlantCard from "@/components/PlantCard.vue";
+import { usePlantData } from "@/composables/usePlantData";
+import { usePlantFilters } from "@/composables/usePlantFilters";
 
-const { getAllPlants, getAllCategories, getAllSizes } = usePlantData()
+const { getAllPlants, getAllCategories, getAllSizes } = usePlantData();
 
-const isFilterOpen = ref(false)
-const isLoading = ref(false)
+const isFilterOpen = ref(false);
+const isLoading = ref(false);
 
-const plants = ref(getAllPlants())
-const categories = ref(getAllCategories())
-const sizes = ref(getAllSizes())
+const plants = ref(getAllPlants());
+const categories = ref(getAllCategories());
+const sizes = ref(getAllSizes());
 
 const {
   selectedCategories,
@@ -199,7 +199,7 @@ const {
   filteredPlants,
   hasActiveFilters,
   resetFilters,
-} = usePlantFilters(plants)
+} = usePlantFilters(plants);
 </script>
 
 <style scoped>

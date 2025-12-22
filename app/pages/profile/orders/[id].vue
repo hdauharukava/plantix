@@ -1,6 +1,5 @@
 <template>
   <div v-if="order" class="bg-white rounded-lg shadow-sm p-6">
-    <!-- Навигация -->
     <nav class="flex items-center space-x-2 text-sm mb-6">
       <NuxtLink to="/profile/orders" class="text-gray-600 hover:text-[#90a88c]">
         Moje zamówienia
@@ -11,7 +10,6 @@
       </span>
     </nav>
 
-    <!-- Заголовок и статус -->
     <div class="mb-8">
       <div
         class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4"
@@ -31,9 +29,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Левая колонка: Продукты -->
       <div class="lg:col-span-2">
-        <!-- Список продуктов -->
         <div class="bg-white rounded-lg border border-gray-200 p-6 mb-6">
           <h2 class="font-poppins font-bold text-lg mb-6">
             Produkty w zamówieniu
@@ -46,7 +42,6 @@
               class="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors"
             >
               <div class="flex items-start gap-4">
-                <!-- Изображение продукта -->
                 <div
                   class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg overflow-hidden"
                 >
@@ -85,7 +80,6 @@
                     </div>
                   </div>
 
-                  <!-- Кнопки действий -->
                   <div class="flex items-center space-x-3 mt-3">
                     <button
                       @click="addToCart(product)"
@@ -100,7 +94,6 @@
           </div>
         </div>
 
-        <!-- Adres dostawy i faktury -->
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <h2 class="font-poppins font-bold text-lg mb-6">
             Dane dostawy i faktury
@@ -133,7 +126,6 @@
         </div>
       </div>
 
-      <!-- Правая колонка: Podsumление -->
       <div class="lg:col-span-1">
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <h2 class="font-poppins font-bold text-lg mb-6">
@@ -141,7 +133,6 @@
           </h2>
 
           <div class="space-y-4 mb-6">
-            <!-- Sposób dostawy -->
             <div class="pb-4 border-b border-gray-100">
               <h3 class="font-semibold text-sm text-gray-700 mb-2">
                 Sposób dostawy
@@ -154,7 +145,6 @@
               </div>
             </div>
 
-            <!-- Metoda płatности -->
             <div class="pb-4 border-b border-gray-100">
               <h3 class="font-semibold text-sm text-gray-700 mb-2">
                 Metoda płatności
@@ -165,7 +155,6 @@
               </div>
             </div>
 
-            <!-- Podsumowanie цен -->
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Wartość produktów:</span>
@@ -190,7 +179,6 @@
             </div>
           </div>
 
-          <!-- Przyciski akcji -->
           <div class="space-y-3">
             <button
               v-if="order.status === 'pending'"
@@ -216,7 +204,6 @@
             </NuxtLink>
           </div>
 
-          <!-- Informacje dodatkowe -->
           <div class="mt-6 pt-6 border-t border-gray-100">
             <h3 class="font-semibold text-sm text-gray-700 mb-3">Informacje</h3>
             <div class="space-y-2 text-xs text-gray-500">
@@ -233,7 +220,6 @@
     </div>
   </div>
 
-  <!-- Замовлення не знайдено -->
   <div v-else-if="!order" class="bg-white rounded-lg shadow-sm p-6">
     <div class="text-center py-12">
       <div class="text-gray-400 mb-4">
@@ -271,7 +257,6 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
-// Исправляем импорт изображений
 import fikus2 from "@/assets/plants/fikus2.png";
 import fikus3 from "@/assets/plants/fikus3.png";
 import kaktus from "@/assets/plants/kaktus.png";

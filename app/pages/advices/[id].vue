@@ -242,23 +242,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
-import { useAdviceData } from "@/composables/useAdviceData"
-import type { CareAdvice } from "@/composables/useAdviceData"
+import { ref } from "vue";
+import { useAdviceData } from "@/composables/useAdviceData";
+import type { CareAdvice } from "@/composables/useAdviceData";
 
-const route = useRoute()
-const { getAdviceById } = useAdviceData()
+const route = useRoute();
+const { getAdviceById } = useAdviceData();
 
-const advice = ref<CareAdvice | null>(null)
+const advice = ref<CareAdvice | null>(null);
 
-const id = parseInt(route.params.id as string)
-advice.value = getAdviceById(id)
+const id = parseInt(route.params.id as string);
+advice.value = getAdviceById(id);
 
 if (!advice.value) {
   throw createError({
     statusCode: 404,
     statusMessage: "Porada nie znaleziona",
-  })
+  });
 }
 
 const getDifficultyClass = (difficulty: string) => {
@@ -266,7 +266,7 @@ const getDifficultyClass = (difficulty: string) => {
     łatwa: "bg-green-100 text-green-800",
     średnia: "bg-yellow-100 text-yellow-800",
     trudna: "bg-red-100 text-red-800",
-  }
-  return classes[difficulty] || "bg-gray-100 text-gray-800"
-}
+  };
+  return classes[difficulty] || "bg-gray-100 text-gray-800";
+};
 </script>
