@@ -1,21 +1,39 @@
 <template>
-  <div class="flex flex-col items-center">
-    <div class="w-full max-w-5xl h-96 bg-mygray relative mb-0">
-      <img src="@/assets/index.png" class="absolute bottom-0"/>
-      <div class="absolute top-24 left-20 font-poppins font-bold text-3xl text-[#1e1e1e]">
+  <div
+    v-if="!isLoading"
+    class="flex flex-col items-center px-4 sm:px-6 lg:px-8"
+  >
+    <div
+      class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0"
+    >
+      <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
+      <div
+        class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
+      >
         Kwiaty do Twojego domu
       </div>
-      <div class="absolute left-20 top-44 max-w-96 font-poppins font-bold text-sm text-[#1e1e1e]">
-        <p>Rośliny w doniczkach staną się pięknym i modnym dodatkiem do wnętrza Twojego mieszkania lub biura.</p>
+      <div
+        class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-[#1e1e1e]"
+      >
+        <p>
+          Rośliny w doniczkach staną się pięknym i modnym dodatkiem do wnętrza
+          Twojego mieszkania lub biura.
+        </p>
       </div>
-      <div class="absolute left-20 top-64">
-        <button class="bg-primary hover:bg-primary activ:bg-primary text-white text-base rounded-full px-5 py-1 text-sm cursor-pointer text-primary">
+      <div
+        class="absolute left-6 md:left-12 lg:left-20 top-40 md:top-50 lg:top-64"
+      >
+        <NuxtLink
+          to="/catalog"
+          class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-2 cursor-pointer font-bold"
+        >
           PRZEJDŹ DO KATALOGU
-        </button>
+        </NuxtLink>
       </div>
     </div>
-    <div class="w-full max-w-5xl mt-10">
-      <div class="grid grid-cols-4 gap-6">
+
+    <div class="w-full max-w-5xl mt-8 md:mt-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <CategoryCard
           :image="fikusy"
           title="Fikusy"
@@ -38,13 +56,17 @@
         />
       </div>
     </div>
-    <div class="w-full max-w-5xl flex items-start mt-10">
-      <p class="text-primary text-2xl">Oferty miesiąca</p>
+
+    <div class="w-full max-w-5xl flex items-start mt-8 md:mt-10">
+      <p class="font-poppins font-bold tracking-[0.025em] text-xl md:text-2xl">
+        Oferty miesiąca
+      </p>
     </div>
-    <div class="w-full max-w-5xl mt-10 mb-10">
-      <div class="grid grid-cols-4 gap-6">
+
+    <div class="w-full max-w-5xl mt-8 md:mt-10 mb-8 md:mb-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <OfferCard
-          :image="of1"
+          :image="fikus2"
           category="Fikusy"
           title="Fikus „Maluszek”"
           :price="89.99"
@@ -52,7 +74,7 @@
           discount="-25%"
         />
         <OfferCard
-          :image="of2"
+          :image="kaktus2"
           category="Kaktusy"
           title="Kaktus „Malusieńki”"
           :price="34.99"
@@ -60,13 +82,13 @@
           discount="-30%"
         />
         <OfferCard
-          :image="of3"
+          :image="sukulent"
           category="Sukulenty"
           title="Aloes Wera „Piękny”"
-          :price="45.50"
+          :price="45.5"
         />
         <OfferCard
-          :image="of4"
+          :image="fikus3"
           category="Fikusy"
           title="Fikus „Gigantyczny”"
           :price="29.99"
@@ -75,23 +97,37 @@
         />
       </div>
     </div>
-    <div class="flex justify-center mb-25 mt-10">
-      <button class="bg-primary hover:bg-[#799573] active:bg-[#647e5e] text-white rounded-full px-5 py-2 text-sm cursor-pointer transition-colors font-bold">
+
+    <div class="flex justify-center mb-20 md:mb-25 mt-8 md:mt-10">
+      <NuxtLink
+        to="/catalog"
+        class="bg-[#90a88c] hover:bg-[#799573] active:bg-[#647e5e] text-white text-sm md:text-base rounded-full px-4 md:px-5 py-1 cursor-pointer font-bold"
+      >
         PRZEJDŹ DO KATALOGU
-      </button>
+      </NuxtLink>
+    </div>
+  </div>
+  <div v-else class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie strony...</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import CategoryCard from '@/components/CategoryCard.vue'
-import OfferCard from '@/components/OfferCard.vue'
-import fikusy from '@/assets/fikusy.png'
-import kaktusy from '@/assets/kaktusy.png'
-import iglice from '@/assets/iglice.png'
-import zamiokulkasy from '@/assets/zamiokulkasy.png'
-import of1 from '@/assets/of1.png'
-import of2 from '@/assets/of2.png'
-import of3 from '@/assets/of3.png'
-import of4 from '@/assets/of4.png'
+import CategoryCard from "@/components/CategoryCard.vue";
+import OfferCard from "@/components/OfferCard.vue";
+import fikusy from "@/assets/plants/fikus.png";
+import kaktusy from "@/assets/plants/kaktus.png";
+import iglice from "@/assets/plants/iglica.png";
+import zamiokulkasy from "@/assets/plants/zamiokulkas.png";
+import fikus2 from "@/assets/plants/fikus2.png";
+import kaktus2 from "@/assets/plants/kaktus2.png";
+import sukulent from "@/assets/plants/sukulent.png";
+import fikus3 from "@/assets/plants/fikus3.png";
+
+const isLoading = ref(false);
 </script>

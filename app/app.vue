@@ -1,13 +1,12 @@
 <template>
   <div>
-    <Navbar />
-    <IndexPage />
+    <NavBar />
+    <NuxtPage />
     <Footer />
   </div>
 </template>
 
 <script setup>
-import Navbar from './components/Navbar.vue'
-import IndexPage from './pages/index.vue' 
-import Footer from './components/Footer.vue'
+import NavBar from "./components/NavBar.vue";
+import Footer from "./components/Footer.vue";
 </script>
