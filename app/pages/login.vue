@@ -204,7 +204,14 @@ async function onSubmit() {
     alert("Logowanie zakończone sukcesem!");
     await router.push("/profile");
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Login error:", {
+      error,
+      email: state.email,
+    });
+    if (typeof error === "object" && error !== null && "code" in error) {
+      const authError = error as { code?: string };
+      console.warn("Login error code:", authError.code);
+    }
     if (typeof error === "object" && error !== null && "code" in error) {
       const authError = error as { code?: string };
       if (authError.code === "auth/user-not-found") {

@@ -491,7 +491,14 @@ async function onSubmit() {
     alert("Rejestracja zakończona sukcesem! Teraz możesz się zalogować.");
     await router.push("/login");
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error("Registration error:", {
+      error,
+      email: state.email,
+    });
+    if (typeof error === "object" && error !== null && "code" in error) {
+      const authError = error as { code?: string };
+      console.warn("Registration error code:", authError.code);
+    }
     if (typeof error === "object" && error !== null && "code" in error) {
       const authError = error as { code?: string };
       if (authError.code === "auth/email-already-in-use") {
