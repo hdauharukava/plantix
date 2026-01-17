@@ -9,7 +9,7 @@ import { useFirebase } from "@/composables/useFirebase";
 import type { Product } from "@/types/product";
 import type { CreateOrderPayload, OrderRecord } from "@/types/order";
 
-const PRIMARY_PRODUCTS_COLLECTION = "Plants";
+const PRIMARY_PRODUCTS_COLLECTION = "plants";
 const FALLBACK_PRODUCTS_COLLECTION = "products";
 const ORDERS_COLLECTION = "orders";
 
