@@ -61,7 +61,7 @@
                     class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-green-50 rounded-lg flex items-center justify-center mr-2 md:mr-3"
                   >
                     <img
-                      src="@/assets/icons/Sun.svg"
+                      :src="icons.sun"
                       alt="Światło"
                       class="md:w-8 md:h-8 w-6 h-6 cursor-pointer"
                     />
@@ -79,7 +79,7 @@
                     class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-blue-50 rounded-lg flex items-center justify-center mr-2 md:mr-3"
                   >
                     <img
-                      src="@/assets/icons/Water.svg"
+                      :src="icons.water"
                       alt="Podlewanie"
                       class="md:w-8 md:h-8 w-6 h-6 cursor-pointer"
                     />
@@ -99,7 +99,7 @@
                     class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-yellow-50 rounded-lg flex items-center justify-center mr-2 md:mr-3"
                   >
                     <img
-                      src="@/assets/icons/Temperature.svg"
+                      :src="icons.temperature"
                       alt="Temperatura"
                       class="md:w-8 md:h-8 w-6 h-6 cursor-pointer"
                     />
@@ -245,12 +245,19 @@
 import { ref, onMounted } from "vue";
 import { showError } from "#app";
 import { useAdviceData } from "@/composables/useAdviceData";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 import type { CareAdvice } from "@/composables/useAdviceData";
 
 const route = useRoute();
 const { loadAdviceData, getAdviceById } = useAdviceData();
+const { resolveAssetUrl } = useAssetUrl();
 
 const advice = ref<CareAdvice | null>(null);
+const icons = {
+  sun: resolveAssetUrl("/icons/Sun.svg"),
+  water: resolveAssetUrl("/icons/Water.svg"),
+  temperature: resolveAssetUrl("/icons/Temperature.svg"),
+};
 
 const id = parseInt(route.params.id as string);
 

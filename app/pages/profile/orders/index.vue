@@ -287,18 +287,20 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRouter } from "#app";
-
-import fikus1 from "@/assets/plants/fikus2.webp";
-import fikus2 from "@/assets/plants/fikus3.webp";
-import kaktus1 from "@/assets/plants/kaktus.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import iglica1 from "@/assets/plants/iglica.webp";
-import iglica2 from "@/assets/plants/iglica2.webp";
-import monstera1 from "@/assets/plants/monstera.webp";
-import monstera2 from "@/assets/plants/monstera2.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 
 const router = useRouter();
+const { resolveAssetUrl } = useAssetUrl();
 const isLoading = ref(false);
+
+const fikus1 = resolveAssetUrl("/plants/fikus2.webp");
+const fikus2 = resolveAssetUrl("/plants/fikus3.webp");
+const kaktus1 = resolveAssetUrl("/plants/kaktus.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const iglica1 = resolveAssetUrl("/plants/iglica.webp");
+const iglica2 = resolveAssetUrl("/plants/iglica2.webp");
+const monstera1 = resolveAssetUrl("/plants/monstera.webp");
+const monstera2 = resolveAssetUrl("/plants/monstera2.webp");
 
 const orders = ref([
   {

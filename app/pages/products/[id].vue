@@ -102,7 +102,7 @@
                     class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center"
                   >
                     <img
-                      src="@/assets/icons/Sun.svg"
+                      :src="icons.sun"
                       alt="Światło"
                       class="w-6 h-6"
                     />
@@ -120,7 +120,7 @@
                     class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center"
                   >
                     <img
-                      src="@/assets/icons/Water.svg"
+                      :src="icons.water"
                       alt="Podlewanie"
                       class="w-6 h-6"
                     />
@@ -138,7 +138,7 @@
                     class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center"
                   >
                     <img
-                      src="@/assets/icons/Temperature.svg"
+                      :src="icons.temperature"
                       alt="Temperatura"
                       class="w-6 h-6"
                     />
@@ -281,14 +281,21 @@
 import { ref, computed, onMounted } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
 import { getProductsUseCase } from "@/domain/usecases/getProducts";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 import type { Product } from "@/types/product";
 
 const route = useRoute();
+const { resolveAssetUrl } = useAssetUrl();
 
 const plant = ref<Product | null>(null);
 const selectedImage = ref<string>("");
 const isFavorite = ref(false);
 const allProducts = ref<Product[]>([]);
+const icons = {
+  sun: resolveAssetUrl("/icons/Sun.svg"),
+  water: resolveAssetUrl("/icons/Water.svg"),
+  temperature: resolveAssetUrl("/icons/Temperature.svg"),
+};
 
 const similarPlants = computed(() => {
   if (!plant.value) return [];

@@ -6,7 +6,7 @@
     <div
       class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0"
     >
-      <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
+      <img :src="heroImage" class="absolute bottom-0 w-full" />
       <div
         class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
       >
@@ -120,14 +120,19 @@
 <script setup>
 import CategoryCard from "@/components/CategoryCard.vue";
 import OfferCard from "@/components/OfferCard.vue";
-import fikusy from "@/assets/plants/fikus.webp";
-import kaktusy from "@/assets/plants/kaktus.webp";
-import iglice from "@/assets/plants/iglica.webp";
-import zamiokulkasy from "@/assets/plants/zamiokulkas.webp";
-import fikus2 from "@/assets/plants/fikus2.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import sukulent from "@/assets/plants/sukulent.webp";
-import fikus3 from "@/assets/plants/fikus3.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
+
+const { resolveAssetUrl } = useAssetUrl();
+
+const heroImage = resolveAssetUrl("/index.png");
+const fikusy = resolveAssetUrl("/plants/fikus.webp");
+const kaktusy = resolveAssetUrl("/plants/kaktus.webp");
+const iglice = resolveAssetUrl("/plants/iglica.webp");
+const zamiokulkasy = resolveAssetUrl("/plants/zamiokulkas.webp");
+const fikus2 = resolveAssetUrl("/plants/fikus2.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const sukulent = resolveAssetUrl("/plants/sukulent.webp");
+const fikus3 = resolveAssetUrl("/plants/fikus3.webp");
 
 const isLoading = ref(false);
 </script>

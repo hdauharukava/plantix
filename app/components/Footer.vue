@@ -4,12 +4,12 @@
       <div class="hidden md:block">
         <div class="absolute right-6 top-9 flex items-center space-x-4">
           <img
-            src="@/assets/icons/Instagram.svg"
+            :src="icons.instagram"
             alt="Instagram"
             class="w-8 h-8 cursor-pointer"
           />
           <img
-            src="@/assets/icons/Facebook.svg"
+            :src="icons.facebook"
             alt="Facebook"
             class="w-8 h-8 cursor-pointer"
           />
@@ -56,7 +56,7 @@
         <div class="absolute left-6 bottom-18">
           <NuxtLink to="/">
             <img
-              src="@/assets/icons/LogoWhite.svg"
+              :src="icons.logoWhite"
               alt="logo"
               class="cursor-pointer h-8"
             />
@@ -84,12 +84,12 @@
 
         <div class="flex items-center space-x-3">
           <img
-            src="@/assets/icons/Instagram.svg"
+            :src="icons.instagram"
             alt="Instagram"
             class="w-8 h-8 cursor-pointer"
           />
           <img
-            src="@/assets/icons/Facebook.svg"
+            :src="icons.facebook"
             alt="Facebook"
             class="w-8 h-8 cursor-pointer"
           />
@@ -114,7 +114,7 @@
         <div class="flex flex-col items-center space-y-3">
           <NuxtLink to="/">
             <img
-              src="@/assets/icons/LogoWhite.svg"
+              :src="icons.logoWhite"
               alt="logo"
               class="cursor-pointer h-8"
             />
@@ -129,6 +129,16 @@
 </template>
 
 <script setup lang="ts">
+import { useAssetUrl } from "@/composables/useAssetUrl";
+
+const { resolveAssetUrl } = useAssetUrl();
+
+const icons = {
+  instagram: resolveAssetUrl("/icons/Instagram.svg"),
+  facebook: resolveAssetUrl("/icons/Facebook.svg"),
+  logoWhite: resolveAssetUrl("/icons/LogoWhite.svg"),
+};
+
 const email = ref("");
 
 const subscribe = () => {

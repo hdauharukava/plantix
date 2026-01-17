@@ -256,18 +256,20 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-
-import fikus2 from "@/assets/plants/fikus2.webp";
-import fikus3 from "@/assets/plants/fikus3.webp";
-import kaktus from "@/assets/plants/kaktus.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import iglica from "@/assets/plants/iglica.webp";
-import iglica2 from "@/assets/plants/iglica2.webp";
-import monstera from "@/assets/plants/monstera.webp";
-import monstera2 from "@/assets/plants/monstera2.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 
 const route = useRoute();
 const order = ref<any>(null);
+const { resolveAssetUrl } = useAssetUrl();
+
+const fikus2 = resolveAssetUrl("/plants/fikus2.webp");
+const fikus3 = resolveAssetUrl("/plants/fikus3.webp");
+const kaktus = resolveAssetUrl("/plants/kaktus.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const iglica = resolveAssetUrl("/plants/iglica.webp");
+const iglica2 = resolveAssetUrl("/plants/iglica2.webp");
+const monstera = resolveAssetUrl("/plants/monstera.webp");
+const monstera2 = resolveAssetUrl("/plants/monstera2.webp");
 
 const ordersData = [
   {
