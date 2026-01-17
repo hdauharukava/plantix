@@ -288,14 +288,14 @@
 import { ref, computed } from "vue";
 import { useRouter } from "#app";
 
-import fikus1 from "@/assets/plants/fikus2.png";
-import fikus2 from "@/assets/plants/fikus3.png";
-import kaktus1 from "@/assets/plants/kaktus.png";
-import kaktus2 from "@/assets/plants/kaktus2.png";
-import iglica1 from "@/assets/plants/iglica.png";
-import iglica2 from "@/assets/plants/iglica2.png";
-import monstera1 from "@/assets/plants/monstera.png";
-import monstera2 from "@/assets/plants/monstera2.png";
+import fikus1 from "@/assets/plants/fikus2.webp";
+import fikus2 from "@/assets/plants/fikus3.webp";
+import kaktus1 from "@/assets/plants/kaktus.webp";
+import kaktus2 from "@/assets/plants/kaktus2.webp";
+import iglica1 from "@/assets/plants/iglica.webp";
+import iglica2 from "@/assets/plants/iglica2.webp";
+import monstera1 from "@/assets/plants/monstera.webp";
+import monstera2 from "@/assets/plants/monstera2.webp";
 
 const router = useRouter();
 const isLoading = ref(false);

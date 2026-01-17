@@ -147,7 +147,7 @@
             :title="plant.title"
             :price="plant.price"
             :old-price="plant.oldPrice ?? undefined"
-            :discount="plant.discount ?? undefined"
+            :discount="plant.discount !== null ? `${plant.discount}%` : undefined"
             :size="plant.size"
           />
         </div>
@@ -177,19 +177,53 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
-import { usePlantData } from "@/composables/usePlantData";
 import { usePlantFilters } from "@/composables/usePlantFilters";
+import { getProductsUseCase } from "@/domain/usecases/getProducts";
+import type { Product } from "@/types/product";
 
-const { getAllPlants, getAllCategories, getAllSizes } = usePlantData();
+interface CategoryOption {
+  id: string;
+  name: string;
+}
+
+interface SizeOption {
+  id: string;
+  name: string;
+}
 
 const isFilterOpen = ref(false);
-const isLoading = ref(false);
+const isLoading = ref(true);
 
-const plants = ref(getAllPlants());
-const categories = ref(getAllCategories());
-const sizes = ref(getAllSizes());
+const plants = ref<Product[]>([]);
+const categories = ref<CategoryOption[]>([]);
+const sizes = ref<SizeOption[]>([]);
+
+const sizeLabels: Record<string, string> = {
+  small: "Mały",
+  medium: "Średni",
+  large: "Duży",
+  S: "Mały",
+  M: "Średni",
+  L: "Duży",
+};
+
+const buildCategories = (products: Product[]) => {
+  const unique = new Set(products.map((product) => product.category));
+  return Array.from(unique).map((category) => ({
+    id: category,
+    name: category,
+  }));
+};
+
+const buildSizes = (products: Product[]) => {
+  const unique = new Set(products.map((product) => product.size));
+  return Array.from(unique).map((size) => ({
+    id: size,
+    name: sizeLabels[size] || size,
+  }));
+};
 
 const {
   selectedCategories,
@@ -200,6 +234,20 @@ const {
   hasActiveFilters,
   resetFilters,
 } = usePlantFilters(plants);
+
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    const products = await getProductsUseCase();
+    plants.value = products;
+    categories.value = buildCategories(products);
+    sizes.value = buildSizes(products);
+  } catch (error) {
+    console.error("Błąd ładowania katalogu:", error);
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>
 
 <style scoped>

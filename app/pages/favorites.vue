@@ -148,7 +148,7 @@
             :title="plant.title"
             :price="plant.price"
             :old-price="plant.oldPrice ?? undefined"
-            :discount="plant.discount ?? undefined"
+            :discount="plant.discount !== null ? `${plant.discount}%` : undefined"
             :size="plant.size"
           />
         </div>
@@ -210,25 +210,60 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
-import { usePlantData } from "@/composables/usePlantData";
 import { usePlantFilters } from "@/composables/usePlantFilters";
-import type { Plant } from "@/composables/usePlantData";
+import { getProductsUseCase } from "@/domain/usecases/getProducts";
+import type { Product } from "@/types/product";
 
-const { getAllPlants, getAllCategories, getAllSizes, getPlantById } =
-  usePlantData();
+interface CategoryOption {
+  id: string;
+  name: string;
+}
+
+interface SizeOption {
+  id: string;
+  name: string;
+}
 
 const isFilterOpen = ref(false);
-const isLoading = ref(false);
+const isLoading = ref(true);
 
-const favoritePlants = ref<Plant[]>([]);
-const categories = ref(getAllCategories());
-const sizes = ref(getAllSizes());
+const favoritePlants = ref<Product[]>([]);
+const categories = ref<CategoryOption[]>([]);
+const sizes = ref<SizeOption[]>([]);
 
-const loadFavorites = () => {
+const sizeLabels: Record<string, string> = {
+  small: "Mały",
+  medium: "Średni",
+  large: "Duży",
+  S: "Mały",
+  M: "Średni",
+  L: "Duży",
+};
+
+const buildCategories = (products: Product[]) => {
+  const unique = new Set(products.map((product) => product.category));
+  return Array.from(unique).map((category) => ({
+    id: category,
+    name: category,
+  }));
+};
+
+const buildSizes = (products: Product[]) => {
+  const unique = new Set(products.map((product) => product.size));
+  return Array.from(unique).map((size) => ({
+    id: size,
+    name: sizeLabels[size] || size,
+  }));
+};
+
+const loadFavorites = async () => {
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  favoritePlants.value = favorites
-    .map((id: number) => getPlantById(id))
-    .filter(Boolean) as Plant[];
+  const products = await getProductsUseCase();
+  favoritePlants.value = products.filter((product) =>
+    favorites.includes(product.id),
+  );
+  categories.value = buildCategories(products);
+  sizes.value = buildSizes(products);
 };
 
 const handleFavoritesUpdate = () => {
@@ -247,8 +282,14 @@ const {
 
 const filteredFavoritePlants = computed(() => filteredPlants.value);
 
-onMounted(() => {
-  loadFavorites();
+onMounted(async () => {
+  try {
+    await loadFavorites();
+  } catch (error) {
+    console.error("Błąd ładowania ulubionych:", error);
+  } finally {
+    isLoading.value = false;
+  }
   window.addEventListener("favoritesUpdated", handleFavoritesUpdate);
 });
 

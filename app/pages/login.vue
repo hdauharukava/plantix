@@ -109,8 +109,9 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, watch } from "vue";
 import { useRouter } from "#app";
+import { loginUserUseCase } from "@/domain/usecases/loginUser";
 
 const router = useRouter();
 const isLoading = ref(false);
@@ -190,33 +191,38 @@ async function onSubmit() {
 
   try {
     isLoading.value = true;
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      const user = JSON.parse(userData);
+    const user = await loginUserUseCase(state.email, state.password);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        email: user.email ?? state.email,
+        name: user.displayName || "Użytkownik",
+      }),
+    );
 
-      if (user.email === state.email && user.password === state.password) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            email: user.email,
-            name: user.name || "Użytkownik",
-          }),
-        );
-
-        alert("Logowanie zakończone sukcesem!");
-        await router.push("/profile");
-      } else {
+    alert("Logowanie zakończone sukcesem!");
+    await router.push("/profile");
+  } catch (error) {
+    console.error("Login error:", {
+      error,
+      email: state.email,
+    });
+    if (error instanceof Error) {
+      if (error.message === "user-not-found") {
+        generalError.value =
+          "Nie znaleziono użytkownika. Zarejestruj się najpierw.";
+      } else if (error.message === "invalid-password") {
         generalError.value = "Nieprawidłowy email lub hasło";
         errors.password = " ";
+      } else {
+        generalError.value =
+          "Wystąpił błąd podczas logowania. Spróbuj ponownie.";
       }
     } else {
       generalError.value =
-        "Nie znaleziono użytkownika. Zarejestruj się najpierw.";
+        "Wystąpił błąd podczas logowania. Spróbuj ponownie.";
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    generalError.value = "Wystąpił błąd podczas logowania. Spróbuj ponownie.";
   } finally {
     isLoading.value = false;
   }
