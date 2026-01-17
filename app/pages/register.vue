@@ -229,6 +229,7 @@
 <script setup lang="ts">
 import { reactive, computed, ref, watch } from "vue";
 import { useRouter } from "#app";
+import { registerUserUseCase } from "@/domain/usecases/registerUser";
 
 const router = useRouter();
 const isLoading = ref(false);
@@ -485,30 +486,28 @@ async function onSubmit() {
   try {
     isLoading.value = true;
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const existingUser = localStorage.getItem("user");
-    if (existingUser) {
-      const user = JSON.parse(existingUser);
-      if (user.email === state.email) {
-        generalError.value = "Użytkownik z tym adresem email już istnieje";
-        return;
-      }
-    }
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        email: state.email,
-        password: state.password,
-      }),
-    );
+    await registerUserUseCase(state.email, state.password);
 
     alert("Rejestracja zakończona sukcesem! Teraz możesz się zalogować.");
     await router.push("/login");
   } catch (error) {
     console.error("Registration error:", error);
-    generalError.value = "Wystąpił błąd podczas rejestracji. Spróbuj ponownie.";
+    if (typeof error === "object" && error !== null && "code" in error) {
+      const authError = error as { code?: string };
+      if (authError.code === "auth/email-already-in-use") {
+        generalError.value = "Użytkownik z tym adresem email już istnieje";
+      } else if (authError.code === "auth/invalid-email") {
+        generalError.value = "Nieprawidłowy format email";
+      } else if (authError.code === "auth/weak-password") {
+        generalError.value = "Hasło jest zbyt słabe";
+      } else {
+        generalError.value =
+          "Wystąpił błąd podczas rejestracji. Spróbuj ponownie.";
+      }
+    } else {
+      generalError.value =
+        "Wystąpił błąd podczas rejestracji. Spróbuj ponownie.";
+    }
   } finally {
     isLoading.value = false;
   }
