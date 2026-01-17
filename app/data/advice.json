@@ -19,7 +19,7 @@
         "Przesadzaj co 2-3 lata",
         "Regularnie przecieraj liście"
       ],
-      "image": "/advice/fikus.png"
+      "image": "/plants/fikus.webp"
     },
     {
       "id": 2,
@@ -40,7 +40,7 @@
         "Unikaj przelania",
         "Sadź w doniczkach z otworami"
       ],
-      "image": "/advice/kaktus.png"
+      "image": "/plants/kaktus.webp"
     },
     {
       "id": 3,
@@ -61,7 +61,7 @@
         "Unikaj stojącej wody",
         "Regularnie obracaj dla równomiernego wzrostu"
       ],
-      "image": "/advice/iglica.png"
+      "image": "/plants/iglica.webp"
     },
     {
       "id": 4,
@@ -82,7 +82,7 @@
         "Idealna dla początkujących",
         "Trująca dla zwierząt"
       ],
-      "image": "/advice/zamiokulkas.png"
+      "image": "/plants/zamiokulkas.webp"
     },
     {
       "id": 5,
@@ -99,7 +99,7 @@
       "pruning": "Usuwanie uszkodzonych części",
       "pests": "Wełnowce, mszyce",
       "tips": ["Nie przelewaj!", "Zapewnij drenaż", "Zimą zmniejsz podlewanie"],
-      "image": "/advice/sukulent.png"
+      "image": "/plants/sukulent.webp"
     },
     {
       "id": 6,
@@ -120,7 +120,7 @@
         "Potrzebuje podpory do pnączy",
         "Regularnie czyść liście"
       ],
-      "image": "/advice/monstera.png"
+      "image": "/plants/monstera.webp"
     }
   ],
   "categories": [
