@@ -1,11 +1,11 @@
 import adviceData from "@/data/advice.json";
 
-import fikus1 from "@/assets/plants/fikus2.png";
-import kaktus1 from "@/assets/plants/kaktus.png";
-import iglica1 from "@/assets/plants/iglica.png";
-import zamiokulkas1 from "@/assets/plants/zamiokulkas.png";
-import sukulent1 from "@/assets/plants/sukulent.png";
-import monstera1 from "@/assets/plants/monstera.png";
+import fikus1 from "@/assets/plants/fikus2.webp";
+import kaktus1 from "@/assets/plants/kaktus.webp";
+import iglica1 from "@/assets/plants/iglica.webp";
+import zamiokulkas1 from "@/assets/plants/zamiokulkas.webp";
+import sukulent1 from "@/assets/plants/sukulent.webp";
+import monstera1 from "@/assets/plants/monstera.webp";
 
 export interface CareAdvice {
   id: number;

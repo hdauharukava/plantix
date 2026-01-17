@@ -2,7 +2,7 @@
   "plants": [
     {
       "id": 1,
-      "image": "/plants/fikus2.png",
+      "image": "/plants/fikus2.webp",
       "category": "Fikusy",
       "title": "Fikus „Maluszek”",
       "price": 89.99,
@@ -13,7 +13,7 @@
     },
     {
       "id": 2,
-      "image": "/plants/fikus3.png",
+      "image": "/plants/fikus3.webp",
       "category": "Fikusy",
       "title": "Fikus „Gigantyczny”",
       "price": 199.99,
@@ -24,7 +24,7 @@
     },
     {
       "id": 3,
-      "image": "/plants/kaktus.png",
+      "image": "/plants/kaktus.webp",
       "category": "Kaktusy",
       "title": "Kaktus „Malusieńki”",
       "price": 34.99,
@@ -35,7 +35,7 @@
     },
     {
       "id": 4,
-      "image": "/plants/kaktus2.png",
+      "image": "/plants/kaktus2.webp",
       "category": "Kaktusy",
       "title": "Kaktus „Królewski»",
       "price": 79.99,
@@ -46,7 +46,7 @@
     },
     {
       "id": 5,
-      "image": "/plants/iglica.png",
+      "image": "/plants/iglica.webp",
       "category": "Iglice",
       "title": "Iglice „Zielona Piękność»",
       "price": 65.5,
@@ -57,7 +57,7 @@
     },
     {
       "id": 6,
-      "image": "/plants/iglica2.png",
+      "image": "/plants/iglica2.webp",
       "category": "Iglice",
       "title": "Iglice „Miniatura»",
       "price": 45.0,
@@ -68,7 +68,7 @@
     },
     {
       "id": 7,
-      "image": "/plants/zamiokulkas.png",
+      "image": "/plants/zamiokulkas.webp",
       "category": "Zamiokulkasy",
       "title": "Zamiokulkas „Elegancki»",
       "price": 89.99,
@@ -79,7 +79,7 @@
     },
     {
       "id": 8,
-      "image": "/plants/zamiokulkas2.png",
+      "image": "/plants/zamiokulkas2.webp",
       "category": "Zamiokulkasy",
       "title": "Zamiokulkas „Pnący»",
       "price": 120.0,
@@ -90,7 +90,7 @@
     },
     {
       "id": 9,
-      "image": "/plants/sukulent.png",
+      "image": "/plants/sukulent.webp",
       "category": "Sukulenty",
       "title": "Aloes Wera „Piękny»",
       "price": 45.5,
@@ -101,7 +101,7 @@
     },
     {
       "id": 10,
-      "image": "/plants/sukulent2.png",
+      "image": "/plants/sukulent2.webp",
       "category": "Sukulenty",
       "title": "Sukulent „Kolorowy»",
       "price": 35.99,
@@ -112,7 +112,7 @@
     },
     {
       "id": 11,
-      "image": "/plants/monstera.png",
+      "image": "/plants/monstera.webp",
       "category": "Monstery",
       "title": "Monstera „Deliciosa»",
       "price": 129.99,
@@ -123,7 +123,7 @@
     },
     {
       "id": 12,
-      "image": "/plants/monstera2.png",
+      "image": "/plants/monstera2.webp",
       "category": "Monstery",
       "title": "Monstera „Adansonii»",
       "price": 95.0,

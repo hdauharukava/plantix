@@ -120,14 +120,14 @@
 <script setup>
 import CategoryCard from "@/components/CategoryCard.vue";
 import OfferCard from "@/components/OfferCard.vue";
-import fikusy from "@/assets/plants/fikus.png";
-import kaktusy from "@/assets/plants/kaktus.png";
-import iglice from "@/assets/plants/iglica.png";
-import zamiokulkasy from "@/assets/plants/zamiokulkas.png";
-import fikus2 from "@/assets/plants/fikus2.png";
-import kaktus2 from "@/assets/plants/kaktus2.png";
-import sukulent from "@/assets/plants/sukulent.png";
-import fikus3 from "@/assets/plants/fikus3.png";
+import fikusy from "@/assets/plants/fikus.webp";
+import kaktusy from "@/assets/plants/kaktus.webp";
+import iglice from "@/assets/plants/iglica.webp";
+import zamiokulkasy from "@/assets/plants/zamiokulkas.webp";
+import fikus2 from "@/assets/plants/fikus2.webp";
+import kaktus2 from "@/assets/plants/kaktus2.webp";
+import sukulent from "@/assets/plants/sukulent.webp";
+import fikus3 from "@/assets/plants/fikus3.webp";
 
 const isLoading = ref(false);
 </script>
