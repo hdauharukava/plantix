@@ -56,6 +56,33 @@ export const fetchProducts = async (): Promise<Product[]> => {
   });
 };
 
+export const fetchProductById = async (
+  productId: string,
+): Promise<Product | null> => {
+  const { firestore } = useFirebase();
+  const config = useRuntimeConfig();
+  const baseUrl = config.public.firebaseHostingBaseUrl ?? "";
+  const primaryDoc = await getDoc(
+    doc(firestore, PRIMARY_PRODUCTS_COLLECTION, productId),
+  );
+
+  if (primaryDoc.exists()) {
+    const data = primaryDoc.data() as Product;
+    return mapProduct(primaryDoc.id, data, baseUrl);
+  }
+
+  const fallbackDoc = await getDoc(
+    doc(firestore, FALLBACK_PRODUCTS_COLLECTION, productId),
+  );
+
+  if (!fallbackDoc.exists()) {
+    return null;
+  }
+
+  const data = fallbackDoc.data() as Product;
+  return mapProduct(fallbackDoc.id, data, baseUrl);
+};
+
 export const createOrder = async (
   payload: CreateOrderPayload,
 ): Promise<string> => {

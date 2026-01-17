@@ -302,6 +302,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
+import { getProductByIdUseCase } from "@/domain/usecases/getProductById";
 import { getProductsUseCase } from "@/domain/usecases/getProducts";
 import type { Product } from "@/types/product";
 
@@ -462,11 +463,8 @@ onMounted(async () => {
   errorMessage.value = null;
 
   try {
-    const products = await getProductsUseCase();
-    allProducts.value = products;
-    const selected = products.find(
-      (item) => item.id === (route.params.id as string),
-    );
+    const productId = route.params.id as string;
+    const selected = await getProductByIdUseCase(productId);
 
     if (!selected) {
       errorMessage.value =
@@ -476,6 +474,12 @@ onMounted(async () => {
 
     plant.value = selected;
     selectedImage.value = selected.image;
+
+    try {
+      allProducts.value = await getProductsUseCase();
+    } catch (listError) {
+      console.error("Błąd ładowania podobnych produktów:", listError);
+    }
   } catch (error) {
     console.error("Błąd ładowania produktu:", error);
     errorMessage.value = "Wystąpił błąd podczas ładowania produktu.";
