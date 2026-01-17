@@ -495,17 +495,12 @@ async function onSubmit() {
       error,
       email: state.email,
     });
-    if (typeof error === "object" && error !== null && "code" in error) {
-      const authError = error as { code?: string };
-      console.warn("Registration error code:", authError.code);
-    }
-    if (typeof error === "object" && error !== null && "code" in error) {
-      const authError = error as { code?: string };
-      if (authError.code === "auth/email-already-in-use") {
+    if (error instanceof Error) {
+      if (error.message === "user-exists") {
         generalError.value = "Użytkownik z tym adresem email już istnieje";
-      } else if (authError.code === "auth/invalid-email") {
+      } else if (error.message === "invalid-email") {
         generalError.value = "Nieprawidłowy format email";
-      } else if (authError.code === "auth/weak-password") {
+      } else if (error.message === "weak-password") {
         generalError.value = "Hasło jest zbyt słabe";
       } else {
         generalError.value =

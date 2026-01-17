@@ -9,7 +9,8 @@ import { useFirebase } from "@/composables/useFirebase";
 import type { Product } from "@/types/product";
 import type { CreateOrderPayload, OrderRecord } from "@/types/order";
 
-const PRODUCTS_COLLECTION = "products";
+const PRIMARY_PRODUCTS_COLLECTION = "Plants";
+const FALLBACK_PRODUCTS_COLLECTION = "products";
 const ORDERS_COLLECTION = "orders";
 
 const mapProduct = (id: string, data: Partial<Product>): Product => ({
@@ -26,9 +27,14 @@ const mapProduct = (id: string, data: Partial<Product>): Product => ({
 
 export const fetchProducts = async (): Promise<Product[]> => {
   const { firestore } = useFirebase();
-  const snapshot = await getDocs(collection(firestore, PRODUCTS_COLLECTION));
+  const snapshot = await getDocs(
+    collection(firestore, PRIMARY_PRODUCTS_COLLECTION),
+  );
+  const docs = snapshot.docs.length
+    ? snapshot.docs
+    : (await getDocs(collection(firestore, FALLBACK_PRODUCTS_COLLECTION))).docs;
 
-  return snapshot.docs.map((docSnapshot) => {
+  return docs.map((docSnapshot) => {
     const data = docSnapshot.data() as Product;
     return mapProduct(docSnapshot.id, data);
   });

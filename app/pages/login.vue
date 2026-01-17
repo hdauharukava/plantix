@@ -208,19 +208,11 @@ async function onSubmit() {
       error,
       email: state.email,
     });
-    if (typeof error === "object" && error !== null && "code" in error) {
-      const authError = error as { code?: string };
-      console.warn("Login error code:", authError.code);
-    }
-    if (typeof error === "object" && error !== null && "code" in error) {
-      const authError = error as { code?: string };
-      if (authError.code === "auth/user-not-found") {
+    if (error instanceof Error) {
+      if (error.message === "user-not-found") {
         generalError.value =
           "Nie znaleziono użytkownika. Zarejestruj się najpierw.";
-      } else if (authError.code === "auth/wrong-password") {
-        generalError.value = "Nieprawidłowy email lub hasło";
-        errors.password = " ";
-      } else if (authError.code === "auth/invalid-credential") {
+      } else if (error.message === "invalid-password") {
         generalError.value = "Nieprawidłowy email lub hasło";
         errors.password = " ";
       } else {
