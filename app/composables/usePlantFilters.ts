@@ -1,13 +1,13 @@
 import { ref, computed, watch } from "vue";
 import type { Ref } from "vue";
-import type { Plant } from "./usePlantData";
+import type { Product } from "@/types/product";
 
 interface PriceRange {
   min: number | null;
   max: number | null;
 }
 
-export const usePlantFilters = (plants: Ref<Plant[]>) => {
+export const usePlantFilters = (plants: Ref<Product[]>) => {
   const selectedCategories = ref<string[]>([]);
   const selectedSizes = ref<string[]>([]);
   const priceRange = ref<PriceRange>({ min: null, max: null });

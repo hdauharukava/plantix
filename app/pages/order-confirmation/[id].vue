@@ -511,61 +511,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { getOrderByIdUseCase } from "@/domain/usecases/getOrderById";
+import type { OrderRecord } from "@/types/order";
 
 const route = useRoute();
 
-interface OrderCustomer {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  street: string;
-  apartment: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
-
-interface OrderItem {
-  id: number;
-  title: string;
-  category: string;
-  size: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
-
-interface OrderShipping {
-  method: string;
-  description: string;
-  deliveryTime: string;
-  cost: number;
-}
-
-interface OrderPayment {
-  method: string;
-  description: string;
-}
-
-interface OrderDetails {
-  id: number;
-  orderNumber: string;
-  date: string;
-  customer: OrderCustomer;
-  items: OrderItem[];
-  shipping: OrderShipping;
-  payment: OrderPayment;
-  subtotal: number;
-  shippingCost: number;
-  additionalFees: number;
-  discount: number;
-  total: number;
-  status: string;
-  promoCode: string | null;
-}
-
-const orderDetails = ref<OrderDetails | null>(null);
+const orderDetails = ref<OrderRecord | null>(null);
 const isLoading = ref(true);
 
 const getSizeName = (size: string) => {
@@ -573,6 +525,9 @@ const getSizeName = (size: string) => {
     small: "Mały",
     medium: "Średni",
     large: "Duży",
+    S: "Mały",
+    M: "Średni",
+    L: "Duży",
   };
   return sizes[size] || size;
 };
@@ -592,22 +547,14 @@ const formatDate = (dateString: string) => {
   }
 };
 
-const loadOrderDetails = () => {
-  if (typeof window !== "undefined") {
-    try {
-      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
-      const orderId = parseInt(route.params.id as string);
-
-      const order = orders.find((o: OrderDetails) => o.id === orderId);
-
-      if (order) {
-        orderDetails.value = order;
-      }
-    } catch (error) {
-      console.error("Błąd ładowania zamówienia:", error);
-    } finally {
-      isLoading.value = false;
-    }
+const loadOrderDetails = async () => {
+  try {
+    const orderId = route.params.id as string;
+    orderDetails.value = await getOrderByIdUseCase(orderId);
+  } catch (error) {
+    console.error("Błąd ładowania zamówienia:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
 

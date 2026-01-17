@@ -1,16 +1,16 @@
 import type { FirebaseApp } from "firebase/app";
-import type { Database } from "firebase/database";
+import type { Firestore } from "firebase/firestore";
 
 declare module "#app" {
   interface NuxtApp {
     $firebaseApp: FirebaseApp;
-    $firebaseDb: Database;
+    $firestore: Firestore;
   }
 }
 
 declare module "vue" {
   interface ComponentCustomProperties {
     $firebaseApp: FirebaseApp;
-    $firebaseDb: Database;
+    $firestore: Firestore;
   }
 }

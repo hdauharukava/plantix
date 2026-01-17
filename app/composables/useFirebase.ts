@@ -1,11 +1,11 @@
 import type { FirebaseApp } from "firebase/app";
-import type { Database } from "firebase/database";
+import type { Firestore } from "firebase/firestore";
 
 export const useFirebase = () => {
   const nuxtApp = useNuxtApp();
 
   return {
     app: nuxtApp.$firebaseApp as FirebaseApp,
-    database: nuxtApp.$firebaseDb as Database,
+    firestore: nuxtApp.$firestore as Firestore,
   };
 };

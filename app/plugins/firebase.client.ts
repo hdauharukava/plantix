@@ -1,5 +1,5 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -15,12 +15,12 @@ export default defineNuxtPlugin(() => {
   };
 
   const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const firebaseDb = getDatabase(firebaseApp);
+  const firestore = getFirestore(firebaseApp);
 
   return {
     provide: {
       firebaseApp,
-      firebaseDb,
+      firestore,
     },
   };
 });
