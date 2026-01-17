@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@layer base {
+  :root {
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #374151;
+    --color-text-muted: #6b7280;
+    --color-text-subtle: #9ca3af;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f8fafc;
+    --color-border-subtle: #e5e7eb;
+    --color-input-text: #111827;
+    --color-placeholder: #9ca3af;
+  }
+}
+
 @layer utilities {
   .bg-primary {
     background-color: #90a88c;
@@ -13,5 +27,32 @@
   }
   .bg-mygray {
     background-color: #ececec;
+  }
+  .text-primary {
+    color: var(--color-text-primary);
+  }
+  .text-secondary {
+    color: var(--color-text-secondary);
+  }
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+  .text-subtle {
+    color: var(--color-text-subtle);
+  }
+  .text-input {
+    color: var(--color-input-text);
+  }
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .bg-surface-muted {
+    background-color: var(--color-surface-muted);
+  }
+  .border-subtle {
+    border-color: var(--color-border-subtle);
+  }
+  .placeholder-subtle::placeholder {
+    color: var(--color-placeholder);
   }
 }
