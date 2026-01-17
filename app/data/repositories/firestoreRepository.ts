@@ -13,7 +13,21 @@ const PRIMARY_PRODUCTS_COLLECTION = "Plants";
 const FALLBACK_PRODUCTS_COLLECTION = "products";
 const ORDERS_COLLECTION = "orders";
 
-const mapProduct = (id: string, data: Partial<Product>): Product => ({
+const resolveImageUrl = (image: string, baseUrl: string) => {
+  if (!image) return "";
+  if (image.startsWith("http")) return image;
+  if (!baseUrl) return image;
+  if (image.startsWith("/")) {
+    return `${baseUrl}${image}`;
+  }
+  return `${baseUrl}/${image}`;
+};
+
+const mapProduct = (
+  id: string,
+  data: Partial<Product>,
+  baseUrl: string,
+): Product => ({
   id: data.id ?? id,
   title: data.title ?? "",
   category: data.category ?? "",
@@ -21,12 +35,14 @@ const mapProduct = (id: string, data: Partial<Product>): Product => ({
   price: data.price ?? 0,
   oldPrice: data.oldPrice ?? null,
   discount: data.discount ?? null,
-  image: data.image ?? "",
+  image: resolveImageUrl(data.image ?? "", baseUrl),
   size: data.size ?? "",
 });
 
 export const fetchProducts = async (): Promise<Product[]> => {
   const { firestore } = useFirebase();
+  const config = useRuntimeConfig();
+  const baseUrl = config.public.firebaseHostingBaseUrl ?? "";
   const snapshot = await getDocs(
     collection(firestore, PRIMARY_PRODUCTS_COLLECTION),
   );
@@ -36,7 +52,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
   return docs.map((docSnapshot) => {
     const data = docSnapshot.data() as Product;
-    return mapProduct(docSnapshot.id, data);
+    return mapProduct(docSnapshot.id, data, baseUrl);
   });
 };
 
