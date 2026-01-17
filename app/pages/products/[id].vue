@@ -1,5 +1,34 @@
 <template>
-  <div v-if="plant" class="min-h-screen bg-gray-50">
+  <div v-if="isLoading" class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie produktu...</p>
+    </div>
+  </div>
+
+  <div
+    v-else-if="errorMessage"
+    class="min-h-screen flex items-center justify-center bg-gray-50"
+  >
+    <div class="text-center max-w-md px-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">
+        Produkt nie znaleziony
+      </h2>
+      <p class="text-gray-600 mb-6">
+        {{ errorMessage }}
+      </p>
+      <NuxtLink
+        to="/catalog"
+        class="bg-[#90a88c] hover:bg-[#799573] text-white rounded-full px-6 py-2 text-sm cursor-pointer transition-colors inline-block"
+      >
+        Wróć do katalogu
+      </NuxtLink>
+    </div>
+  </div>
+
+  <div v-else-if="plant" class="min-h-screen bg-gray-50">
     <div class="bg-white border-b border-gray-200">
       <div class="container mx-auto px-4 py-4">
         <nav class="flex items-center space-x-2 text-sm">
@@ -265,10 +294,7 @@
 
   <div v-else class="min-h-screen flex items-center justify-center">
     <div class="text-center">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
-      ></div>
-      <p class="text-gray-600">Ładowanie produktu...</p>
+      <p class="text-gray-600">Brak danych produktu.</p>
     </div>
   </div>
 </template>
@@ -284,6 +310,8 @@ const plant = ref<Product | null>(null);
 const selectedImage = ref<string>("");
 const isFavorite = ref(false);
 const allProducts = ref<Product[]>([]);
+const isLoading = ref(true);
+const errorMessage = ref<string | null>(null);
 
 const similarPlants = computed(() => {
   if (!plant.value) return [];
@@ -428,26 +456,32 @@ const toggleFavorite = () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   checkFavoriteStatus();
-  const loadProduct = async () => {
+  isLoading.value = true;
+  errorMessage.value = null;
+
+  try {
     const products = await getProductsUseCase();
     allProducts.value = products;
     const selected = products.find(
       (item) => item.id === (route.params.id as string),
     );
+
     if (!selected) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Produkt nie znaleziony",
-      });
+      errorMessage.value =
+        "Nie znaleźliśmy produktu o podanym identyfikatorze.";
+      return;
     }
+
     plant.value = selected;
     selectedImage.value = selected.image;
-  };
-  loadProduct().catch((error) => {
+  } catch (error) {
     console.error("Błąd ładowania produktu:", error);
-  });
+    errorMessage.value = "Wystąpił błąd podczas ładowania produktu.";
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 
