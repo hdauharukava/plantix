@@ -364,16 +364,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useAdviceData } from "@/composables/useAdviceData";
-import type { CareAdvice, Category, FAQ } from "@/composables/useAdviceData";
+import type { CareAdvice } from "@/composables/useAdviceData";
 
-const { getAllAdvice, getAllCategories, getAllFAQs, getAdviceCountByCategory } =
-  useAdviceData();
+const {
+  advice,
+  categories: adviceCategories,
+  faqs: adviceFaqs,
+  loadAdviceData,
+  getAdviceCountByCategory,
+} = useAdviceData();
 
-const isLoading = ref(false);
+const isLoading = ref(true);
 
-const categories = ref<Category[]>(getAllCategories());
+const categories = computed(() => adviceCategories.value);
 const selectedCategory = ref<string>("");
 const selectedDifficulty = ref<string>("all");
 const sortBy = ref<
@@ -381,8 +386,8 @@ const sortBy = ref<
 >("easy-first");
 const isFilterOpen = ref(false);
 
-const allAdvice = ref<CareAdvice[]>(getAllAdvice());
-const faqs = ref<FAQ[]>(getAllFAQs());
+const allAdvice = computed(() => advice.value);
+const faqs = computed(() => adviceFaqs.value);
 
 const filteredAdvice = computed(() => {
   let advice = [...allAdvice.value];
@@ -449,6 +454,12 @@ const getDifficultyClass = (difficulty: string) => {
   };
   return classes[difficulty] || "bg-gray-100 text-gray-800";
 };
+
+onMounted(async () => {
+  isLoading.value = true;
+  await loadAdviceData();
+  isLoading.value = false;
+});
 </script>
 
 <style scoped>

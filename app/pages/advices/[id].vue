@@ -242,24 +242,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { showError } from "#app";
 import { useAdviceData } from "@/composables/useAdviceData";
 import type { CareAdvice } from "@/composables/useAdviceData";
 
 const route = useRoute();
-const { getAdviceById } = useAdviceData();
+const { loadAdviceData, getAdviceById } = useAdviceData();
 
 const advice = ref<CareAdvice | null>(null);
 
 const id = parseInt(route.params.id as string);
-advice.value = getAdviceById(id);
 
-if (!advice.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Porada nie znaleziona",
-  });
-}
+onMounted(async () => {
+  await loadAdviceData();
+  advice.value = getAdviceById(id);
+
+  if (!advice.value) {
+    showError({
+      statusCode: 404,
+      statusMessage: "Porada nie znaleziona",
+    });
+  }
+});
 
 const getDifficultyClass = (difficulty: string) => {
   const classes: Record<string, string> = {
