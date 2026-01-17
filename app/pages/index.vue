@@ -6,7 +6,7 @@
     <div
       class="w-full max-w-5xl h-64 md:h-80 lg:h-96 bg-[#ececec] relative mb-0"
     >
-      <img :src="heroImage" class="absolute bottom-0 w-full" />
+      <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
       <div
         class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
       >
@@ -124,7 +124,6 @@ import { useAssetUrl } from "@/composables/useAssetUrl";
 
 const { resolveAssetUrl } = useAssetUrl();
 
-const heroImage = resolveAssetUrl("/index.png");
 const fikusy = resolveAssetUrl("/plants/fikus.webp");
 const kaktusy = resolveAssetUrl("/plants/kaktus.webp");
 const iglice = resolveAssetUrl("/plants/iglica.webp");

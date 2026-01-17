@@ -4,7 +4,7 @@
   >
     <div>
       <NuxtLink to="/">
-        <img :src="icons.logo" alt="logo" class="cursor-pointer" />
+        <img src="@/assets/icons/Logo.svg" alt="logo" class="cursor-pointer" />
       </NuxtLink>
     </div>
 
@@ -50,25 +50,41 @@
             @click="performSearch"
             class="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
           >
-            <img :src="icons.search" alt="Search" class="w-5 h-5" />
+            <img
+              src="@/assets/icons/SearchIcon.svg"
+              alt="Search"
+              class="w-5 h-5"
+            />
           </button>
         </div>
 
         <button v-else @click="openSearch" class="cursor-pointer">
-          <img :src="icons.search" alt="Search" class="w-7 h-7" />
+          <img
+            src="@/assets/icons/SearchIcon.svg"
+            alt="Search"
+            class="w-7 h-7"
+          />
         </button>
 
         <NuxtLink to="/favorites" class="hidden md:block">
-          <img :src="icons.heart" alt="Favorite" class="w-7 h-7 cursor-pointer" />
+          <img
+            src="@/assets/icons/HeartIcon.svg"
+            alt="Favorite"
+            class="w-7 h-7 cursor-pointer"
+          />
         </NuxtLink>
         <img
-          :src="icons.user"
+          src="@/assets/icons/UserIcon.svg"
           alt="User"
           class="w-7 h-7 cursor-pointer"
           @click="toggleUserModal"
         />
         <NuxtLink to="/cart" class="relative">
-          <img :src="icons.cart" alt="Cart" class="w-7 h-7 cursor-pointer" />
+          <img
+            src="@/assets/icons/CartIcon.svg"
+            alt="Cart"
+            class="w-7 h-7 cursor-pointer"
+          />
           <div
             v-if="totalItems > 0"
             class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
@@ -151,29 +167,41 @@
               @click="performSearch"
               class="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
             >
-              <img :src="icons.search" alt="Search" class="w-4 h-4" />
+              <img
+                src="@/assets/icons/SearchIcon.svg"
+                alt="Search"
+                class="w-4 h-4"
+              />
             </button>
           </div>
 
           <div v-else class="flex items-center justify-around w-full">
             <button @click="openSearchMobile" class="cursor-pointer">
-              <img :src="icons.search" alt="Search" class="w-6 h-6" />
+              <img
+                src="@/assets/icons/SearchIcon.svg"
+                alt="Search"
+                class="w-6 h-6"
+              />
             </button>
             <NuxtLink to="/favorites" class="relative">
               <img
-                :src="icons.heart"
+                src="@/assets/icons/HeartIcon.svg"
                 alt="Heart"
                 class="w-6 h-6 cursor-pointer"
               />
             </NuxtLink>
             <img
-              :src="icons.user"
+              src="@/assets/icons/UserIcon.svg"
               alt="User"
               class="w-6 h-6 cursor-pointer"
               @click.stop="openUserModal"
             />
             <NuxtLink to="/cart" class="relative">
-              <img :src="icons.cart" alt="Cart" class="w-6 h-6 cursor-pointer" />
+              <img
+                src="@/assets/icons/CartIcon.svg"
+                alt="Cart"
+                class="w-6 h-6 cursor-pointer"
+              />
 
               <div
                 v-if="totalItems > 0"
@@ -215,18 +243,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useCart } from "~/composables/useCart";
-import { useAssetUrl } from "@/composables/useAssetUrl";
-
 const { totalItems } = useCart();
-const { resolveAssetUrl } = useAssetUrl();
-
-const icons = {
-  logo: resolveAssetUrl("/icons/Logo.svg"),
-  search: resolveAssetUrl("/icons/SearchIcon.svg"),
-  heart: resolveAssetUrl("/icons/HeartIcon.svg"),
-  user: resolveAssetUrl("/icons/UserIcon.svg"),
-  cart: resolveAssetUrl("/icons/CartIcon.svg"),
-};
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);
