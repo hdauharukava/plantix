@@ -148,7 +148,7 @@
             :title="plant.title"
             :price="plant.price"
             :old-price="plant.oldPrice ?? undefined"
-            :discount="plant.discount !== null ? `${plant.discount}%` : undefined"
+            :discount="plant.discount ?? undefined"
             :size="plant.size"
           />
         </div>

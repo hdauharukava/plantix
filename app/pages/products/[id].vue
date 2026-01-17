@@ -67,7 +67,7 @@
                   v-if="plant.discount !== null"
                   class="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded-full"
                 >
-                  {{ `${plant.discount}%` }}
+                  {{ plant.discount }}
                 </span>
               </div>
 
@@ -253,11 +253,7 @@
               :title="similarPlant.title"
               :price="similarPlant.price"
               :old-price="similarPlant.oldPrice ?? undefined"
-              :discount="
-                similarPlant.discount !== null
-                  ? `${similarPlant.discount}%`
-                  : undefined
-              "
+              :discount="similarPlant.discount ?? undefined"
               :size="similarPlant.size"
               class="h-full"
             />
