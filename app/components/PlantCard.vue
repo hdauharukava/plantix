@@ -115,7 +115,7 @@ const props = defineProps({
     default: null,
   },
   discount: {
-    type: String,
+    type: [String, Number],
     default: null,
   },
   size: {
@@ -123,7 +123,7 @@ const props = defineProps({
     default: "medium",
   },
   id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
@@ -135,6 +135,9 @@ const getSizeName = (size) => {
     small: "Mały",
     medium: "Średni",
     large: "Duży",
+    S: "Mały",
+    M: "Średni",
+    L: "Duży",
   };
   return sizes[size] || size;
 };
@@ -145,7 +148,7 @@ const formatPrice = (price) => {
 
 onMounted(() => {
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  isFavorite.value = favorites.includes(props.id);
+  isFavorite.value = favorites.includes(String(props.id));
 });
 
 const toggleFavorite = (event) => {
@@ -153,11 +156,12 @@ const toggleFavorite = (event) => {
   event.stopPropagation();
 
   let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const favoriteId = String(props.id);
 
   if (isFavorite.value) {
-    favorites = favorites.filter((favId) => favId !== props.id);
+    favorites = favorites.filter((favId) => favId !== favoriteId);
   } else {
-    favorites.push(props.id);
+    favorites.push(favoriteId);
   }
 
   localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -180,8 +184,10 @@ const addToCart = (event) => {
     cart.push({
       id: props.id,
       title: props.title,
+      category: props.category,
       price: props.price,
       image: props.image,
+      size: props.size,
       quantity: 1,
     });
   }

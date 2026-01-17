@@ -486,12 +486,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "#app";
-import { usePlantData } from "@/composables/usePlantData";
-import type { Plant } from "@/composables/usePlantData";
+import { createOrderUseCase } from "@/domain/usecases/createOrder";
+import type { CreateOrderPayload, OrderItem } from "@/types/order";
 
 const router = useRouter();
-const { getPlantById } = usePlantData();
-
 const isLoading = ref(false);
 const isProcessing = ref(false);
 
@@ -519,11 +517,7 @@ const formState = ref<FormState>({
   country: "",
 });
 
-interface CartItem extends Plant {
-  quantity: number;
-}
-
-const cartItems = ref<CartItem[]>([]);
+const cartItems = ref<OrderItem[]>([]);
 
 const shippingMethods = ref([
   {
@@ -584,18 +578,15 @@ const termsAccepted = ref(false);
 
 const loadCart = () => {
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  cartItems.value = cart
-    .map((item: { id: number; quantity: number }) => {
-      const plant = getPlantById(item.id);
-      if (plant) {
-        return {
-          ...plant,
-          quantity: item.quantity,
-        };
-      }
-      return null;
-    })
-    .filter(Boolean) as CartItem[];
+  cartItems.value = (cart as OrderItem[]).map((item) => ({
+    id: String(item.id),
+    title: item.title ?? "",
+    category: item.category ?? "",
+    size: item.size ?? "",
+    price: item.price ?? 0,
+    image: item.image ?? "",
+    quantity: item.quantity ?? 1,
+  }));
 };
 
 const subtotal = computed(() => {
@@ -703,8 +694,9 @@ const processOrder = async () => {
       (m) => m.id === selectedPayment.value,
     );
 
-    const order = {
-      id: Date.now(),
+    const additionalFees =
+      selectedPayment.value === "cod" ? subtotal.value * 0.01 : 0;
+    const orderPayload: CreateOrderPayload = {
       orderNumber: `ORD-${Date.now().toString().slice(-8)}`,
       date: new Date().toISOString(),
       customer: formState.value,
@@ -721,20 +713,19 @@ const processOrder = async () => {
       },
       subtotal: subtotal.value,
       shippingCost: selectedShippingPrice.value,
+      additionalFees,
       discount: discount.value,
       total: totalPrice.value,
       status: "pending",
       promoCode: promoCode.value || null,
     };
 
-    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
-    orders.push(order);
-    localStorage.setItem("orders", JSON.stringify(orders));
+    const orderId = await createOrderUseCase(orderPayload);
 
     localStorage.removeItem("cart");
     window.dispatchEvent(new Event("cartUpdated"));
 
-    await router.push(`/order-confirmation/${order.id}`);
+    await router.push(`/order-confirmation/${orderId}`);
   } catch (error) {
     console.error("Błąd podczas składania zamówienia:", error);
     alert("Wystąpił błąd podczas składania zamówienia. Spróbuj ponownie.");

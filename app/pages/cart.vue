@@ -296,42 +296,27 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { usePlantData } from "@/composables/usePlantData";
-import type { Plant } from "@/composables/usePlantData";
-
-const { getPlantById, getAllSizes } = usePlantData();
-const sizes = getAllSizes();
+import type { OrderItem } from "@/types/order";
 
 const isLoading = ref(false);
 
-interface CartItem extends Plant {
-  quantity: number;
-}
-
-const cartItems = ref<CartItem[]>([]);
+const cartItems = ref<OrderItem[]>([]);
 
 const loadCart = () => {
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  cartItems.value = cart
-    .map((item: { id: number; quantity: number }) => {
-      const plant = getPlantById(item.id);
-      if (plant) {
-        return {
-          ...plant,
-          quantity: item.quantity,
-        };
-      }
-      return null;
-    })
-    .filter(Boolean) as CartItem[];
+  cartItems.value = (cart as OrderItem[]).map((item) => ({
+    id: String(item.id),
+    title: item.title ?? "",
+    category: item.category ?? "",
+    size: item.size ?? "",
+    price: item.price ?? 0,
+    image: item.image ?? "",
+    quantity: item.quantity ?? 1,
+  }));
 };
 
 const saveCart = () => {
-  const cart = cartItems.value.map((item) => ({
-    id: item.id,
-    quantity: item.quantity,
-  }));
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cartItems.value));
 
   if (typeof window !== "undefined") {
     window.dispatchEvent(new Event("cartUpdated"));
@@ -340,11 +325,18 @@ const saveCart = () => {
 };
 
 const getSizeName = (size: string) => {
-  const sizeObj = sizes.find((s) => s.id === size);
-  return sizeObj ? sizeObj.name : size;
+  const sizes: Record<string, string> = {
+    small: "Mały",
+    medium: "Średni",
+    large: "Duży",
+    S: "Mały",
+    M: "Średni",
+    L: "Duży",
+  };
+  return sizes[size] || size;
 };
 
-const increaseQuantity = (id: number) => {
+const increaseQuantity = (id: string) => {
   const item = cartItems.value.find((item) => item.id === id);
   if (item) {
     item.quantity++;
@@ -352,7 +344,7 @@ const increaseQuantity = (id: number) => {
   }
 };
 
-const decreaseQuantity = (id: number) => {
+const decreaseQuantity = (id: string) => {
   const item = cartItems.value.find((item) => item.id === id);
   if (item && item.quantity > 1) {
     item.quantity--;
@@ -360,7 +352,7 @@ const decreaseQuantity = (id: number) => {
   }
 };
 
-const removeFromCart = (id: number) => {
+const removeFromCart = (id: string) => {
   cartItems.value = cartItems.value.filter((item) => item.id !== id);
   saveCart();
 };

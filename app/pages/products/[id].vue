@@ -64,10 +64,10 @@
                   </span>
                 </div>
                 <span
-                  v-if="plant.discount"
+                  v-if="plant.discount !== null"
                   class="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded-full"
                 >
-                  {{ plant.discount }}
+                  {{ `${plant.discount}%` }}
                 </span>
               </div>
 
@@ -253,7 +253,11 @@
               :title="similarPlant.title"
               :price="similarPlant.price"
               :old-price="similarPlant.oldPrice ?? undefined"
-              :discount="similarPlant.discount ?? undefined"
+              :discount="
+                similarPlant.discount !== null
+                  ? `${similarPlant.discount}%`
+                  : undefined
+              "
               :size="similarPlant.size"
               class="h-full"
             />
@@ -275,49 +279,47 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { usePlantData } from "@/composables/usePlantData";
-import type { Plant } from "@/composables/usePlantData";
 import PlantCard from "@/components/PlantCard.vue";
+import { getProductsUseCase } from "@/domain/usecases/getProducts";
+import type { Product } from "@/types/product";
 
 const route = useRoute();
 
-const { getPlantById, getSimilarPlants, getAllSizes } = usePlantData();
-const sizes = getAllSizes();
-
-const plant = ref<Plant | null>(null);
+const plant = ref<Product | null>(null);
 const selectedImage = ref<string>("");
 const isFavorite = ref(false);
-
-const id = parseInt(route.params.id as string);
-plant.value = getPlantById(id);
-
-if (!plant.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Produkt nie znaleziony",
-  });
-}
-
-selectedImage.value = plant.value.image;
+const allProducts = ref<Product[]>([]);
 
 const similarPlants = computed(() => {
   if (!plant.value) return [];
-  return getSimilarPlants(plant.value.id, plant.value.category, 4);
+  return allProducts.value
+    .filter(
+      (item) =>
+        item.category === plant.value?.category && item.id !== plant.value?.id,
+    )
+    .slice(0, 4);
 });
 
 const checkFavoriteStatus = () => {
   if (typeof window !== "undefined") {
     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    isFavorite.value = favorites.includes(plant.value?.id);
+    isFavorite.value = favorites.includes(String(plant.value?.id));
   }
 };
 
 const getSizeName = (size: string) => {
-  const sizeObj = sizes.find((s) => s.id === size);
-  return sizeObj ? sizeObj.name : size;
+  const sizes: Record<string, string> = {
+    small: "Mały",
+    medium: "Średni",
+    large: "Duży",
+    S: "Mały",
+    M: "Średni",
+    L: "Duży",
+  };
+  return sizes[size] || size;
 };
 
-const getDefaultDescription = (plant: Plant) => {
+const getDefaultDescription = (plant: Product) => {
   const descriptions: Record<string, string> = {
     Fikusy:
       "Fikus to popularna roślina doniczkowa, znana ze swoich pięknych, błyszczących liści. Idealna do nowoczesnych wnętrz.",
@@ -395,8 +397,10 @@ const addToCart = () => {
       cart.push({
         id: plant.value.id,
         title: plant.value.title,
+        category: plant.value.category,
         price: plant.value.price,
         image: plant.value.image,
+        size: plant.value.size,
         quantity: 1,
       });
     }
@@ -414,12 +418,12 @@ const toggleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
     if (isFavorite.value) {
-      const index = favorites.indexOf(plant.value.id);
+      const index = favorites.indexOf(String(plant.value.id));
       if (index > -1) {
         favorites.splice(index, 1);
       }
     } else {
-      favorites.push(plant.value.id);
+      favorites.push(String(plant.value.id));
     }
 
     localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -431,6 +435,24 @@ const toggleFavorite = () => {
 
 onMounted(() => {
   checkFavoriteStatus();
+  const loadProduct = async () => {
+    const products = await getProductsUseCase();
+    allProducts.value = products;
+    const selected = products.find(
+      (item) => item.id === (route.params.id as string),
+    );
+    if (!selected) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Produkt nie znaleziony",
+      });
+    }
+    plant.value = selected;
+    selectedImage.value = selected.image;
+  };
+  loadProduct().catch((error) => {
+    console.error("Błąd ładowania produktu:", error);
+  });
 });
 </script>
 
