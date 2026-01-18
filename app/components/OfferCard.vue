@@ -19,14 +19,14 @@
 
     <div class="px-2">
       <p class="text-gray-500 text-sm mb-1">{{ category }}</p>
-      <h3 class="font-poppins font-bold text-lg text-[#1e1e1e] mb-2">
+      <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">
         {{ title }}
       </h3>
 
       <div class="flex items-center gap-2 mb-3">
         <span
           class=""
-          :class="oldPrice ? 'text-[#ff0000] opacity-80' : 'text-[#1e1e1e]'"
+          :class="oldPrice ? 'text-[#ff0000] opacity-80' : 'text-gray-900'"
         >
           {{ formattedPrice }}
         </span>

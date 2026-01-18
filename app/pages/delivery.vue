@@ -4,7 +4,7 @@
       <div class="flex justify-between items-start">
         <div>
           <h1
-            class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]"
+            class="font-poppins font-bold text-2xl md:text-3xl text-gray-900"
           >
             Płatność i dostawa
           </h1>

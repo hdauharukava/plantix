@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
     <div class="w-full max-w-5xl mb-8">
       <div>
-        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-gray-900">
           Moje zamówienia
         </h1>
         <p class="text-gray-600 mt-2">Historia Twoich zamówień</p>
@@ -155,7 +155,7 @@
 
                   <div class="space-y-3">
                     <div class="flex items-center space-x-4">
-                      <span class="font-bold text-lg text-[#1e1e1e]">
+                      <span class="font-bold text-lg text-gray-900">
                         {{ order.total.toFixed(2) }} zł
                       </span>
                       <span

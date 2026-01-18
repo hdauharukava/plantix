@@ -14,7 +14,7 @@
       <div
         class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4"
       >
-        <h1 class="font-poppins font-bold text-2xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl text-gray-900">
           Zamówienie #{{ order.id }}
         </h1>
         <span
@@ -74,7 +74,7 @@
 
                     <div class="flex items-center space-x-2">
                       <span class="text-sm text-gray-600">Razem:</span>
-                      <span class="font-bold text-[#1e1e1e]">
+                      <span class="font-bold text-gray-900">
                         {{ (product.price * product.quantity).toFixed(2) }} zł
                       </span>
                     </div>
@@ -171,7 +171,7 @@
               <div class="border-t border-gray-200 pt-3">
                 <div class="flex justify-between text-lg font-bold">
                   <span>Razem:</span>
-                  <span class="text-[#1e1e1e]"
+                  <span class="text-gray-900"
                     >{{ order.total.toFixed(2) }} zł</span
                   >
                 </div>

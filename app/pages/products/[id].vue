@@ -75,14 +75,14 @@
           <div>
             <div class="mb-6">
               <h1
-                class="font-poppins font-bold text-3xl md:text-4xl text-[#1e1e1e] mb-3"
+                class="font-poppins font-bold text-3xl md:text-4xl text-gray-900 mb-3"
               >
                 {{ plant.title }}
               </h1>
 
               <div class="flex items-center space-x-4 mb-4">
                 <div class="flex items-center space-x-2">
-                  <span class="font-bold text-2xl text-[#1e1e1e]">
+                  <span class="font-bold text-2xl text-gray-900">
                     {{ plant.price.toFixed(2) }} zł
                   </span>
                   <span
@@ -269,7 +269,7 @@
         </div>
 
         <div class="mt-16 pt-8 border-t border-gray-200">
-          <h2 class="font-poppins font-bold text-2xl text-[#1e1e1e] mb-6">
+          <h2 class="font-poppins font-bold text-2xl text-gray-900 mb-6">
             Podobne rośliny
           </h2>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">

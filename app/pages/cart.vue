@@ -5,7 +5,7 @@
   >
     <div class="w-full max-w-5xl mb-8">
       <div>
-        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-gray-900">
           Koszyk
         </h1>
         <p class="text-gray-600 mt-2">Twoje produkty do zakupu</p>
@@ -70,7 +70,7 @@
                     </p>
                     <div class="md:hidden mt-2">
                       <div class="flex items-center space-x-2">
-                        <span class="font-bold text-lg text-[#1e1e1e]"
+                        <span class="font-bold text-lg text-gray-900"
                           >{{ item.price.toFixed(2) }} zł</span
                         >
                         <span
@@ -89,7 +89,7 @@
                     :to="`/products/${item.id}`"
                     class="flex flex-col items-center hover:text-[#90a88c] transition-colors"
                   >
-                    <span class="font-bold text-lg text-[#1e1e1e]"
+                    <span class="font-bold text-lg text-gray-900"
                       >{{ item.price.toFixed(2) }} zł</span
                     >
                     <span
@@ -231,7 +231,7 @@
             <div class="border-t border-gray-200 pt-4">
               <div class="flex justify-between text-lg font-bold">
                 <span>Razem:</span>
-                <span class="text-[#1e1e1e]"
+                <span class="text-gray-900"
                   >{{ totalPrice.toFixed(2) }} zł</span
                 >
               </div>
@@ -261,7 +261,7 @@
             <div class="border-t border-gray-200 pt-4">
               <div class="flex justify-between text-lg font-bold">
                 <span>Razem:</span>
-                <span class="text-[#1e1e1e]">0,00 zł</span>
+                <span class="text-gray-900">0,00 zł</span>
               </div>
             </div>
 

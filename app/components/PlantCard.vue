@@ -62,7 +62,7 @@
 
       <div class="flex items-center justify-between mt-4">
         <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="font-bold text-base text-[#1e1e1e] whitespace-nowrap">{{
+          <span class="font-bold text-base text-gray-900 whitespace-nowrap">{{
             formatPrice(price)
           }}</span>
           <span

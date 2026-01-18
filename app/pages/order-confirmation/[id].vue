@@ -23,7 +23,7 @@
         </div>
 
         <h1
-          class="font-poppins font-bold text-3xl md:text-4xl text-[#1e1e1e] mb-4"
+          class="font-poppins font-bold text-3xl md:text-4xl text-gray-900 mb-4"
         >
           Zamówienie potwierdzone!
         </h1>
@@ -64,7 +64,7 @@
             class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6"
           >
             <h2
-              class="font-poppins font-bold text-xl text-[#1e1e1e] mb-6 pb-4 border-b border-gray-200"
+              class="font-poppins font-bold text-xl text-gray-900 mb-6 pb-4 border-b border-gray-200"
             >
               Szczegóły zamówienia
             </h2>
@@ -199,7 +199,7 @@
 
           <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2
-              class="font-poppins font-bold text-xl text-[#1e1e1e] mb-6 pb-4 border-b border-gray-200"
+              class="font-poppins font-bold text-xl text-gray-900 mb-6 pb-4 border-b border-gray-200"
             >
               Zamówione produkty
             </h2>
@@ -272,7 +272,7 @@
           <div
             class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8"
           >
-            <h2 class="font-poppins font-bold text-xl text-[#1e1e1e] mb-6">
+            <h2 class="font-poppins font-bold text-xl text-gray-900 mb-6">
               Podsumowanie
             </h2>
 
@@ -338,7 +338,7 @@
               <div class="border-t border-gray-200 pt-4 mt-3">
                 <div class="flex justify-between text-lg font-bold">
                   <span>Łącznie do zapłaty:</span>
-                  <span class="text-[#1e1e1e]">
+                  <span class="text-gray-900">
                     {{ orderDetails.total.toFixed(2) }} zł
                   </span>
                 </div>

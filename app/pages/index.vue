@@ -8,12 +8,12 @@
     >
       <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
       <div
-        class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
+        class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-gray-900"
       >
         Kwiaty do Twojego domu
       </div>
       <div
-        class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-[#1e1e1e]"
+        class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-gray-900"
       >
         <p>
           Rośliny w doniczkach staną się pięknym i modnym dodatkiem do wnętrza
