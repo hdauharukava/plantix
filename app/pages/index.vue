@@ -8,12 +8,12 @@
     >
       <img src="@/assets/index.png" class="absolute bottom-0 w-full" />
       <div
-        class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
+        class="absolute top-12 md:top-18 lg:top-24 left-6 md:left-12 lg:left-20 font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-gray-900"
       >
         Kwiaty do Twojego domu
       </div>
       <div
-        class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-[#1e1e1e]"
+        class="absolute left-6 md:left-12 lg:left-20 top-24 md:top-34 lg:top-44 max-w-80 md:max-w-96 font-poppins font-bold text-xs md:text-sm text-gray-900"
       >
         <p>
           Rośliny w doniczkach staną się pięknym i modnym dodatkiem do wnętrza
@@ -120,14 +120,18 @@
 <script setup>
 import CategoryCard from "@/components/CategoryCard.vue";
 import OfferCard from "@/components/OfferCard.vue";
-import fikusy from "@/assets/plants/fikus.webp";
-import kaktusy from "@/assets/plants/kaktus.webp";
-import iglice from "@/assets/plants/iglica.webp";
-import zamiokulkasy from "@/assets/plants/zamiokulkas.webp";
-import fikus2 from "@/assets/plants/fikus2.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import sukulent from "@/assets/plants/sukulent.webp";
-import fikus3 from "@/assets/plants/fikus3.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
+
+const { resolveAssetUrl } = useAssetUrl();
+
+const fikusy = resolveAssetUrl("/plants/fikus.webp");
+const kaktusy = resolveAssetUrl("/plants/kaktus.webp");
+const iglice = resolveAssetUrl("/plants/iglica.webp");
+const zamiokulkasy = resolveAssetUrl("/plants/zamiokulkas.webp");
+const fikus2 = resolveAssetUrl("/plants/fikus2.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const sukulent = resolveAssetUrl("/plants/sukulent.webp");
+const fikus3 = resolveAssetUrl("/plants/fikus3.webp");
 
 const isLoading = ref(false);
 </script>

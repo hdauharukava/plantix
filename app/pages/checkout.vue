@@ -4,7 +4,7 @@
       <div class="max-w-6xl mx-auto">
         <div class="mb-8">
           <h1
-            class="font-poppins font-bold text-3xl md:text-4xl text-[#1e1e1e]"
+            class="font-poppins font-bold text-3xl md:text-4xl text-gray-900"
           >
             Kasa
           </h1>
@@ -19,7 +19,7 @@
               <div
                 class="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
               >
-                <h2 class="font-poppins font-bold text-xl text-[#1e1e1e] mb-6">
+                <h2 class="font-poppins font-bold text-xl text-gray-900 mb-6">
                   Dane kontaktowe
                 </h2>
 
@@ -301,7 +301,7 @@
             <div
               class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8"
             >
-              <h2 class="font-poppins font-bold text-xl text-[#1e1e1e] mb-6">
+              <h2 class="font-poppins font-bold text-xl text-gray-900 mb-6">
                 Podsumowanie zamówienia
               </h2>
 
@@ -376,7 +376,7 @@
                 <div class="border-t border-gray-200 pt-4">
                   <div class="flex justify-between text-lg font-bold">
                     <span>Do zapłaty:</span>
-                    <span class="text-[#1e1e1e]">
+                    <span class="text-gray-900">
                       {{ totalPrice.toFixed(2) }} zł
                     </span>
                   </div>

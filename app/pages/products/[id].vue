@@ -1,5 +1,34 @@
 <template>
-  <div v-if="plant" class="min-h-screen bg-gray-50">
+  <div v-if="isLoading" class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Ładowanie produktu...</p>
+    </div>
+  </div>
+
+  <div
+    v-else-if="errorMessage"
+    class="min-h-screen flex items-center justify-center bg-gray-50"
+  >
+    <div class="text-center max-w-md px-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">
+        Produkt nie znaleziony
+      </h2>
+      <p class="text-gray-600 mb-6">
+        {{ errorMessage }}
+      </p>
+      <NuxtLink
+        to="/catalog"
+        class="bg-[#90a88c] hover:bg-[#799573] text-white rounded-full px-6 py-2 text-sm cursor-pointer transition-colors inline-block"
+      >
+        Wróć do katalogu
+      </NuxtLink>
+    </div>
+  </div>
+
+  <div v-else-if="plant" class="min-h-screen bg-gray-50">
     <div class="bg-white border-b border-gray-200">
       <div class="container mx-auto px-4 py-4">
         <nav class="flex items-center space-x-2 text-sm">
@@ -46,14 +75,14 @@
           <div>
             <div class="mb-6">
               <h1
-                class="font-poppins font-bold text-3xl md:text-4xl text-[#1e1e1e] mb-3"
+                class="font-poppins font-bold text-3xl md:text-4xl text-gray-900 mb-3"
               >
                 {{ plant.title }}
               </h1>
 
               <div class="flex items-center space-x-4 mb-4">
                 <div class="flex items-center space-x-2">
-                  <span class="font-bold text-2xl text-[#1e1e1e]">
+                  <span class="font-bold text-2xl text-gray-900">
                     {{ plant.price.toFixed(2) }} zł
                   </span>
                   <span
@@ -67,7 +96,7 @@
                   v-if="plant.discount !== null"
                   class="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded-full"
                 >
-                  {{ `${plant.discount}%` }}
+                  {{ plant.discount }}
                 </span>
               </div>
 
@@ -240,7 +269,7 @@
         </div>
 
         <div class="mt-16 pt-8 border-t border-gray-200">
-          <h2 class="font-poppins font-bold text-2xl text-[#1e1e1e] mb-6">
+          <h2 class="font-poppins font-bold text-2xl text-gray-900 mb-6">
             Podobne rośliny
           </h2>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -253,11 +282,7 @@
               :title="similarPlant.title"
               :price="similarPlant.price"
               :old-price="similarPlant.oldPrice ?? undefined"
-              :discount="
-                similarPlant.discount !== null
-                  ? `${similarPlant.discount}%`
-                  : undefined
-              "
+              :discount="similarPlant.discount ?? undefined"
               :size="similarPlant.size"
               class="h-full"
             />
@@ -269,10 +294,7 @@
 
   <div v-else class="min-h-screen flex items-center justify-center">
     <div class="text-center">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#90a88c] mx-auto mb-4"
-      ></div>
-      <p class="text-gray-600">Ładowanie produktu...</p>
+      <p class="text-gray-600">Brak danych produktu.</p>
     </div>
   </div>
 </template>
@@ -280,15 +302,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import PlantCard from "@/components/PlantCard.vue";
+import { getProductByIdUseCase } from "@/domain/usecases/getProductById";
 import { getProductsUseCase } from "@/domain/usecases/getProducts";
 import type { Product } from "@/types/product";
 
 const route = useRoute();
-
 const plant = ref<Product | null>(null);
 const selectedImage = ref<string>("");
 const isFavorite = ref(false);
 const allProducts = ref<Product[]>([]);
+const isLoading = ref(true);
+const errorMessage = ref<string | null>(null);
 
 const similarPlants = computed(() => {
   if (!plant.value) return [];
@@ -433,26 +457,35 @@ const toggleFavorite = () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   checkFavoriteStatus();
-  const loadProduct = async () => {
-    const products = await getProductsUseCase();
-    allProducts.value = products;
-    const selected = products.find(
-      (item) => item.id === (route.params.id as string),
-    );
+  isLoading.value = true;
+  errorMessage.value = null;
+
+  try {
+    const productId = route.params.id as string;
+    const selected = await getProductByIdUseCase(productId);
+
     if (!selected) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "Produkt nie znaleziony",
-      });
+      errorMessage.value =
+        "Nie znaleźliśmy produktu o podanym identyfikatorze.";
+      return;
     }
+
     plant.value = selected;
     selectedImage.value = selected.image;
-  };
-  loadProduct().catch((error) => {
+
+    try {
+      allProducts.value = await getProductsUseCase();
+    } catch (listError) {
+      console.error("Błąd ładowania podobnych produktów:", listError);
+    }
+  } catch (error) {
     console.error("Błąd ładowania produktu:", error);
-  });
+    errorMessage.value = "Wystąpił błąd podczas ładowania produktu.";
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 

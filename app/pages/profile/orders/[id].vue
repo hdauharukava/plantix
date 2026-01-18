@@ -14,7 +14,7 @@
       <div
         class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4"
       >
-        <h1 class="font-poppins font-bold text-2xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl text-gray-900">
           Zamówienie #{{ order.id }}
         </h1>
         <span
@@ -74,7 +74,7 @@
 
                     <div class="flex items-center space-x-2">
                       <span class="text-sm text-gray-600">Razem:</span>
-                      <span class="font-bold text-[#1e1e1e]">
+                      <span class="font-bold text-gray-900">
                         {{ (product.price * product.quantity).toFixed(2) }} zł
                       </span>
                     </div>
@@ -171,7 +171,7 @@
               <div class="border-t border-gray-200 pt-3">
                 <div class="flex justify-between text-lg font-bold">
                   <span>Razem:</span>
-                  <span class="text-[#1e1e1e]"
+                  <span class="text-gray-900"
                     >{{ order.total.toFixed(2) }} zł</span
                   >
                 </div>
@@ -256,18 +256,20 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-
-import fikus2 from "@/assets/plants/fikus2.webp";
-import fikus3 from "@/assets/plants/fikus3.webp";
-import kaktus from "@/assets/plants/kaktus.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import iglica from "@/assets/plants/iglica.webp";
-import iglica2 from "@/assets/plants/iglica2.webp";
-import monstera from "@/assets/plants/monstera.webp";
-import monstera2 from "@/assets/plants/monstera2.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 
 const route = useRoute();
 const order = ref<any>(null);
+const { resolveAssetUrl } = useAssetUrl();
+
+const fikus2 = resolveAssetUrl("/plants/fikus2.webp");
+const fikus3 = resolveAssetUrl("/plants/fikus3.webp");
+const kaktus = resolveAssetUrl("/plants/kaktus.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const iglica = resolveAssetUrl("/plants/iglica.webp");
+const iglica2 = resolveAssetUrl("/plants/iglica2.webp");
+const monstera = resolveAssetUrl("/plants/monstera.webp");
+const monstera2 = resolveAssetUrl("/plants/monstera2.webp");
 
 const ordersData = [
   {

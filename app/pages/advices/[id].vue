@@ -27,7 +27,7 @@
             }}</span>
           </div>
           <h1
-            class="font-poppins font-bold text-2xl md:text-3xl lg:text-4xl text-[#1e1e1e] mb-3 md:mb-4"
+            class="font-poppins font-bold text-2xl md:text-3xl lg:text-4xl text-gray-900 mb-3 md:mb-4"
           >
             {{ advice.title }}
           </h1>
@@ -123,7 +123,7 @@
             >
               <div class="p-4 md:p-6 border-b border-gray-200">
                 <h2
-                  class="font-poppins font-semibold text-lg md:text-xl text-[#1e1e1e]"
+                  class="font-poppins font-semibold text-lg md:text-xl text-gray-900"
                 >
                   Szczegółowy przewodnik pielęgnacyjny
                 </h2>
@@ -191,7 +191,7 @@
               class="border border-[#90a88c] border-2 rounded-xl p-4 md:p-6 mb-4 md:mb-8"
             >
               <h3
-                class="font-poppins font-semibold text-lg md:text-xl text-[#1e1e1e] mb-3 md:mb-4"
+                class="font-poppins font-semibold text-lg md:text-xl text-gray-900 mb-3 md:mb-4"
               >
                 Praktyczne wskazówki
               </h3>
@@ -242,24 +242,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { showError } from "#app";
 import { useAdviceData } from "@/composables/useAdviceData";
 import type { CareAdvice } from "@/composables/useAdviceData";
 
 const route = useRoute();
-const { getAdviceById } = useAdviceData();
+const { loadAdviceData, getAdviceById } = useAdviceData();
 
 const advice = ref<CareAdvice | null>(null);
 
 const id = parseInt(route.params.id as string);
-advice.value = getAdviceById(id);
 
-if (!advice.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "Porada nie znaleziona",
-  });
-}
+onMounted(async () => {
+  await loadAdviceData();
+  advice.value = getAdviceById(id);
+
+  if (!advice.value) {
+    showError({
+      statusCode: 404,
+      statusMessage: "Porada nie znaleziona",
+    });
+  }
+});
 
 const getDifficultyClass = (difficulty: string) => {
   const classes: Record<string, string> = {

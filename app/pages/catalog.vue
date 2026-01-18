@@ -6,12 +6,10 @@
     <div class="w-full max-w-5xl mb-8">
       <div class="flex justify-between items-start">
         <div>
-          <h1
-            class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]"
-          >
+          <h1 class="font-poppins font-bold text-2xl md:text-3xl text-primary">
             Katalog roślin
           </h1>
-          <p class="text-gray-600 mt-2">
+          <p class="text-secondary mt-2">
             Znajdź idealną roślinę dla swojego domu
           </p>
         </div>
@@ -43,11 +41,15 @@
         class="lg:w-1/4 transition-all duration-300 overflow-hidden lg:overflow-visible"
         :class="isFilterOpen ? 'max-h-[800px]' : 'max-h-0 lg:max-h-none'"
       >
-        <div class="bg-white rounded-lg shadow-sm p-6 lg:sticky lg:top-8">
+        <div
+          class="bg-white rounded-lg shadow-sm p-6 lg:sticky lg:top-8 text-primary"
+        >
           <h2 class="font-poppins font-bold text-lg mb-6">Filtry</h2>
 
           <div class="mb-6">
-            <h3 class="font-semibold text-sm text-gray-700 mb-3">Kategorie</h3>
+            <h3 class="font-semibold text-sm text-secondary mb-3">
+              Kategorie
+            </h3>
             <div class="space-y-2">
               <label
                 v-for="category in categories"
@@ -60,34 +62,34 @@
                   v-model="selectedCategories"
                   class="custom-checkbox h-4 w-4 rounded border-gray-300 focus:ring-[#90a88c] focus:ring-2 focus:ring-offset-0"
                 />
-                <span class="text-sm">{{ category.name }}</span>
+                <span class="text-sm text-secondary">{{ category.name }}</span>
               </label>
             </div>
           </div>
 
           <div class="mb-6">
-            <h3 class="font-semibold text-sm text-gray-700 mb-3">Cena</h3>
+            <h3 class="font-semibold text-sm text-secondary mb-3">Cena</h3>
             <div class="space-y-4">
               <div class="flex items-center space-x-2">
                 <input
                   type="number"
                   placeholder="Od"
                   v-model="priceRange.min"
-                  class="w-20 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
+                  class="w-20 px-2 py-1 border border-subtle rounded text-sm text-input placeholder-subtle focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
                 />
-                <span class="text-gray-500">-</span>
+                <span class="text-muted">-</span>
                 <input
                   type="number"
                   placeholder="Do"
                   v-model="priceRange.max"
-                  class="w-20 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
+                  class="w-20 px-2 py-1 border border-subtle rounded text-sm text-input placeholder-subtle focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
                 />
               </div>
             </div>
           </div>
 
           <div class="mb-6">
-            <h3 class="font-semibold text-sm text-gray-700 mb-3">Rozmiar</h3>
+            <h3 class="font-semibold text-sm text-secondary mb-3">Rozmiar</h3>
             <div class="space-y-2">
               <label
                 v-for="size in sizes"
@@ -100,7 +102,7 @@
                   v-model="selectedSizes"
                   class="custom-checkbox h-4 w-4 rounded border-gray-300 focus:ring-[#90a88c] focus:ring-2 focus:ring-offset-0"
                 />
-                <span class="text-sm">{{ size.name }}</span>
+                <span class="text-sm text-secondary">{{ size.name }}</span>
               </label>
             </div>
           </div>
@@ -108,7 +110,7 @@
           <div>
             <button
               @click="resetFilters"
-              class="flex-1 border border-gray-300 hover:border-gray-400 active:border-gray-500 text-gray-300 hover:text-gray-400 active:text-gray-500 text-sm rounded-full px-4 py-1 transition-colors"
+              class="flex-1 border border-subtle hover:border-gray-400 active:border-gray-500 text-muted hover:text-gray-500 active:text-gray-600 text-sm rounded-full px-4 py-1 transition-colors"
             >
               Wyczyść
             </button>
@@ -120,14 +122,14 @@
         <div
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4"
         >
-          <p class="text-gray-600 text-sm">
+          <p class="text-secondary text-sm">
             Znaleziono {{ filteredPlants.length }} produktów
           </p>
           <div class="flex items-center space-x-2">
-            <span class="text-sm text-gray-600">Sortuj według:</span>
+            <span class="text-sm text-secondary">Sortuj według:</span>
             <select
               v-model="sortBy"
-              class="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
+              class="border border-subtle rounded px-3 py-1 text-sm text-input focus:outline-none focus:ring-1 focus:ring-[#90a88c] focus:border-[#90a88c]"
             >
               <option value="name">Nazwa A-Z</option>
               <option value="name-desc">Nazwa Z-A</option>
@@ -147,7 +149,7 @@
             :title="plant.title"
             :price="plant.price"
             :old-price="plant.oldPrice ?? undefined"
-            :discount="plant.discount !== null ? `${plant.discount}%` : undefined"
+            :discount="plant.discount ?? undefined"
             :size="plant.size"
           />
         </div>

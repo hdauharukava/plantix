@@ -9,7 +9,7 @@ import { useFirebase } from "@/composables/useFirebase";
 import type { Product } from "@/types/product";
 import type { CreateOrderPayload, OrderRecord } from "@/types/order";
 
-const PRIMARY_PRODUCTS_COLLECTION = "Plants";
+const PRIMARY_PRODUCTS_COLLECTION = "plants";
 const FALLBACK_PRODUCTS_COLLECTION = "products";
 const ORDERS_COLLECTION = "orders";
 
@@ -54,6 +54,33 @@ export const fetchProducts = async (): Promise<Product[]> => {
     const data = docSnapshot.data() as Product;
     return mapProduct(docSnapshot.id, data, baseUrl);
   });
+};
+
+export const fetchProductById = async (
+  productId: string,
+): Promise<Product | null> => {
+  const { firestore } = useFirebase();
+  const config = useRuntimeConfig();
+  const baseUrl = config.public.firebaseHostingBaseUrl ?? "";
+  const primaryDoc = await getDoc(
+    doc(firestore, PRIMARY_PRODUCTS_COLLECTION, productId),
+  );
+
+  if (primaryDoc.exists()) {
+    const data = primaryDoc.data() as Product;
+    return mapProduct(primaryDoc.id, data, baseUrl);
+  }
+
+  const fallbackDoc = await getDoc(
+    doc(firestore, FALLBACK_PRODUCTS_COLLECTION, productId),
+  );
+
+  if (!fallbackDoc.exists()) {
+    return null;
+  }
+
+  const data = fallbackDoc.data() as Product;
+  return mapProduct(fallbackDoc.id, data, baseUrl);
 };
 
 export const createOrder = async (

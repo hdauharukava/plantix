@@ -5,7 +5,7 @@
   >
     <div class="w-full max-w-5xl mb-8">
       <div>
-        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-gray-900">
           Mój profil
         </h1>
         <p class="text-gray-600 mt-2">Zarządzaj swoim kontem i zamówieniami</p>

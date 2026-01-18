@@ -66,6 +66,17 @@
           />
         </button>
 
+        <button
+          type="button"
+          class="w-8 h-8 flex items-center justify-center rounded-full border border-subtle text-gray-700 hover:text-gray-900 hover:border-gray-400 transition-colors"
+          :aria-label="
+            theme === 'dark' ? 'Przełącz na jasny motyw' : 'Przełącz na ciemny motyw'
+          "
+          @click="toggleTheme"
+        >
+          <span class="text-sm">{{ theme === "dark" ? "🌙" : "☀️" }}</span>
+        </button>
+
         <NuxtLink to="/favorites" class="hidden md:block">
           <img
             src="@/assets/icons/HeartIcon.svg"
@@ -147,6 +158,14 @@
             Kontakt
           </NuxtLink>
         </div>
+
+        <button
+          type="button"
+          class="mt-4 w-full text-left py-2 px-3 rounded-md border border-gray-200 text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-colors"
+          @click="toggleTheme"
+        >
+          {{ theme === "dark" ? "Jasny motyw" : "Ciemny motyw" }}
+        </button>
 
         <div
           class="flex items-center justify-around mt-4 pt-4 border-t border-gray-200 md:hidden"
@@ -243,8 +262,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useCart } from "~/composables/useCart";
-
+import { useTheme } from "~/composables/useTheme";
 const { totalItems } = useCart();
+const { theme, toggleTheme } = useTheme();
 
 const isMenuOpen = ref(false);
 const isUserOpen = ref(false);

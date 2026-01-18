@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
     <div class="w-full max-w-5xl mb-8">
       <div>
-        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-[#1e1e1e]">
+        <h1 class="font-poppins font-bold text-2xl md:text-3xl text-gray-900">
           Moje zamówienia
         </h1>
         <p class="text-gray-600 mt-2">Historia Twoich zamówień</p>
@@ -155,7 +155,7 @@
 
                   <div class="space-y-3">
                     <div class="flex items-center space-x-4">
-                      <span class="font-bold text-lg text-[#1e1e1e]">
+                      <span class="font-bold text-lg text-gray-900">
                         {{ order.total.toFixed(2) }} zł
                       </span>
                       <span
@@ -287,18 +287,20 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRouter } from "#app";
-
-import fikus1 from "@/assets/plants/fikus2.webp";
-import fikus2 from "@/assets/plants/fikus3.webp";
-import kaktus1 from "@/assets/plants/kaktus.webp";
-import kaktus2 from "@/assets/plants/kaktus2.webp";
-import iglica1 from "@/assets/plants/iglica.webp";
-import iglica2 from "@/assets/plants/iglica2.webp";
-import monstera1 from "@/assets/plants/monstera.webp";
-import monstera2 from "@/assets/plants/monstera2.webp";
+import { useAssetUrl } from "@/composables/useAssetUrl";
 
 const router = useRouter();
+const { resolveAssetUrl } = useAssetUrl();
 const isLoading = ref(false);
+
+const fikus1 = resolveAssetUrl("/plants/fikus2.webp");
+const fikus2 = resolveAssetUrl("/plants/fikus3.webp");
+const kaktus1 = resolveAssetUrl("/plants/kaktus.webp");
+const kaktus2 = resolveAssetUrl("/plants/kaktus2.webp");
+const iglica1 = resolveAssetUrl("/plants/iglica.webp");
+const iglica2 = resolveAssetUrl("/plants/iglica2.webp");
+const monstera1 = resolveAssetUrl("/plants/monstera.webp");
+const monstera2 = resolveAssetUrl("/plants/monstera2.webp");
 
 const orders = ref([
   {

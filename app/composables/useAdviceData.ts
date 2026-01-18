@@ -1,11 +1,4 @@
-import adviceData from "@/data/advice.json";
-
-import fikus1 from "@/assets/plants/fikus2.webp";
-import kaktus1 from "@/assets/plants/kaktus.webp";
-import iglica1 from "@/assets/plants/iglica.webp";
-import zamiokulkas1 from "@/assets/plants/zamiokulkas.webp";
-import sukulent1 from "@/assets/plants/sukulent.webp";
-import monstera1 from "@/assets/plants/monstera.webp";
+import { fetchAdvice } from "@/data/repositories/adviceRepository";
 
 export interface CareAdvice {
   id: number;
@@ -22,7 +15,7 @@ export interface CareAdvice {
   pruning: string;
   pests: string;
   tips: string[];
-  image: any;
+  image: string;
 }
 
 export interface Category {
@@ -41,58 +34,74 @@ export interface AdviceData {
   faqs: FAQ[];
 }
 
-const categoryImages: Record<string, any> = {
-  Fikusy: fikus1,
-  Kaktusy: kaktus1,
-  Iglice: iglica1,
-  Zamiokulkasy: zamiokulkas1,
-  Sukulenty: sukulent1,
-  Monstery: monstera1,
+const buildCategories = (advice: CareAdvice[]): Category[] => {
+  const uniqueCategories = new Map<string, Category>();
+
+  advice.forEach((item) => {
+    if (!item.plantCategory) return;
+    if (!uniqueCategories.has(item.plantCategory)) {
+      uniqueCategories.set(item.plantCategory, {
+        id: item.plantCategory,
+        name: item.plantCategory,
+      });
+    }
+  });
+
+  return Array.from(uniqueCategories.values()).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
 };
 
 export const useAdviceData = () => {
-  const processedAdvice = adviceData.advice.map((item) => ({
-    ...item,
-    image: categoryImages[item.plantCategory] || fikus1,
-  }));
+  const advice = useState<CareAdvice[]>("advice-items", () => []);
+  const categories = useState<Category[]>("advice-categories", () => []);
+  const faqs = useState<FAQ[]>("advice-faqs", () => []);
+  const isLoaded = useState<boolean>("advice-loaded", () => false);
 
-  const data: AdviceData = {
-    advice: processedAdvice,
-    categories: adviceData.categories,
-    faqs: adviceData.faqs,
+  const loadAdviceData = async (): Promise<void> => {
+    if (isLoaded.value) return;
+
+    const adviceItems = await fetchAdvice();
+
+    advice.value = adviceItems;
+    categories.value = buildCategories(adviceItems);
+    isLoaded.value = true;
   };
 
   const getAdviceById = (id: number): CareAdvice | null => {
-    return data.advice.find((advice) => advice.id === id) || null;
+    return advice.value.find((item) => item.id === id) || null;
   };
 
   const getAdviceBySlug = (slug: string): CareAdvice | null => {
-    return data.advice.find((advice) => advice.slug === slug) || null;
+    return advice.value.find((item) => item.slug === slug) || null;
   };
 
   const getAdviceByCategory = (category: string): CareAdvice[] => {
-    return data.advice.filter((advice) => advice.plantCategory === category);
+    return advice.value.filter((item) => item.plantCategory === category);
   };
 
   const getAllAdvice = (): CareAdvice[] => {
-    return [...data.advice];
+    return [...advice.value];
   };
 
   const getAllCategories = (): Category[] => {
-    return [...data.categories];
+    return [...categories.value];
   };
 
   const getAllFAQs = (): FAQ[] => {
-    return [...data.faqs];
+    return [...faqs.value];
   };
 
   const getAdviceCountByCategory = (categoryId: string): number => {
-    return data.advice.filter((advice) => advice.plantCategory === categoryId)
+    return advice.value.filter((item) => item.plantCategory === categoryId)
       .length;
   };
 
   return {
-    data,
+    advice,
+    categories,
+    faqs,
+    loadAdviceData,
     getAdviceById,
     getAdviceBySlug,
     getAdviceByCategory,

@@ -10,7 +10,7 @@
       />
     </div>
     <div class="px-2 mb-3">
-      <h3 class="font-poppins font-bold text-lg text-[#1e1e1e] mb-2">
+      <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">
         {{ title }}
       </h3>
       <p class="font-poppins text-sm text-gray-600">{{ description }}</p>

@@ -6,7 +6,7 @@
     <div class="w-full max-w-5xl mb-6 md:mb-8">
       <div>
         <h1
-          class="font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-[#1e1e1e]"
+          class="font-poppins font-bold text-xl md:text-2xl lg:text-3xl text-gray-900"
         >
           Porady dotyczące pielęgnacji
         </h1>
@@ -147,7 +147,7 @@
             class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-3 md:gap-4"
           >
             <h2
-              class="font-poppins font-bold text-lg md:text-xl text-[#1e1e1e]"
+              class="font-poppins font-bold text-lg md:text-xl text-gray-900"
             >
               {{
                 selectedCategory
@@ -318,7 +318,7 @@
       <div id="faq" class="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200">
         <div class="max-w-5xl mx-auto">
           <h2
-            class="font-poppins font-bold text-lg md:text-xl text-[#1e1e1e] mb-4 md:mb-6"
+            class="font-poppins font-bold text-lg md:text-xl text-gray-900 mb-4 md:mb-6"
           >
             Często zadawane pytania (FAQ)
           </h2>
@@ -364,16 +364,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useAdviceData } from "@/composables/useAdviceData";
-import type { CareAdvice, Category, FAQ } from "@/composables/useAdviceData";
+import type { CareAdvice } from "@/composables/useAdviceData";
 
-const { getAllAdvice, getAllCategories, getAllFAQs, getAdviceCountByCategory } =
-  useAdviceData();
+const {
+  advice,
+  categories: adviceCategories,
+  faqs: adviceFaqs,
+  loadAdviceData,
+  getAdviceCountByCategory,
+} = useAdviceData();
 
-const isLoading = ref(false);
+const isLoading = ref(true);
 
-const categories = ref<Category[]>(getAllCategories());
+const categories = computed(() => adviceCategories.value);
 const selectedCategory = ref<string>("");
 const selectedDifficulty = ref<string>("all");
 const sortBy = ref<
@@ -381,8 +386,8 @@ const sortBy = ref<
 >("easy-first");
 const isFilterOpen = ref(false);
 
-const allAdvice = ref<CareAdvice[]>(getAllAdvice());
-const faqs = ref<FAQ[]>(getAllFAQs());
+const allAdvice = computed(() => advice.value);
+const faqs = computed(() => adviceFaqs.value);
 
 const filteredAdvice = computed(() => {
   let advice = [...allAdvice.value];
@@ -449,6 +454,12 @@ const getDifficultyClass = (difficulty: string) => {
   };
   return classes[difficulty] || "bg-gray-100 text-gray-800";
 };
+
+onMounted(async () => {
+  isLoading.value = true;
+  await loadAdviceData();
+  isLoading.value = false;
+});
 </script>
 
 <style scoped>
